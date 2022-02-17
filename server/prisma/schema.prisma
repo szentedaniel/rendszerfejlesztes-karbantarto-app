@@ -7,41 +7,45 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Device{
-  id            Int  @id @default(autoincrement())
-  name          String
-  maintenances  Maintenance[]
+model Device {
+  id           Int           @id @default(autoincrement())
+  name         String
+  maintenances Maintenance[]
 }
 
 model Maintenance {
-  id              Int      @id @default(autoincrement())
-  name            String
-  instructions    Instruction[]
-  device Device   @relation(fields: [deviceId], references: [id])
-  deviceId        Int
-  exceptive       Boolean @default(false)
-  last            DateTime
-  normaInMinutes  Int @default(60)
-  periodInDays    Decimal
-  assignedAt      DateTime @default(now())
+  id             Int           @id @default(autoincrement())
+  name           String
+  instructions   Instruction[]
+  device         Device        @relation(fields: [deviceId], references: [id])
+  deviceId       Int
+  exceptive      Boolean       @default(false)
+  last           DateTime
+  normaInMinutes Int           @default(60)
+  periodInDays   Decimal
+  assignedAt     DateTime      @default(now())
+  userId         Int
+  user           User          @relation(fields: [userId], references: [id])
 }
 
 model Instruction {
-  id              Int      @id @default(autoincrement())
-  title           String?
-  body            String
-  maintenance     Maintenance @relation(fields: [maintenanceId], references: [id])
-  maintenanceId   Int
+  id            Int         @id @default(autoincrement())
+  title         String?
+  body          String
+  maintenance   Maintenance @relation(fields: [maintenanceId], references: [id])
+  maintenanceId Int
 
 }
+
 model User {
-  id        Int        @id @default(autoincrement())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  name      String
-  username  String
-  password  String
-  UserRole  UserRole[]
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  name        String
+  username    String
+  password    String
+  UserRole    UserRole[]
+  Maintenance Maintenance[]
 }
 
 model Role {
