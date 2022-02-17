@@ -1,3 +1,6 @@
 {
-    "prisma.fileWatcher": true
+    "prisma.fileWatcher": true,
+    "yaml.schemas": {
+        "openapi:v3": "file:///Users/szentedaniel/Documents/Codes/nodejs_projects/rendszerfejlesztes-karbantarto-app/server/openapi%3A%203.0.2.yml"
+    }
 }

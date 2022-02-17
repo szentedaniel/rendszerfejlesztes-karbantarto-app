@@ -56,9 +56,9 @@ model Role {
 
 model UserRole {
   role   Role @relation(fields: [roleId], references: [id])
-  roleId Int // relation scalar field (used in the `@relation` attribute above)
+  roleId Int 
   user   User @relation(fields: [userId], references: [id])
-  userId Int // relation scalar field (used in the `@relation` attribute above)
+  userId Int 
 
   @@id([roleId, userId])
 }

@@ -1,0 +1,155 @@
+openapi: '3.0.2'
+info:
+  title: Rendszerfejlesztes API
+  version: '1.0'
+servers:
+  - url: http://localhost:3000/api
+
+components:
+    schemas:
+      # Device schema
+      Device:
+        type: object
+        properties:
+          id:
+            type: integer
+            default: Auto-generated
+          name:
+            type: string
+          maintenances:
+            type: array
+            items:
+              $ref: '#/components/schemas/Maintenance'
+      # Maintenance schema
+      Maintenance:
+        type: object
+        properties:
+            id: 
+              type: integer
+              default: Auto-generated
+            name: 
+              type: string
+            instructions:
+              type: array
+              items:
+                $ref: '#/components/schemas/Instruction'
+            device:
+              $ref: '#/components/schemas/Device'
+            deviceId: 
+              type: integer
+            exceptive: 
+              type: boolean
+              default: false
+            last:
+              type: string
+            normaInMinutes:
+              type: integer
+              default: 60
+            periodInDays:
+              type: number
+            assignedAt:
+              type: string
+              default: Auto-generated
+            userId:
+              type: integer
+            user:
+              $ref: '#/components/schemas/User'
+      # Instruction schema
+      Instruction:
+        type: object
+        properties:
+          id:
+            type: integer
+            default: Auto-generated
+          title:
+            type: string
+          body:
+            type: string
+          maintenance:
+            $ref: '#/components/schemas/Maintenance'
+          maintenanceId:
+            type: integer
+      # User schema
+      User:
+        type: object
+        properties:
+          id:
+            type: integer
+            default: Auto-generated
+          createdAt:
+            type: string
+            default: Auto-generated   
+          updatedAt:
+            type: string
+            default: Auto-generated      
+          name:
+            type: string
+          password:
+            type: string
+          UserRole:
+            type: array
+            items:
+              $ref: '#/components/schemas/UserRole'
+          Maintenance:
+            type: array
+            items:
+              $ref: '#/components/schemas/Maintenance'
+      # Role schema
+      Role:
+        type: object
+        properties:
+          id:
+            type: integer
+            default: Auto-generated
+          name:
+            type: string
+          UserRole:
+            type: array
+            items:
+              $ref: '#/components/schemas/UserRole'
+      # UserRole schema
+      UserRole:
+        type: object
+        properties:
+          role:
+            $ref: '#/components/schemas/Role'
+          roleId:
+            type: integer
+          user:
+            $ref: '#/components/schemas/User'
+          userId:
+            type: integer
+      Post:
+        type: object
+        required:
+          - userId
+          - title
+          - body
+        properties:
+          id:
+            type: integer
+          userId:
+            type: integer
+          title:
+            type: string
+          body:
+            type: string
+        example:
+          id: 1
+          userId: 1
+          title: my title
+          body: my article
+paths:
+  /users:
+   get:
+     summary: Returns all users
+     tags: [Users]
+     responses:
+       200:
+         description: the list of the users
+         content:
+           application/json:
+             schema:
+               type: array
+               items:
+                 $ref: '#/components/schemas/User'
