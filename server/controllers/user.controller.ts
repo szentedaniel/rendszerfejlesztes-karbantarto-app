@@ -20,7 +20,12 @@ export const getAllUsers = async (req: express.Request, res: express.Response, n
   try {
     const allUsers = await prisma.user.findMany({
     include: {
-      UserRole: true,
+      UserRole: {
+        select: {
+          role: true,
+          roleId: true
+        }
+      },
       Maintenance: true,
     },
   })
