@@ -1,9 +1,9 @@
 import { Maintenance, PrismaClient, User, UserRole } from '@prisma/client'
 import express from 'express'
-
+import { createUser, deleteUserById, getAllUsers, getUserById, updateUserById } from '../controllers/user.controller'
 
 const prisma = new PrismaClient()
-const router = require('express').Router()
+const router = express.Router()
 
 
 router.get('/', async (req: express.Request, res: express.Response, next: any) => {
@@ -11,38 +11,29 @@ router.get('/', async (req: express.Request, res: express.Response, next: any) =
 })
 
 
-
+// Users ROUTES
 router.get('/users', async (req: express.Request, res: express.Response, next: any) => {
-  try {
-    const allUsers = await prisma.user.findMany({
-    include: {
-      UserRole: true,
-      Maintenance: true,
-    },
-  })
-  
-    res.send(allUsers)
-  } catch (error) {
-    next(error)    
-  }
-  
+  getAllUsers(req, res, next)  
+})
+
+router.get('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getUserById(req, res, next)  
+})
+
+router.delete('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteUserById(req, res, next)  
+})
+
+router.patch('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateUserById(req, res, next)  
 })
 
 router.post('/user', async (req: express.Request, res: express.Response, next: any) => {
-  try {
-    const allUsers = await prisma.user.findMany({
-    include: {
-      UserRole: true,
-      Maintenance: true,
-    },
-  })
-  console.dir(allUsers, { depth: null })
-
-    res.send(allUsers)
-  } catch (error) {
-    next(error)    
-  }
-  
+  createUser(req, res, next)
 })
+
+// ____ ROUTES
+
+
 
 module.exports = router
