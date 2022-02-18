@@ -1,14 +1,21 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 import express from 'express'
 import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
-interface createUserData{
-  name: string,
-  username: string,
-  password: string,
-  roleId: number
+export interface createUserData{
+    name: string,
+    username: string,
+    password: string,
+    roleId: number
+}
+
+export interface updateUserData{
+    name: any,
+    username: any,
+    password: any,
+    roleId: any,
 }
 
 export const getAllUsers = async () => {
@@ -47,7 +54,6 @@ export const getAllUsers = async () => {
                 }
               },
               instructions: true,
-
             }
           },
           status: true
@@ -66,13 +72,12 @@ export const getAllUsers = async () => {
   })
     return allUsers
   } catch (error: any) {
-    throw new Error(error);
+    throw new Error(error)
   }
 }
 
-export const getUserById = async (req: express.Request, res: express.Response, next: any) => {
+export const getUserById = async (id: number) => {
   try {
-    const { id } = req.params
     const User = await prisma.user.findUnique({
       where: {
         id: Number(id)
@@ -90,7 +95,6 @@ export const getUserById = async (req: express.Request, res: express.Response, n
             select: {
               name: true,
               instructions: true,
-
             }
           },
           status: true
@@ -98,51 +102,45 @@ export const getUserById = async (req: express.Request, res: express.Response, n
       },
       },
     })
-    res.json(User)
-  } catch (error) {
-    next(error)    
+    return User
+  } catch (error: any) {
+    throw new Error(error)
   }
 }
 
-export const createUser = async (req: express.Request, res: express.Response, next: any) => {
+export const createUser = async (userData: createUserData): Promise<User> => {
     try {
-      let userData: createUserData = req.body
-
-      bcrypt.genSalt(10, async (err, salt) => {
-        bcrypt.hash(userData.password, salt, async (err, hash) => {
-          userData.password = hash
-
-          const createdUser = await prisma.user.create({ 
-            data: userData,
-          })
-          res.json(createdUser)
-        })
+      const salt = bcrypt.genSaltSync(10)
+      const hash = bcrypt.hashSync(userData.password, salt)
+      userData.password = hash
+      const createdUser = await prisma.user.create({ 
+        data: userData,
       })
+      return createdUser
+          
       
-  } catch (error) {
-    next(error)    
+  } catch (error: any) {
+    throw new Error(error)
   }
 }
 
-export const deleteUserById = async (req: express.Request, res: express.Response, next: any) => {
+export const deleteUserById = async (id: number) => {
   try {
-    const { id } = req.params
     const deletedUser = await prisma.user.delete({
       where: {
         id: Number(id)
       }
     })
-    res.json(deletedUser)
-  } catch (error) {
-    next(error)    
+  return deletedUser
+  } catch (error: any) {
+    throw new Error(error)
+    
   }
 }
 
-export const updateUserById = async (req: express.Request, res: express.Response, next: any) => {
+export const updateUserById = async (id: number, userData: updateUserData) => {
   try {
-    const { id } = req.params
-
-    let wantToBeUserData = req.body
+    let wantToBeUserData = userData
 
     if (wantToBeUserData.password) {
       bcrypt.genSalt(10, async (err, salt) => {
@@ -176,10 +174,11 @@ export const updateUserById = async (req: express.Request, res: express.Response
               },
               },
             })
-            res.json(updatedUser)
+            return updatedUser
             
-          } catch (error) {
-            next(error)
+          } catch (error: any) {
+            throw new Error(error)
+            
           }
         })
       })
@@ -210,10 +209,11 @@ export const updateUserById = async (req: express.Request, res: express.Response
               },
             },
           })
-          res.json(updatedUser)
+          return updatedUser
     }
     
-  } catch (error) {
-    next(error)    
+  } catch (error: any) {
+    throw new Error(error)
+    
   }
 }

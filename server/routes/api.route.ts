@@ -1,7 +1,6 @@
 import { Maintenance, PrismaClient, User } from '@prisma/client'
 import express from 'express'
-import { getAllUserApi } from '../controllers/api/api.user.controller'
-import { createUser, deleteUserById, getAllUsers, getUserById, updateUserById } from '../controllers/user.controller'
+import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
 
 const prisma = new PrismaClient()
 const router = express.Router()
@@ -18,22 +17,24 @@ router.get('/users', async (req: express.Request, res: express.Response, next: a
 })
 
 router.get('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
-  getUserById(req, res, next)  
+  getUserByIdApi(req, res, next)  
 })
 
 router.delete('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
-  deleteUserById(req, res, next)  
+  deleteUserByIdApi(req, res, next)  
 })
 
 router.patch('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
-  updateUserById(req, res, next)  
+  updateUserByIdApi(req, res, next)  
 })
 
 router.post('/user', async (req: express.Request, res: express.Response, next: any) => {
-  createUser(req, res, next)
+  createUserApi(req, res, next)
 })
 
 // ____ ROUTES
+
+
 
 
 
