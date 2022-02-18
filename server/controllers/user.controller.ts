@@ -11,7 +11,7 @@ interface createUserData{
   roleId: number
 }
 
-export const getAllUsers = async (req: express.Request, res: express.Response, next: any) => {
+export const getAllUsers = async () => {
   try {
     const allUsers = await prisma.user.findMany({
     include: {
@@ -21,12 +21,52 @@ export const getAllUsers = async (req: express.Request, res: express.Response, n
           id: true
         }
       },
-      maintenance: true,
+      maintenanceUsers: {
+        select: {
+          maintenance: {
+            select: {
+              name: true,
+              exceptive: true,
+              categoryId: true,
+              category: {
+                select:{
+                  name: true,
+                  devices: {
+                    select: {
+                      name: true,
+                      description: true,
+                      identifier: true,
+                      location: {
+                        select: {
+                          name: true,
+                          building: true
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              instructions: true,
+
+            }
+          },
+          status: true
+        },
+      },
     },
+    // where: {
+    //   maintenanceUsers: {
+    //     some: {
+    //       status: {
+    //         name: { notIn: ['Elutasítva', 'Befejezve']}
+    //       }
+    //     }
+    //   }
+    // }
   })
-    res.json(allUsers)
-  } catch (error) {
-    next(error)    
+    return allUsers
+  } catch (error: any) {
+    throw new Error(error);
   }
 }
 
@@ -44,7 +84,18 @@ export const getUserById = async (req: express.Request, res: express.Response, n
             id: true
           }
         },
-      maintenance: true,
+      maintenanceUsers: {
+        select: {
+          maintenance: {
+            select: {
+              name: true,
+              instructions: true,
+
+            }
+          },
+          status: true
+        },
+      },
       },
     })
     res.json(User)
@@ -111,7 +162,18 @@ export const updateUserById = async (req: express.Request, res: express.Response
                     id: true
                   }
                 },
-              maintenance: true,
+              maintenanceUsers: {
+                select: {
+                  maintenance: {
+                    select: {
+                      name: true,
+                      instructions: true,
+
+                    }
+                  },
+                  status: true
+                },
+              },
               },
             })
             res.json(updatedUser)
@@ -134,7 +196,18 @@ export const updateUserById = async (req: express.Request, res: express.Response
                     id: true
                   }
                 },
-              maintenance: true,
+              maintenanceUsers: {
+                select: {
+                  maintenance: {
+                    select: {
+                      name: true,
+                      instructions: true,
+
+                    }
+                  },
+                  status: true
+                },
+              },
             },
           })
           res.json(updatedUser)

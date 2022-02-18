@@ -36,14 +36,14 @@ model Category {
   id              Int           @id @default(autoincrement())
   name            String
   normaInMinutes  Int
-  lastMaintenance DateTime
+  lastMaintenance DateTime?
   devices         Device[]
   maintenances    Maintenance[]
   period          Period        @relation(fields: [periodId], references: [id])
   periodId        Int
   children        Category[]    @relation("ChildParent")
-  parent          Category      @relation("ChildParent", fields: [parentId], references: [id])
-  parentId        Int
+  parent          Category?      @relation("ChildParent", fields: [parentId], references: [id])
+  parentId        Int?
 }
 
 model Period {
@@ -124,10 +124,10 @@ model MaintenanceUser {
   user          User        @relation(fields: [userId], references: [id])
   assignedAt    DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  acceptedAt    DateTime
-  declinedAt    DateTime
-  startedAt     DateTime
-  finishedAt    DateTime
+  acceptedAt    DateTime?
+  declinedAt    DateTime?
+  startedAt     DateTime?
+  finishedAt    DateTime?
   statusId      Int
   status        Status      @relation(fields: [statusId], references: [id])
 

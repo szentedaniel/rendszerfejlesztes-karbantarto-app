@@ -1,5 +1,6 @@
 import { Maintenance, PrismaClient, User } from '@prisma/client'
 import express from 'express'
+import { getAllUserApi } from '../controllers/api/api.user.controller'
 import { createUser, deleteUserById, getAllUsers, getUserById, updateUserById } from '../controllers/user.controller'
 
 const prisma = new PrismaClient()
@@ -13,7 +14,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: any) =
 
 // Users ROUTES
 router.get('/users', async (req: express.Request, res: express.Response, next: any) => {
-  getAllUsers(req, res, next)  
+  getAllUserApi(req, res, next)
 })
 
 router.get('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
