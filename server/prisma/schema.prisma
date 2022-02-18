@@ -8,8 +8,49 @@ generator client {
 }
 
 model Device {
-  id           Int           @id @default(autoincrement())
-  name         String
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  identifier  String
+  location    Location @relation(fields: [locationId], references: [id])
+  locationId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+}
+
+model Location {
+  id         Int      @id @default(autoincrement())
+  name       String
+  building   Building @relation(fields: [buildingId], references: [id])
+  buildingId Int
+  devices    Device[]
+}
+
+model Building {
+  id        Int        @id @default(autoincrement())
+  name      String
+  locations Location[]
+}
+
+model Category {
+  id              Int           @id @default(autoincrement())
+  name            String
+  normaInMinutes  Int
+  lastMaintenance DateTime
+  devices         Device[]
+  maintenances    Maintenance[]
+  period          Period        @relation(fields: [periodId], references: [id])
+  periodId        Int
+  children        Category[]    @relation("ChildParent")
+  parent          Category      @relation("ChildParent", fields: [parentId], references: [id])
+  parentId        Int
+}
+
+model Period {
+  id         Int        @id @default(autoincrement())
+  name       String
+  days       Int
+  categories Category[]
 }
 
 model Maintenance {
@@ -17,8 +58,10 @@ model Maintenance {
   name                     String
   instructions             Instruction[]
   exceptive                Boolean                    @default(false)
-  categoryId                Int
-  category                  Category              @relation(fields: [categoryId], references: [id])
+  categoryId               Int
+  category                 Category                   @relation(fields: [categoryId], references: [id])
+  MaintenanceQualification MaintenanceQualification[]
+  MaintenanceUser          MaintenanceUser[]
 }
 
 model Instruction {
@@ -29,24 +72,18 @@ model Instruction {
   maintenanceId Int
 }
 
-
 model User {
-  id                Int                 @id @default(autoincrement())
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  name              String
-  username          String
-  password          String
-  Role              Role                @relation(fields: [roleId], references: [id])
-  roleId            Int
-  maintenance       Maintenance[]
-  UserQualification UserQualification[]
-}
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  username           String
+  password           String
+  Role               Role                @relation(fields: [roleId], references: [id])
+  roleId             Int
+  userQualifications UserQualification[]
+  maintenanceUsers   MaintenanceUser[]
 
-model Role {
-  id   Int    @id @default(autoincrement())
-  name String
-  User User[]
 }
 
 model Qualification {
@@ -65,6 +102,12 @@ model UserQualification {
   @@id([qualificationId, userId])
 }
 
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
+}
+
 model MaintenanceQualification {
   qualification   Qualification @relation(fields: [qualificationId], references: [id])
   qualificationId Int
@@ -75,23 +118,24 @@ model MaintenanceQualification {
 }
 
 model MaintenanceUser {
-  maintenanceId     Int
-  maintenance       Maintenance @relation(fields: [maintenanceId], references: [id])
-  userId            Int
-  user              User @relation(fields: [userId], references: [id])
-  assignedAt        DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  acceptedAt        DateTime
-  declinedAt        DateTime
-  startedAt         DateTime
-  finishedAt        DateTime
-  statusId          Int
-  status            Status  @relation(fields: [statusId], references: [id])
+  maintenanceId Int
+  maintenance   Maintenance @relation(fields: [maintenanceId], references: [id])
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id])
+  assignedAt    DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  acceptedAt    DateTime
+  declinedAt    DateTime
+  startedAt     DateTime
+  finishedAt    DateTime
+  statusId      Int
+  status        Status      @relation(fields: [statusId], references: [id])
 
   @@id([userId, maintenanceId])
 }
 
 model Status {
-  id        Int         @id @default(autoincrement())
-  name      String
+  id              Int               @id @default(autoincrement())
+  name            String
+  MaintenanceUser MaintenanceUser[]
 }
