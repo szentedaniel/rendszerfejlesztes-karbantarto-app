@@ -10,7 +10,47 @@ generator client {
 model Device {
   id           Int           @id @default(autoincrement())
   name         String
+  description String
+  identifier String
+  location Location @relation(fields: [locationId], references: [id])
+  locationId Int
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+model Location{
+  id           Int           @id @default(autoincrement())
+  name String
+  building Building @relation(fields: [buildingId], references: [id])
+  buildingId Int
+  devices Device[]
+}
+
+model Building{
+  id           Int           @id @default(autoincrement())
+  name String
+  locations Location[]
+}
+
+model Category{
+  id           Int           @id @default(autoincrement())
+  name String
+  normaInMinutes Int
+  lastMaintenance DateTime
+  devices Device[]
   maintenances Maintenance[]
+  period Period  @relation(fields: [periodId], references: [id])
+  periodId Int
+  children Category[] @relation("ChildParent")
+  parent Category @relation("ChildParent", fields: [parentId], references: [id])
+  parentId Int
+}
+
+model Period{
+  id           Int           @id @default(autoincrement())
+  name String
+  days Int
+  categories Category[]
 }
 
 model Maintenance {
@@ -40,21 +80,16 @@ model Instruction {
 
 model User {
   id                Int                 @id @default(autoincrement())
+  name              String
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
-  name              String
   username          String
   password          String
   Role              Role                @relation(fields: [roleId], references: [id])
   roleId            Int
-  maintenance       Maintenance[]
-  UserQualification UserQualification[]
-}
-
-model Role {
-  id   Int    @id @default(autoincrement())
-  name String
-  User User[]
+  userQualifications UserQualification[]
+  maintenanceUsers MaintenanceUsers[]
+  
 }
 
 model Qualification {
@@ -72,6 +107,14 @@ model UserQualification {
 
   @@id([qualificationId, userId])
 }
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
+}
+
+
 
 model MaintenanceQualification {
   qualification   Qualification @relation(fields: [qualificationId], references: [id])
