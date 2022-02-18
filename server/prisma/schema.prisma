@@ -14,18 +14,19 @@ model Device {
 }
 
 model Maintenance {
-  id             Int           @id @default(autoincrement())
-  name           String
-  instructions   Instruction[]
-  device         Device        @relation(fields: [deviceId], references: [id])
-  deviceId       Int
-  exceptive      Boolean       @default(false)
-  last           DateTime
-  normaInMinutes Int           @default(60)
-  periodInDays   Decimal
-  assignedAt     DateTime      @default(now())
-  userId         Int
-  user           User          @relation(fields: [userId], references: [id])
+  id                       Int                        @id @default(autoincrement())
+  name                     String
+  instructions             Instruction[]
+  device                   Device                     @relation(fields: [deviceId], references: [id])
+  deviceId                 Int
+  exceptive                Boolean                    @default(false)
+  last                     DateTime
+  normaInMinutes           Int                        @default(60)
+  periodInDays             Decimal
+  assignedAt               DateTime                   @default(now())
+  userId                   Int
+  user                     User                       @relation(fields: [userId], references: [id])
+  maintenanceQualification MaintenanceQualification[]
 }
 
 model Instruction {
@@ -38,27 +39,45 @@ model Instruction {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  name        String
-  username    String
-  password    String
-  UserRole    UserRole[]
-  Maintenance Maintenance[]
+  id                Int                 @id @default(autoincrement())
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  name              String
+  username          String
+  password          String
+  Role              Role                @relation(fields: [roleId], references: [id])
+  roleId            Int
+  maintenance       Maintenance[]
+  UserQualification UserQualification[]
 }
 
 model Role {
-  id       Int        @id @default(autoincrement())
-  name     String
-  UserRole UserRole[]
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
 }
 
-model UserRole {
-  role   Role @relation(fields: [roleId], references: [id])
-  roleId Int 
-  user   User @relation(fields: [userId], references: [id])
-  userId Int 
+model Qualification {
+  id                       Int                        @id @default(autoincrement())
+  name                     String
+  userQualification        UserQualification[]
+  MaintenanceQualification MaintenanceQualification[]
+}
 
-  @@id([roleId, userId])
+model UserQualification {
+  qualification   Qualification @relation(fields: [qualificationId], references: [id])
+  qualificationId Int
+  user            User          @relation(fields: [userId], references: [id])
+  userId          Int
+
+  @@id([qualificationId, userId])
+}
+
+model MaintenanceQualification {
+  qualification   Qualification @relation(fields: [qualificationId], references: [id])
+  qualificationId Int
+  maintenance     Maintenance   @relation(fields: [maintenanceId], references: [id])
+  maintenanceId   Int
+
+  @@id([qualificationId, maintenanceId])
 }

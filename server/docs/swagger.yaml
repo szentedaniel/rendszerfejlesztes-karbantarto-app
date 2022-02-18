@@ -54,6 +54,10 @@ components:
               type: integer
             user:
               $ref: '#/components/schemas/User'
+            maintenanceQualification:
+              type: array
+              items:
+                $ref: '#/components/schemas/MaintenanceQualification'
       # Instruction schema
       Instruction:
         type: object
@@ -91,14 +95,18 @@ components:
           password:
             type: string
             format: password
-          UserRole:
-            type: array
-            items:
-              $ref: '#/components/schemas/UserRole'
-          Maintenance:
+          role:
+            $ref: '#/components/schemas/Role'
+          roleId:
+            type: integer
+          maintenance:
             type: array
             items:
               $ref: '#/components/schemas/Maintenance'
+          userQualification:
+            type: array
+            items:
+              $ref: '#/components/schemas/UserQualification'
       # Role schema
       Role:
         type: object
@@ -108,21 +116,50 @@ components:
             default: Auto-generated
           name:
             type: string
-          UserRole:
+          user:
             type: array
             items:
-              $ref: '#/components/schemas/UserRole'
-      # UserRole schema
-      UserRole:
+              $ref: '#/components/schemas/User'
+      # Qualification schema
+      Qualification:
         type: object
         properties:
-          role:
-            $ref: '#/components/schemas/Role'
-          roleId:
+          id:
+            type: integer
+            default: Auto-generated
+          name:
+            type: string
+          userQualification:
+            type: array
+            items:
+              $ref: '#/components/schemas/UserQualification'
+          maintenanceQualification:
+            type: array
+            items:
+              $ref: '#/components/schemas/MaintenanceQualification'
+      # UserQualification schema
+      UserQualification:
+        type: object
+        properties:
+          qualification:
+            $ref: '#/components/schemas/Qualification'
+          qualificationId:
             type: integer
           user:
             $ref: '#/components/schemas/User'
           userId:
+            type: integer
+      # MaintenanceQualification schema
+      MaintenanceQualification:
+        type: object
+        properties:
+          qualification:
+            $ref: '#/components/schemas/Qualification'
+          roleId:
+            type: integer
+          maintenance:
+            $ref: '#/components/schemas/Maintenance'
+          maintenanceId:
             type: integer
 #      Post:
 #        type: object
