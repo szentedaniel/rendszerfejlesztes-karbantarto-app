@@ -10,23 +10,15 @@ generator client {
 model Device {
   id           Int           @id @default(autoincrement())
   name         String
-  maintenances Maintenance[]
 }
 
 model Maintenance {
   id                       Int                        @id @default(autoincrement())
   name                     String
   instructions             Instruction[]
-  device                   Device                     @relation(fields: [deviceId], references: [id])
-  deviceId                 Int
   exceptive                Boolean                    @default(false)
-  last                     DateTime
-  normaInMinutes           Int                        @default(60)
-  periodInDays             Decimal
-  assignedAt               DateTime                   @default(now())
-  userId                   Int
-  user                     User                       @relation(fields: [userId], references: [id])
-  maintenanceQualification MaintenanceQualification[]
+  categoryId                Int
+  category                  Category              @relation(fields: [categoryId], references: [id])
 }
 
 model Instruction {
@@ -35,8 +27,8 @@ model Instruction {
   body          String
   maintenance   Maintenance @relation(fields: [maintenanceId], references: [id])
   maintenanceId Int
-
 }
+
 
 model User {
   id                Int                 @id @default(autoincrement())
@@ -80,4 +72,26 @@ model MaintenanceQualification {
   maintenanceId   Int
 
   @@id([qualificationId, maintenanceId])
+}
+
+model MaintenanceUser {
+  maintenanceId     Int
+  maintenance       Maintenance @relation(fields: [maintenanceId], references: [id])
+  userId            Int
+  user              User @relation(fields: [userId], references: [id])
+  assignedAt        DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  acceptedAt        DateTime
+  declinedAt        DateTime
+  startedAt         DateTime
+  finishedAt        DateTime
+  statusId          Int
+  status            Status  @relation(fields: [statusId], references: [id])
+
+  @@id([userId, maintenanceId])
+}
+
+model Status {
+  id        Int         @id @default(autoincrement())
+  name      String
 }
