@@ -95,7 +95,7 @@ components:
           password:
             type: string
             format: password
-          role:
+          Role:
             $ref: '#/components/schemas/Role'
           roleId:
             type: integer
@@ -103,7 +103,7 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Maintenance'
-          userQualification:
+          UserQualification:
             type: array
             items:
               $ref: '#/components/schemas/UserQualification'
@@ -313,11 +313,13 @@ paths:
                   name: Jessica Smith
                   username: jessica_s
                   password: passw1234
+                  roleId: 1
               Ron:       
                 value:
                   name: Ron Stewart
                   username: ron_s
                   password: secret987
+                  roleId: 1
       responses:
         200:
           description: The user was successfully created and the data of the created user is returned

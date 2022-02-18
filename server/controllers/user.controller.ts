@@ -7,26 +7,21 @@ const prisma = new PrismaClient()
 interface createUserData{
   name: string,
   username: string,
-  password: string
-}
-
-interface updateUserData{
-  name: string | null | undefined,
-  username: string | null | undefined,
-  password: string | null | undefined
+  password: string,
+  roleId: number
 }
 
 export const getAllUsers = async (req: express.Request, res: express.Response, next: any) => {
   try {
     const allUsers = await prisma.user.findMany({
     include: {
-      UserRole: {
+      Role: {
         select: {
-          role: true,
-          roleId: true
+          name: true,
+          id: true
         }
       },
-      Maintenance: true,
+      maintenance: true,
     },
   })
     res.json(allUsers)
@@ -43,8 +38,13 @@ export const getUserById = async (req: express.Request, res: express.Response, n
         id: Number(id)
       },
       include: {
-        UserRole: true,
-        Maintenance: true,
+        Role: {
+          select: {
+            name: true,
+            id: true
+          }
+        },
+      maintenance: true,
       },
     })
     res.json(User)
@@ -104,6 +104,15 @@ export const updateUserById = async (req: express.Request, res: express.Response
                 id: Number(id),
               },
               data: wantToBeUserData,
+              include: {
+                Role: {
+                  select: {
+                    name: true,
+                    id: true
+                  }
+                },
+              maintenance: true,
+              },
             })
             res.json(updatedUser)
             
@@ -118,6 +127,15 @@ export const updateUserById = async (req: express.Request, res: express.Response
             id: Number(id),
           },
             data: wantToBeUserData,
+            include: {
+                Role: {
+                  select: {
+                    name: true,
+                    id: true
+                  }
+                },
+              maintenance: true,
+            },
           })
           res.json(updatedUser)
     }

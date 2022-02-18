@@ -1,4 +1,4 @@
-import { Maintenance, PrismaClient, User, UserRole } from '@prisma/client'
+import { Maintenance, PrismaClient, User } from '@prisma/client'
 import express from 'express'
 import { createUser, deleteUserById, getAllUsers, getUserById, updateUserById } from '../controllers/user.controller'
 
