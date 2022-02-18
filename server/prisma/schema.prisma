@@ -23,13 +23,13 @@ model Location {
   name       String
   building   Building @relation(fields: [buildingId], references: [id])
   buildingId Int
-  devices    Device[]
+  Device     Device[]
 }
 
 model Building {
-  id        Int        @id @default(autoincrement())
-  name      String
-  locations Location[]
+  id       Int        @id @default(autoincrement())
+  name     String
+  Location Location[]
 }
 
 model Category {
@@ -37,26 +37,26 @@ model Category {
   name            String
   normaInMinutes  Int
   lastMaintenance DateTime?
-  devices         Device[]
-  maintenances    Maintenance[]
+  Device          Device[]
+  Maintenance     Maintenance[]
   period          Period        @relation(fields: [periodId], references: [id])
   periodId        Int
   children        Category[]    @relation("ChildParent")
-  parent          Category?      @relation("ChildParent", fields: [parentId], references: [id])
+  parent          Category?     @relation("ChildParent", fields: [parentId], references: [id])
   parentId        Int?
 }
 
 model Period {
-  id         Int        @id @default(autoincrement())
-  name       String
-  days       Int
-  categories Category[]
+  id       Int        @id @default(autoincrement())
+  name     String
+  days     Int
+  Category Category[]
 }
 
 model Maintenance {
   id                       Int                        @id @default(autoincrement())
   name                     String
-  instructions             Instruction[]
+  Instruction              Instruction[]
   exceptive                Boolean                    @default(false)
   categoryId               Int
   category                 Category                   @relation(fields: [categoryId], references: [id])
@@ -73,23 +73,23 @@ model Instruction {
 }
 
 model User {
-  id                 Int                 @id @default(autoincrement())
-  name               String
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  username           String
-  password           String
-  Role               Role                @relation(fields: [roleId], references: [id])
-  roleId             Int
-  userQualifications UserQualification[]
-  maintenanceUsers   MaintenanceUser[]
+  id                Int                 @id @default(autoincrement())
+  name              String
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  username          String
+  password          String
+  Role              Role                @relation(fields: [roleId], references: [id])
+  roleId            Int
+  UserQualification UserQualification[]
+  MaintenanceUser   MaintenanceUser[]
 
 }
 
 model Qualification {
   id                       Int                        @id @default(autoincrement())
   name                     String
-  userQualification        UserQualification[]
+  UserQualification        UserQualification[]
   MaintenanceQualification MaintenanceQualification[]
 }
 

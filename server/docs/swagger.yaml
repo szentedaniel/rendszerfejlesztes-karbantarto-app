@@ -16,10 +16,100 @@ components:
             default: Auto-generated
           name:
             type: string
-          maintenances:
+          description:
+            type: string
+          identifier:
+            type: string
+          location:
+            $ref: '#/components/schemas/Location'
+          locationId:
+            type: integer
+          category:
+            $ref: '#/components/schemas/Category'
+          categoryId:
+            type: integer
+      # Location schema
+      Location:
+        type: object
+        properties:
+          id:
+            type: integer
+            default: Auto-generated
+          name:
+            type: string
+          building:
+            $ref: '#/components/schemas/Building'
+          buildingId: 
+            type: integer
+          Device:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
+      # Building schema
+      Building:
+        type: object
+        properties:
+          id: 
+            type: integer
+            default: Auto-generated
+          name: 
+            type: string
+          Location:
+            type: array
+            items:
+              $ref: '#/components/schemas/Location'
+      # Category schema
+      Category:
+        type: object
+        properties:
+          id: 
+            type: integer
+            default: Auto-generated
+          name: 
+            type: string
+          normaInMinutes:
+            type: integer
+          lastMaintenance:
+            type: string
+            format: date-time
+            nullable: true
+          Device:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
+          Maintenance:
             type: array
             items:
               $ref: '#/components/schemas/Maintenance'
+          period:
+            $ref: '#/components/schemas/Period'
+          periodId:
+            type: integer
+          children:
+            type: array
+            items:
+              $ref: '#/components/schemas/Category'
+          parent:
+            $ref: '#/components/schemas/Category'
+            nullable: true
+          parentId:
+            type: integer
+            nullable: true
+      # Period schema
+      Period:
+        type: object
+        properties:
+          id: 
+            type: integer
+            default: Auto-generated
+          name: 
+            type: string
+          days:
+            type: integer
+          Category:
+            type: array
+            items:
+              $ref: '#/components/schemas/Category'
       # Maintenance schema
       Maintenance:
         type: object
@@ -29,35 +119,25 @@ components:
               default: Auto-generated
             name: 
               type: string
-            instructions:
+            Instruction:
               type: array
               items:
                 $ref: '#/components/schemas/Instruction'
-            device:
-              $ref: '#/components/schemas/Device'
-            deviceId: 
-              type: integer
             exceptive: 
               type: boolean
               default: false
-            last:
-              type: string
-            normaInMinutes:
+            categoryId: 
               type: integer
-              default: 60
-            periodInDays:
-              type: number
-            assignedAt:
-              type: string
-              default: Auto-generated
-            userId:
-              type: integer
-            user:
-              $ref: '#/components/schemas/User'
-            maintenanceQualification:
+            category:
+              $ref: '#/components/schemas/Category'
+            MaintenanceQualification:
               type: array
               items:
                 $ref: '#/components/schemas/MaintenanceQualification'
+            MaintenanceUser:
+              type: array
+              items:
+                $ref: '#/components/schemas/MaintenanceUser'
       # Instruction schema
       Instruction:
         type: object
@@ -67,6 +147,7 @@ components:
             default: Auto-generated
           title:
             type: string
+            nullable: true
           body:
             type: string
           maintenance:
@@ -80,6 +161,8 @@ components:
           id:
             type: integer
             default: Auto-generated
+          name:
+            type: string
           createdAt:
             type: string
             format: date-time
@@ -88,8 +171,6 @@ components:
             type: string
             format: date-time
             default: Auto-generated      
-          name:
-            type: string
           username:
             type: string
           password:
@@ -99,27 +180,14 @@ components:
             $ref: '#/components/schemas/Role'
           roleId:
             type: integer
-          maintenance:
-            type: array
-            items:
-              $ref: '#/components/schemas/Maintenance'
           UserQualification:
             type: array
             items:
               $ref: '#/components/schemas/UserQualification'
-      # Role schema
-      Role:
-        type: object
-        properties:
-          id:
-            type: integer
-            default: Auto-generated
-          name:
-            type: string
-          user:
+          MaintenanceUser:
             type: array
             items:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/MaintenanceUser'
       # Qualification schema
       Qualification:
         type: object
@@ -129,11 +197,11 @@ components:
             default: Auto-generated
           name:
             type: string
-          userQualification:
+          UserQualification:
             type: array
             items:
               $ref: '#/components/schemas/UserQualification'
-          maintenanceQualification:
+          MaintenanceQualification:
             type: array
             items:
               $ref: '#/components/schemas/MaintenanceQualification'
@@ -149,18 +217,84 @@ components:
             $ref: '#/components/schemas/User'
           userId:
             type: integer
+      # Role schema
+      Role:
+        type: object
+        properties:
+          id:
+            type: integer
+            default: Auto-generated
+          name:
+            type: string
+          User:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
       # MaintenanceQualification schema
       MaintenanceQualification:
         type: object
         properties:
           qualification:
             $ref: '#/components/schemas/Qualification'
-          roleId:
+          qualificationId:
             type: integer
           maintenance:
             $ref: '#/components/schemas/Maintenance'
           maintenanceId:
             type: integer
+      # MaintenanceUser schema
+      MaintenanceUser:
+        type: object
+        properties:
+          maintenanceId:
+            type: integer
+          maintenance:
+            $ref: '#/components/schemas/Maintenance'
+          userId:
+            type: integer
+          user:
+            $ref: '#/components/schemas/User'
+          assignedAt:
+            type: string
+            format: date-time
+            default: Auto-generated
+          updatedAt:
+            type: string
+            format: date-time #updatedAt is missing!
+            default: Auto-generated
+          acceptedAt:
+            type: string
+            format: date-time
+            nullable: true
+          declinedAt:
+            type: string
+            format: date-time
+            nullable: true
+          startedAt:
+            type: string
+            format: date-time
+            nullable: true
+          finishedAt:
+            type: string
+            format: date-time
+            nullable: true
+          statusId:
+            type: integer
+          status:
+            $ref: '#/components/schemas/Status'
+      # Status schema
+      Status:
+        type: object
+        properties:
+          id:
+            type: integer
+            default: Auto-generated
+          name:
+            type: string
+          MaintenanceUser:
+            type: array
+            items:
+              $ref: '#/components/schemas/MaintenanceUser'
 #      Post:
 #        type: object
 #        required:
