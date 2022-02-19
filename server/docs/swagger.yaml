@@ -407,6 +407,12 @@ paths:
                   name: New name
                   username: New username
                   password: New password
+              Example4:   
+                value:
+                  name: New name
+                  username: New username
+                  password: New password
+                  userId: 1
       responses:
         200:
           description: The user was successfully updated and the data of the updated user is returned
