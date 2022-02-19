@@ -7,7 +7,8 @@
     "cron": "ts-node ./jobs/cron.ts",
     "start": "npx concurrently \"npm:dev\" \"npm:cron\"",
     "setup": "npx concurrently \"npx prisma migrate reset --force\" \"npx prisma db push --accept-data-loss\" \"npm:dev\" \"npm:cron\"",
-    "db_init": "ts-node ./jobs/db_init.ts"
+    "db_init": "ts-node ./jobs/db_init.ts",
+    "db_demo_seed": "ts-node ./prisma/demo.seed.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

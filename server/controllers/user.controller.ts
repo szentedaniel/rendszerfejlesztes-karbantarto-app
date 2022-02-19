@@ -28,7 +28,7 @@ export const getAllUsers = async () => {
           id: true
         }
       },
-      maintenanceUsers: {
+      MaintenanceUser: {
         select: {
           maintenance: {
             select: {
@@ -38,7 +38,7 @@ export const getAllUsers = async () => {
               category: {
                 select:{
                   name: true,
-                  devices: {
+                  Device: {
                     select: {
                       name: true,
                       description: true,
@@ -53,7 +53,6 @@ export const getAllUsers = async () => {
                   }
                 }
               },
-              instructions: true,
             }
           },
           status: true
@@ -89,12 +88,11 @@ export const getUserById = async (id: number) => {
             id: true
           }
         },
-      maintenanceUsers: {
+      MaintenanceUser: {
         select: {
           maintenance: {
             select: {
               name: true,
-              instructions: true,
             }
           },
           status: true
@@ -160,12 +158,11 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
                     id: true
                   }
                 },
-              maintenanceUsers: {
+              MaintenanceUser: {
                 select: {
                   maintenance: {
                     select: {
                       name: true,
-                      instructions: true,
 
                     }
                   },
@@ -195,12 +192,11 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
                     id: true
                   }
                 },
-              maintenanceUsers: {
+              MaintenanceUser: {
                 select: {
                   maintenance: {
                     select: {
                       name: true,
-                      instructions: true,
 
                     }
                   },

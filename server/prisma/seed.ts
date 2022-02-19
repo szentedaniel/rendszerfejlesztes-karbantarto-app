@@ -43,7 +43,7 @@ const userData = [
                 name: 'Karbantartó'
             }   
         }
-    },
+    }
 ]
 
 async function main() {
