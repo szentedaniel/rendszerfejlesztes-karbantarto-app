@@ -64,10 +64,10 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
 
 - [x] *a,* A rendszer adatmodelljének megtervezése és előállítása
 - [x] *b,* A rendszer architektúrájának megtervezése
-- [ ] *c,* Felhasználók beléptetése (regisztráció nincs, adminisztrátor adja hozzá az
+- [x] *c,* Felhasználók beléptetése (regisztráció nincs, adminisztrátor adja hozzá az
 embereket)
-- [ ] *d,* Eszköz kategóriák felvétele, hierarchiába rendezése
-- [ ] *e,* Eszközök rögzítése (azonosító, név, helyszín, kategóriába sorolás)
+- [x] *d,* Eszköz kategóriák felvétele, hierarchiába rendezése
+- [x] *e,* Eszközök rögzítése (azonosító, név, helyszín, kategóriába sorolás)
 - [ ] *f,* Végzettségek felvétele és eszköz kategóriákhoz rendelése
 
 &nbsp;

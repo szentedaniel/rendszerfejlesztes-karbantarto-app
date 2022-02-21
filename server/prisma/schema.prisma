@@ -10,8 +10,8 @@ generator client {
 model Device {
   id          Int      @id @default(autoincrement())
   name        String
-  description String
-  identifier  String
+  description String?
+  identifier  String   @unique
   location    Location @relation(fields: [locationId], references: [id])
   locationId  Int
   category    Category @relation(fields: [categoryId], references: [id])
@@ -35,12 +35,12 @@ model Building {
 model Category {
   id              Int           @id @default(autoincrement())
   name            String
-  normaInMinutes  Int
+  normaInMinutes  Int?
   lastMaintenance DateTime?
   Device          Device[]
   Maintenance     Maintenance[]
-  period          Period        @relation(fields: [periodId], references: [id])
-  periodId        Int
+  period          Period?       @relation(fields: [periodId], references: [id])
+  periodId        Int?
   children        Category[]    @relation("ChildParent")
   parent          Category?     @relation("ChildParent", fields: [parentId], references: [id])
   parentId        Int?
