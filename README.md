@@ -1,12 +1,10 @@
 # 🔧 Rendszerfejlesztés karbantartó app 🔧
 
-&nbsp;
-
 ## **🗿 Backend 🗿**
 
 ---
 
-## 💾 Telepítés 💾
+### 💾 Telepítés 💾
 
 ```bash
 gh repo clone szentedaniel/rendszerfejlesztes-karbantarto-app
@@ -24,29 +22,29 @@ npm run start
 
 `npm run setup` - Létrehozza az adatbázist és feltölti a szükséges adatokkal.
 
-`npm run start` - Elindítja a szervert
+`npm run start` - Elindítja a szervert.
 
 Ezt követően a `http://localhost:3000` címen érjük el a szervert.
 
 API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
 
-## 📚 Tartalomjegyzék 📚
+### 📚 Tartalomjegyzék 📚
 
 - [🔧 Rendszerfejlesztés karbantartó app 🔧](#-rendszerfejlesztés-karbantartó-app-)
   - [**🗿 Backend 🗿**](#-backend-)
-  - [💾 Telepítés 💾](#-telepítés-)
-  - [📚 Tartalomjegyzék 📚](#-tartalomjegyzék-)
-  - [🗂 Architektúra 🗂](#-architektúra-)
-  - [💿 Használt technológiák 💿](#-használt-technológiák-)
-  - [🏆 Mérföldkövek 🏆](#-mérföldkövek-)
+    - [💾 Telepítés 💾](#-telepítés-)
+    - [📚 Tartalomjegyzék 📚](#-tartalomjegyzék-)
+    - [🗂 Architektúra 🗂](#-architektúra-)
+    - [💿 Használt technológiák 💿](#-használt-technológiák-)
+    - [🏆 Mérföldkövek 🏆](#-mérföldkövek-)
 
-## 🗂 Architektúra 🗂
+### 🗂 Architektúra 🗂
 
 <p align="center">
   <img src="https://c.tenor.com/mUXqG0h_G70AAAAC/spongebob-patrick-star.gif" width="700">
 </p>
 
-## 💿 Használt technológiák 💿
+### 💿 Használt technológiák 💿
 
 |   Mire    |                                                                                Mit                                                                                 |                 Link                 |
 | :--------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------: |
@@ -58,7 +56,7 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
 | API Testing |    <a href="https://www.postman.com/"><img width=50px src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fblog.scottlogic.com%2Fmmcalroy%2Fassets%2FpostmanLogo.png&f=1&nofb=1"></a>     |   [Postman](https://www.postman.com/)   |
 | API Documentation |    <a href="https://swagger.io/"><img width=50px src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fseeklogo.com%2Fimages%2FS%2Fswagger-logo-A49F73BAF4-seeklogo.com.png&f=1&nofb=1"></a>     |   [Swagger](https://swagger.io/)   |
 
-## 🏆 Mérföldkövek 🏆
+### 🏆 Mérföldkövek 🏆
 
 &nbsp;
 
