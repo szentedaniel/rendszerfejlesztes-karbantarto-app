@@ -17,15 +17,15 @@ router.get('/users', async (req: express.Request, res: express.Response, next: a
 })
 
 router.get('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
-  getUserByIdApi(req, res, next)  
+  getUserByIdApi(req, res, next)
 })
 
 router.delete('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
-  deleteUserByIdApi(req, res, next)  
+  deleteUserByIdApi(req, res, next)
 })
 
 router.patch('/users/:id', async (req: express.Request, res: express.Response, next: any) => {
-  updateUserByIdApi(req, res, next)  
+  updateUserByIdApi(req, res, next)
 })
 
 router.post('/user', async (req: express.Request, res: express.Response, next: any) => {

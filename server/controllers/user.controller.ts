@@ -1,74 +1,77 @@
-import { PrismaClient, User } from '@prisma/client'
+import {
+  PrismaClient,
+  User
+} from '@prisma/client'
 import express from 'express'
 import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
-export interface createUserData{
-    name: string,
-    username: string,
-    password: string,
-    roleId: number
+export interface createUserData {
+  name: string,
+  username: string,
+  password: string,
+  roleId: number
 }
 
-export interface updateUserData{
-    name: any,
-    username: any,
-    password: any,
-    roleId: any,
+export interface updateUserData {
+  name: any,
+  username: any,
+  password: any,
+  roleId: any,
 }
 
 export const getAllUsers = async () => {
   try {
     const allUsers = await prisma.user.findMany({
-    include: {
-      Role: {
-        select: {
-          name: true,
-          id: true
-        }
-      },
-      MaintenanceUser: {
-        select: {
-          maintenance: {
-            select: {
-              name: true,
-              exceptive: true,
-              categoryId: true,
-              category: {
-                select:{
-                  name: true,
-                  Device: {
-                    select: {
-                      name: true,
-                      description: true,
-                      identifier: true,
-                      location: {
-                        select: {
-                          name: true,
-                          building: true
+      include: {
+        Role: {
+          select: {
+            name: true,
+            id: true
+          }
+        },
+        MaintenanceUser: {
+          select: {
+            maintenance: {
+              select: {
+                name: true,
+                exceptive: true,
+                categoryId: true,
+                category: {
+                  select: {
+                    name: true,
+                    Device: {
+                      select: {
+                        name: true,
+                        description: true,
+                        identifier: true,
+                        location: {
+                          select: {
+                            name: true,
+                            building: true
+                          }
                         }
                       }
                     }
                   }
-                }
-              },
-            }
+                },
+              }
+            },
+            status: true
           },
-          status: true
         },
       },
-    },
-    // where: {
-    //   maintenanceUsers: {
-    //     some: {
-    //       status: {
-    //         name: { notIn: ['Elutasítva', 'Befejezve']}
-    //       }
-    //     }
-    //   }
-    // }
-  })
+      // where: {
+      //   maintenanceUsers: {
+      //     some: {
+      //       status: {
+      //         name: { notIn: ['Elutasítva', 'Befejezve']}
+      //       }
+      //     }
+      //   }
+      // }
+    })
     return allUsers
   } catch (error: any) {
     throw new Error(error)
@@ -88,16 +91,16 @@ export const getUserById = async (id: number) => {
             id: true
           }
         },
-      MaintenanceUser: {
-        select: {
-          maintenance: {
-            select: {
-              name: true,
-            }
+        MaintenanceUser: {
+          select: {
+            maintenance: {
+              select: {
+                name: true,
+              }
+            },
+            status: true
           },
-          status: true
         },
-      },
       },
     })
     return User
@@ -107,16 +110,16 @@ export const getUserById = async (id: number) => {
 }
 
 export const createUser = async (userData: createUserData): Promise<User> => {
-    try {
-      const salt = bcrypt.genSaltSync(10)
-      const hash = bcrypt.hashSync(userData.password, salt)
-      userData.password = hash
-      const createdUser = await prisma.user.create({ 
-        data: userData,
-      })
-      return createdUser
-          
-      
+  try {
+    const salt = bcrypt.genSaltSync(10)
+    const hash = bcrypt.hashSync(userData.password, salt)
+    userData.password = hash
+    const createdUser = await prisma.user.create({
+      data: userData,
+    })
+    return createdUser
+
+
   } catch (error: any) {
     throw new Error(error)
   }
@@ -129,10 +132,10 @@ export const deleteUserById = async (id: number) => {
         id: Number(id)
       }
     })
-  return deletedUser
+    return deletedUser
   } catch (error: any) {
     throw new Error(error)
-    
+
   }
 }
 
@@ -146,7 +149,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
           wantToBeUserData.password = hash
 
           try {
-            const updatedUser = await prisma.user.update({ 
+            const updatedUser = await prisma.user.update({
               where: {
                 id: Number(id),
               },
@@ -158,58 +161,58 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
                     id: true
                   }
                 },
-              MaintenanceUser: {
-                select: {
-                  maintenance: {
-                    select: {
-                      name: true,
+                MaintenanceUser: {
+                  select: {
+                    maintenance: {
+                      select: {
+                        name: true,
 
-                    }
+                      }
+                    },
+                    status: true
                   },
-                  status: true
                 },
-              },
               },
             })
             return updatedUser
-            
+
           } catch (error: any) {
             throw new Error(error)
-            
+
           }
         })
       })
     } else {
-        const updatedUser = await prisma.user.update({ 
-          where: {
-            id: Number(id),
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: Number(id),
+        },
+        data: wantToBeUserData,
+        include: {
+          Role: {
+            select: {
+              name: true,
+              id: true
+            }
           },
-            data: wantToBeUserData,
-            include: {
-                Role: {
-                  select: {
-                    name: true,
-                    id: true
-                  }
-                },
-              MaintenanceUser: {
+          MaintenanceUser: {
+            select: {
+              maintenance: {
                 select: {
-                  maintenance: {
-                    select: {
-                      name: true,
+                  name: true,
 
-                    }
-                  },
-                  status: true
-                },
+                }
               },
+              status: true
             },
-          })
-          return updatedUser
+          },
+        },
+      })
+      return updatedUser
     }
-    
+
   } catch (error: any) {
     throw new Error(error)
-    
+
   }
 }
