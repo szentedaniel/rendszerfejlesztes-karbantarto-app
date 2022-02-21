@@ -295,6 +295,15 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/MaintenanceUser'
+      Login:
+        type: object
+        properties:
+          username:
+            type: string
+            nullable: false
+          password:
+            type: string
+            nullable: false
 #      Post:
 #        type: object
 #        required:
@@ -482,3 +491,32 @@ paths:
                   message:
                     type: string
                     default: Error message
+  /login:
+    post:
+      summary: Login
+      tags: [Users]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Login'   
+            examples:    
+              Working example:   
+                value:
+                  username: admin
+                  password: admin
+              Bad password:       
+                value:
+                  username: admin
+                  password: password
+              Not found example:
+                value:
+                  username: pityu
+                  password: notapassword
+      responses:
+        '200':
+          description: Successfully logged in
+        404:
+          description: Not found
+        401:
+          description: Wrong password

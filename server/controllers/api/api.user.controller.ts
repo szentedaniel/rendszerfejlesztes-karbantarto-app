@@ -1,3 +1,4 @@
+import { User } from '@prisma/client'
 import express from 'express'
 import {
   createUser,
@@ -5,6 +6,9 @@ import {
   deleteUserById,
   getAllUsers,
   getUserById,
+  login,
+  loginUserData,
+  returnWithStatusAndMessage,
   updateUserById,
   updateUserData
 } from '../user.controller'
@@ -63,3 +67,16 @@ export const createUserApi = async (req: express.Request, res: express.Response,
     next(error)
   }
 }
+
+export const loginApi = async (req: express.Request, res: express.Response, next: any) => {
+  try {
+    let userData: loginUserData = req.body
+    const response: returnWithStatusAndMessage | User | any = await login(userData)
+    if (response.status) {
+      res.sendStatus(Number(response.status)).json(response)
+    } else res.json(response)
+  } catch (error) {
+    next(error)
+  }
+}
+

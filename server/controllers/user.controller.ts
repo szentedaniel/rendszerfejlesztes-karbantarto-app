@@ -21,6 +21,16 @@ export interface updateUserData {
   roleId: any,
 }
 
+export interface loginUserData {
+  username: string,
+  password: string
+}
+
+export interface returnWithStatusAndMessage {
+  status: string,
+  message: string
+}
+
 export const getAllUsers = async () => {
   try {
     const allUsers = await prisma.user.findMany({
@@ -214,5 +224,33 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
   } catch (error: any) {
     throw new Error(error)
 
+  }
+}
+
+export const login = async (userData: loginUserData) => {
+  try {
+    const { password, username} = userData
+    const User = await prisma.user.findFirst({
+      where: {
+        username: username
+      },
+      include: {
+        Role: true
+      },
+    })
+
+    
+
+    if (User) {
+      const success = bcrypt.compareSync(password, User!.password)
+      if (success) {
+        const response: any = User
+        delete response.password
+        return response
+      }
+      else return { status: 401, message: 'Wrong password' }
+    } else return { status: 404, message: 'User not found or wrong username' }
+  } catch (error: any) {
+    throw new Error(error)
   }
 }
