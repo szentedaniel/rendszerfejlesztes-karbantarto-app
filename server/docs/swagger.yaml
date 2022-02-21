@@ -520,3 +520,17 @@ paths:
           description: Not found
         401:
           description: Wrong password
+  
+  /qualifications:
+    get:
+      summary: Returns all qualifications
+      tags: [Qualifications]
+      responses:
+        200:
+          description: the list of the qualifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Qualification'

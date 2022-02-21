@@ -30,47 +30,47 @@ export const DemoPeriod = [{
 ]
 
 export const DemoCategory = [{
-    name: 'Fire',
+    name: 'Tűz',
     normaInMinutes: 30,
     periodId: 1
   },
   {
-    name: 'Security',
+    name: 'Biztonság',
     normaInMinutes: 60,
     periodId: 2
   },
   {
-    name: 'Fire.FireExtinguisher',
+    name: 'Tűz.Tűzoltó készülék',
     normaInMinutes: 30,
     periodId: 3,
     parentId: 0
   },
   {
-    name: 'Fire.FireExtinguisher.CO2-FireExtinguisher',
+    name: 'Tűz.Tűzoltó készülék.CO2-Tűzoltó készülék',
     normaInMinutes: 30,
     periodId: 0,
     parentId: 0
   },
   {
-    name: 'Fire.SmokeAlarm',
+    name: 'Tűz.Füstjelző',
     normaInMinutes: 50,
     periodId: 0,
     parentId: 0
   },
   {
-    name: 'Fire.FireExtinguisher.Water-FireExtinguisher',
+    name: 'Tűz.Tűzoltó készülék.Víz-Tűzoltó készülék',
     normaInMinutes: 30,
     periodId: 0,
     parentId: 0
   },
   {
-    name: 'Security.Laser',
+    name: 'Biztonság.Lézer',
     normaInMinutes: 0,
     periodId: 0,
     parentId: 0
   },
   {
-    name: 'Security.Camera',
+    name: 'Biztonság.Kamera',
     normaInMinutes: 0,
     periodId: 0,
     parentId: 0
@@ -120,66 +120,66 @@ export const DemoLocation = [{
 ]
 
 export const DemoDevice = [{
-    name: 'CO2-FireExtinguisher',
-    description: 'Uses co2 to destroy fire',
-    identifier: 'CSA3442',
+    name: 'CO2-Tűzoltó készülék',
+    description: 'CO2-t használ a tűz kioltására.',
+    identifier: 'FIR3442',
     locationId: 1,
     categoryId: 0
   },
   {
-    name: 'CO2-FireExtinguisher',
-    description: 'Uses co2 to destroy fire',
-    identifier: 'CSA3462',
+    name: 'CO2-Tűzoltó készülék',
+    description: 'CO2-t használ a tűz kioltására.',
+    identifier: 'FIR3462',
     locationId: 1,
     categoryId: 0
   },
   {
-    name: 'SmokeAlarm',
-    description: 'Uses noise to warn about fire',
-    identifier: 'BT456',
+    name: 'Füstjelző',
+    description: 'Füst érzékelése esetén hangjelzést ad.',
+    identifier: 'SMO4506',
     locationId: 2,
     categoryId: 0
   },
   {
-    name: 'Water-FireExtinguisher',
-    description: 'Uses water to destroy fire',
-    identifier: 'CSA3442',
+    name: 'Víz-Tűzoltó készülék',
+    description: 'Vízzel kioltja a tüzet, jobb esetben.',
+    identifier: 'WFIR3442',
     locationId: 3,
     categoryId: 0
   },
   {
-    name: 'Camera',
-    description: 'Big brother always watches',
-    identifier: 'CSA3442',
+    name: 'Kamera',
+    description: 'Megfigyel.',
+    identifier: 'VID3442',
     locationId: 1,
     categoryId: 0
   },
   {
-    name: 'Camera',
-    description: 'Big brother always watches',
-    identifier: 'CSA3442',
+    name: 'Kamera',
+    description: 'Megfigyel',
+    identifier: 'VID3443',
     locationId: 3,
     categoryId: 0
   },
 ]
 
 export const DemoMaintenance = [{
-    name: 'Checking cameras',
+    name: 'Kamerák ellenőrzése.',
     exceptive: false,
     categoryId: 8
   },
   {
-    name: 'CO2-Fire Extinguisher replacement',
+    name: 'CO2-Tűzoltó készülék csere.',
     exceptive: false,
     categoryId: 4
   },
   {
-    name: 'Checking storage place',
+    name: 'Tárhely ellenőrzés.',
     exceptive: false,
     categoryId: 8
   },
   {
-    name: 'Changing batteries',
+    name: 'Elem csere.',
     exceptive: false,
     categoryId: 5
   },
@@ -187,41 +187,41 @@ export const DemoMaintenance = [{
 ]
 
 export const DemoInstruction = [{
-    title: 'Camera',
-    body: 'Lorem Ipsum',
+    title: 'Kamera ellenőrzés.',
+    body: 'Mutass be a kamerának. Ha jön a biztonságis és lebasz egyet, akkor működik.',
     maintenanceId: 1
   },
   {
-    title: 'Camera',
-    body: 'Lorem Ipsum2',
+    title: 'Kamera tárhely ellenőrzés.',
+    body: 'Meghajtón jobb egér gomb, tulajdonságok, és a tárhely megtekintése onnan.',
     maintenanceId: 3
   },
   {
-    title: 'Ext',
-    body: 'Smell it. You won\'t regret it.',
+    title: 'Készülék csere',
+    body: 'Készülék forgatása jobbra, balra. Teszt tüzelés. Ha jó, akkor vissza a helyére. Ha nem, akkor vegyél újat.',
     maintenanceId: 2
   },
   {
-    title: 'Bla',
-    body: 'Blalalalallalalalala',
+    title: 'Elem csere',
+    body: 'Fedő eltávolítása. Elem kivétele. Új elem betétele. Fedő visszarakása.',
     maintenanceId: 4
   },
 ]
 
 export const DemoQualification = [{
-    name: 'Electric Engineer'
+    name: 'Villamosmérnök'
   },
   {
-    name: 'Gardener'
+    name: 'Kertész'
   },
   {
-    name: 'IT technician'
+    name: 'Informatikus'
   },
   {
-    name: 'Fire technician'
+    name: 'Tűzbiztonsági szakértő'
   },
   {
-    name: 'Secretary'
+    name: 'Titkár'
   }
 ]
 
@@ -276,19 +276,19 @@ export const DemoMaintenanceQualification = [{
 ]
 
 export const DemoStatus = [{
-    name: 'Assigned'
+    name: 'Kiosztva'
   },
   {
-    name: 'Accepted'
+    name: 'Elfogadva'
   },
   {
-    name: 'Declineed'
+    name: 'Elutasítva'
   },
   {
-    name: 'Started'
+    name: 'Elkezdve'
   },
   {
-    name: 'Finished'
+    name: 'Befejezve'
   }
 
 ]
@@ -393,7 +393,7 @@ async function main() {
       data: u
     })
   }
-
+  
   for (const u of DemoMaintenanceUser) {
     const building = await prisma.maintenanceUser.create({
       data: u

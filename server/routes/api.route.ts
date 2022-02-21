@@ -1,6 +1,7 @@
 import { Maintenance, PrismaClient, User } from '@prisma/client'
 import express from 'express'
 import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
+import { getAllQualificationsApi } from '../controllers/api/api.qualification.controller'
 
 const prisma = new PrismaClient()
 const router = express.Router()
@@ -34,6 +35,13 @@ router.post('/user', async (req: express.Request, res: express.Response, next: a
 
 router.post('/login', async (req: express.Request, res: express.Response, next: any) => {
   loginApi(req, res, next)
+})
+
+
+// Qualification Routes
+
+router.get('/qualifications', async (req: express.Request, res: express.Response, next: any) => {
+  getAllQualificationsApi(req, res, next)
 })
 
 // ____ ROUTES
