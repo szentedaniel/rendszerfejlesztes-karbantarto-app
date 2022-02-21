@@ -122,7 +122,7 @@ export const DemoLocation = [{
 export const DemoDevice = [{
     name: 'CO2-FireExtinguisher',
     description: 'Uses co2 to destroy fire',
-    identifier: 'CSA3442',
+    identifier: 'CSA3411',
     locationId: 1,
     categoryId: 0
   },
@@ -143,14 +143,14 @@ export const DemoDevice = [{
   {
     name: 'Water-FireExtinguisher',
     description: 'Uses water to destroy fire',
-    identifier: 'CSA3442',
+    identifier: 'CSA3440',
     locationId: 3,
     categoryId: 0
   },
   {
     name: 'Camera',
     description: 'Big brother always watches',
-    identifier: 'CSA3442',
+    identifier: 'CSA3441',
     locationId: 1,
     categoryId: 0
   },
