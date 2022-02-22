@@ -14,8 +14,8 @@ model Device {
   identifier  String   @unique
   location    Location @relation(fields: [locationId], references: [id])
   locationId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
-  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
+  categoryId  Int      @default(1)
 }
 
 model Location {
@@ -39,10 +39,10 @@ model Category {
   lastMaintenance DateTime?
   Device          Device[]
   Maintenance     Maintenance[]
-  period          Period?       @relation(fields: [periodId], references: [id])
+  period          Period?       @relation(fields: [periodId], references: [id], onDelete: SetNull)
   periodId        Int?
   children        Category[]    @relation("ChildParent")
-  parent          Category?     @relation("ChildParent", fields: [parentId], references: [id])
+  parent          Category?     @relation("ChildParent", fields: [parentId], references: [id], onDelete: SetNull)
   parentId        Int?
 }
 
@@ -58,8 +58,8 @@ model Maintenance {
   name                     String
   Instruction              Instruction[]
   exceptive                Boolean                    @default(false)
-  categoryId               Int
-  category                 Category                   @relation(fields: [categoryId], references: [id])
+  categoryId               Int                        @default(1)
+  category                 Category                   @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
   MaintenanceQualification MaintenanceQualification[]
   MaintenanceUser          MaintenanceUser[]
 }
@@ -94,7 +94,7 @@ model Qualification {
 }
 
 model UserQualification {
-  qualification   Qualification @relation(fields: [qualificationId], references: [id])
+  qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
   qualificationId Int
   user            User          @relation(fields: [userId], references: [id])
   userId          Int
@@ -109,7 +109,7 @@ model Role {
 }
 
 model MaintenanceQualification {
-  qualification   Qualification @relation(fields: [qualificationId], references: [id])
+  qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
   qualificationId Int
   maintenance     Maintenance   @relation(fields: [maintenanceId], references: [id])
   maintenanceId   Int

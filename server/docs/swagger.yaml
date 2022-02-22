@@ -522,7 +522,8 @@ paths:
           description: Not found
         401:
           description: Wrong password
-  
+
+# QUALIFICATIONS
   /qualifications:
     get:
       summary: Returns all qualifications
@@ -530,8 +531,138 @@ paths:
       responses:
         200:
           description: the list of the qualifications
-          $ref: '#/components/schemas/Qualification'
-          
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Qualification'
+
+  /qualification/{id}:
+    get:
+      summary: Returns a qualification by id
+      tags: [Qualifications]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a qualification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Qualification'
+    delete:
+      summary: Delete a qualification by id
+      tags: [Qualifications]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The qualification was successfully deleted and the data of the deleted category is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Qualification'
+        500:
+          description: The qualification could not be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: Error message
+    patch:
+      summary: Update a qualification by id
+      tags: [Qualifications]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Qualification'
+            examples:
+              Example1:   
+                value:
+                  name: New name
+      responses:
+        200:
+          description: The qualification was successfully updated and the data of the updated category is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Qualification'
+        500:
+          description: The qualification could not be updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: Error message
+  /qualification:
+    post:
+      summary: Adds a new qualification
+      tags: [Qualifications]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Qualification'   
+            examples:    
+              Example1:   
+                value:
+                  name: New name
+      responses:
+        200:
+          description: The qualification was successfully created and the data of the created category is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Qualification'
+        500:
+          description: The qualification could not be created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: Error message
+
+      
 # CATEGORIES
   /categories:
     get:
@@ -560,7 +691,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
-
+        
   /categories/{id}:
     get:
       summary: Returns a category by id

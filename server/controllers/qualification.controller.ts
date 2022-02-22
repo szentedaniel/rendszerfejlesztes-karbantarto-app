@@ -11,6 +11,10 @@ export interface createQualificationData {
     name: string
 }
 
+export interface updateQualificationData {
+    name: string
+}
+
 export interface createMaintenanceQualificationData {
     qualificationId: number,
     maintenanceId: number
@@ -26,8 +30,7 @@ export const getAllQualifications = async () => {
                             select: {
                                 name: true,
                                 exceptive: true,
-                                categoryId: true,
-                                //category: true
+                                categoryId: true
                             }
                         }
                     }
@@ -40,7 +43,7 @@ export const getAllQualifications = async () => {
                                 createdAt: true,
                                 updatedAt: true,
                                 username: true,
-                                //Role: true
+                                roleId: true
                             }
                             
                         }
@@ -49,6 +52,47 @@ export const getAllQualifications = async () => {
             }
         })
         return allQualifications
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
+export const getQualificationById = async (id: number) => {
+    try {
+        const Qualification = await prisma.qualification.findUnique({
+            where: {
+                id: Number(id)
+            },
+            include: {
+                MaintenanceQualification: {
+                    select: {
+                        maintenance: {
+                            select: {
+                                name: true,
+                                exceptive: true,
+                                categoryId: true
+                            }
+                        }
+                    }
+                },
+                UserQualification:{
+                    select: {
+                        user: {
+                            select: {
+                                name: true,
+                                createdAt: true,
+                                updatedAt: true,
+                                username: true,
+                                roleId: true
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        })
+
+        return Qualification
     } catch (error: any) {
         throw new Error(error)
     }
@@ -64,6 +108,60 @@ export const createQualification = async (
 
         return createdQualification
 
+    } catch (error: any) {
+        throw new Error(error)
+    }
+}
+
+export const deleteQualificationById = async (id: number) => {
+    try{
+        const deletedQualification = await prisma.qualification.delete({
+            where: {
+                id: Number(id)
+            }
+        })
+        return deletedQualification
+    } catch (error: any){
+        throw new Error(error)
+    }
+}
+
+export const updateQualificationById = async (id: number, qualificationData: updateQualificationData) => {
+    try {
+        const updateQualification = await prisma.qualification.update({
+            where: {
+                id: Number(id)
+            },
+            data: qualificationData,
+            include: {
+                MaintenanceQualification: {
+                    select: {
+                        maintenance: {
+                            select: {
+                                name: true,
+                                exceptive: true,
+                                categoryId: true
+                            }
+                        }
+                    }
+                },
+                UserQualification:{
+                    select: {
+                        user: {
+                            select: {
+                                name: true,
+                                createdAt: true,
+                                updatedAt: true,
+                                username: true,
+                                roleId: true
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        })
+        return updateQualification
     } catch (error: any) {
         throw new Error(error)
     }

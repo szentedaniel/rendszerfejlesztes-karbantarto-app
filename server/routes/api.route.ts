@@ -2,7 +2,7 @@ import express from 'express'
 import { createCategoryApi, deleteCategoryByIdApi, getAllCategoryApi, getAllCategoryWithDetailsApi, getCategoryByIdApi, getCategoryByIdWithDetailsApi, updateCategoryByIdApi } from '../controllers/api/api.category.controller'
 import { createDeviceApi, deleteDeviceByIdApi, getAllDeviceApi, getDeviceByIdApi, updateDeviceByIdApi } from '../controllers/api/api.device.controller'
 import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
-import { getAllQualificationsApi } from '../controllers/api/api.qualification.controller'
+import { createQualificationApi, deleteQualificationByIdApi, getAllQualificationsApi, getQualificationByIdApi, updateQualificationByIdApi } from '../controllers/api/api.qualification.controller'
 
 const router = express.Router()
 
@@ -96,5 +96,20 @@ router.get('/qualifications', async (req: express.Request, res: express.Response
   getAllQualificationsApi(req, res, next)
 })
 
+router.get('/qualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getQualificationByIdApi(req, res, next)
+})
+
+router.post('/qualification', async (req: express.Request, res: express.Response, next: any) => {
+  createQualificationApi(req, res, next)
+})
+
+router.delete('/qualification/:id',async (req: express.Request, res: express.Response, next: any) => {
+  deleteQualificationByIdApi(req, res, next)
+})
+
+router.patch('/qualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateQualificationByIdApi(req, res, next)
+})
 
 module.exports = router
