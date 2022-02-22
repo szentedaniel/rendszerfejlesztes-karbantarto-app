@@ -3,6 +3,7 @@ import { createCategoryApi, deleteCategoryByIdApi, getAllCategoryApi, getAllCate
 import { createDeviceApi, deleteDeviceByIdApi, getAllDeviceApi, getDeviceByIdApi, updateDeviceByIdApi } from '../controllers/api/api.device.controller'
 import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
 import { createQualificationApi, deleteQualificationByIdApi, getAllQualificationsApi, getQualificationByIdApi, updateQualificationByIdApi } from '../controllers/api/api.qualification.controller'
+import { getAllMaintenanceApi, getAllMaintenanceWithDetailsApi, getMaintenanceByIdApi, getMaintenanceByIdWithDetailsApi, deleteMaintenanceByIdApi, updateMaintenanceByIdApi, createMaintenanceApi } from '../controllers/api/api.maintenance.controller'
 
 const router = express.Router()
 
@@ -110,6 +111,36 @@ router.delete('/qualification/:id',async (req: express.Request, res: express.Res
 
 router.patch('/qualification/:id', async (req: express.Request, res: express.Response, next: any) => {
   updateQualificationByIdApi(req, res, next)
+})
+
+
+// Maintenance ROUTES
+router.get('/maintenances', async (req: express.Request, res: express.Response, next: any) => {
+  getAllMaintenanceApi(req, res, next)
+})
+
+router.get('/maintenances/details', async (req: express.Request, res: express.Response, next: any) => {
+  getAllMaintenanceWithDetailsApi(req, res, next)
+})
+
+router.get('/maintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getMaintenanceByIdApi(req, res, next)
+})
+
+router.get('/maintenances/:id/details', async (req: express.Request, res: express.Response, next: any) => {
+  getMaintenanceByIdWithDetailsApi(req, res, next)
+})
+
+router.delete('/maintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteMaintenanceByIdApi(req, res, next)
+})
+
+router.patch('/maintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateMaintenanceByIdApi(req, res, next)
+})
+
+router.post('/maintenance', async (req: express.Request, res: express.Response, next: any) => {
+  createMaintenanceApi(req, res, next)
 })
 
 module.exports = router

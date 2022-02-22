@@ -66,9 +66,9 @@ model Maintenance {
 
 model Instruction {
   id            Int         @id @default(autoincrement())
-  title         String?
-  body          String
-  maintenance   Maintenance @relation(fields: [maintenanceId], references: [id])
+  title         String
+  body          String?
+  maintenance   Maintenance @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
   maintenanceId Int
 }
 
@@ -94,7 +94,7 @@ model Qualification {
 }
 
 model UserQualification {
-  qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
+  qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: SetNull)
   qualificationId Int
   user            User          @relation(fields: [userId], references: [id])
   userId          Int
@@ -111,7 +111,7 @@ model Role {
 model MaintenanceQualification {
   qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
   qualificationId Int
-  maintenance     Maintenance   @relation(fields: [maintenanceId], references: [id])
+  maintenance     Maintenance   @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
   maintenanceId   Int
 
   @@id([qualificationId, maintenanceId])
@@ -119,9 +119,9 @@ model MaintenanceQualification {
 
 model MaintenanceUser {
   maintenanceId Int
-  maintenance   Maintenance @relation(fields: [maintenanceId], references: [id])
+  maintenance   Maintenance @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
   userId        Int
-  user          User        @relation(fields: [userId], references: [id])
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   assignedAt    DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   acceptedAt    DateTime?

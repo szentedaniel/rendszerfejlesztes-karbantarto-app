@@ -136,6 +136,13 @@ export const createUser = async (userData: createUserData): Promise<User> => {
 
 export const deleteUserById = async (id: number) => {
   try {
+    const validUser = await prisma.user.findFirst({
+      where: {
+        id: id
+      }
+    })
+    if (!validUser) return { status: 404, message: `User not found with id: ${id}` }
+    
     const deletedUser = await prisma.user.delete({
       where: {
         id: Number(id)
@@ -151,6 +158,13 @@ export const deleteUserById = async (id: number) => {
 export const updateUserById = async (id: number, userData: updateUserData) => {
   try {
     let wantToBeUserData = userData
+
+    const validUser = await prisma.user.findFirst({
+      where: {
+        id: id
+      }
+    })
+    if (!validUser) return { status: 404, message: `User not found with id: ${id}` }
 
     if (wantToBeUserData.password) {
       bcrypt.genSalt(10, async (err, salt) => {

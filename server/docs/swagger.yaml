@@ -306,6 +306,15 @@ components:
           password:
             type: string
             nullable: false
+      NotFound:
+        type: object
+        properties:
+          status:
+            type: integer
+            default: 404
+          message:
+            type: string
+            default: Not found with this id
 #      Post:
 #        type: object
 #        required:
@@ -378,6 +387,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+        404:
+          description: The user was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
         500:
           description: The user could not be deleted
           content:
@@ -433,6 +448,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+        404:
+          description: The user was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
         500:
           description: The user could not be updated
           content:
@@ -727,6 +748,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
+        404:
+          description: The category was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
         500:
           description: The category could not be deleted
           content:
@@ -780,6 +807,16 @@ paths:
                   lastMaintenance: '2022-02-20T18:37:49.809Z'
                   periodId: 1
                   parentId: 1
+              Norma and Period:   
+                value:
+                  normaInMinutes: 5
+                  periodId: 1
+              Only norma:   
+                value:
+                  normaInMinutes: 5
+              Only period:   
+                value:
+                  periodId: 1
       responses:
         200:
           description: The category was successfully updated and the data of the updated category is returned
@@ -789,6 +826,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
+        404:
+          description: The category was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
         500:
           description: The category could not be updated
           content:
@@ -918,6 +961,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Device'
+        404:
+          description: The device was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
         500:
           description: The device could not be deleted
           content:
@@ -980,6 +1029,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Device'
+        404:
+          description: The category was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
         500:
           description: The device could not be updated
           content:
@@ -1029,6 +1084,205 @@ paths:
                   $ref: '#/components/schemas/Device'
         500:
           description: The device could not be created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: Error message
+
+  # MAINTENANCES
+  /maintenances:
+    get:
+      summary: Returns all maintenances
+      tags: [Maintenances]
+      responses:
+        200:
+          description: the list of the maintenances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Maintenance'
+  
+  /maintenances/details:
+    get:
+      summary: Returns all maintenances with details
+      tags: [Maintenances]
+      responses:
+        200:
+          description: the list of the maintenances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Maintenance'
+        
+  /maintenances/{id}:
+    get:
+      summary: Returns a maintenance by id
+      tags: [Maintenances]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a maintenance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maintenance'
+    delete:
+      summary: Delete a maintenance by id
+      tags: [Maintenances]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The maintenance was successfully deleted and the data of the deleted maintenance is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Maintenance'
+        404:
+          description: The maintetnance was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The maintenance could not be deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: Error message
+    patch:
+      summary: Update a maintenance by id
+      tags: [Maintenances]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Maintenance'
+            examples:    
+              Example1:   
+                value:
+                  name: New name
+              Example2:   
+                value:
+                  name: New name
+                  exceptive: false
+              Example3:   
+                value:
+                  name: New name
+                  exceptive: false
+                  categoryId: 1
+      responses:
+        200:
+          description: The maintenance was successfully updated and the data of the updated maintenance is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Maintenance'
+        404:
+          description: The maintenance was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The maintenance could not be updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: Error message
+
+  /maintenances/{id}/details:
+    get:
+      summary: Returns a maintenance by id
+      tags: [Maintenances]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a maintenance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Maintenance'
+
+  /maintenance:
+    post:
+      summary: Adds a new maintenance
+      tags: [Maintenances]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Maintenance'   
+            examples:    
+              Example1:   
+                value:
+                  name: New name
+                  exceptive: false
+                  categoryId: 1
+              Example2:   
+                value:
+                  name: New name
+                  categoryId: 1
+      responses:
+        200:
+          description: The maintenance was successfully created and the data of the created maintenance is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Maintenance'
+        500:
+          description: The maintenance could not be created
           content:
             application/json:
               schema:

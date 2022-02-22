@@ -76,6 +76,13 @@ export const createDevice = async (DeviceData: createDeviceData) => {
 
 export const deleteDeviceById = async (id: number) => {
   try {
+    const validDevice = await prisma.device.findFirst({
+      where: {
+        id: id
+      }
+    })
+    if (!validDevice) return { status: 404, message: `Device not found with id: ${id}` }
+
     const deletedDevice = await prisma.device.delete({
       where: {
         id: Number(id)
@@ -89,6 +96,14 @@ export const deleteDeviceById = async (id: number) => {
 
 export const updateDeviceById = async (id: number, DeviceData: updateDeviceData) => {
   try {
+    const validDevice = await prisma.device.findFirst({
+      where: {
+        id: id
+      }
+    })
+    if (!validDevice) return { status: 404, message: `Device not found with id: ${id}` }
+
+
     let wantToBeDeviceData = DeviceData
     if (wantToBeDeviceData.identifier && wantToBeDeviceData.identifier !== null) {
       const device = await prisma.device.findFirst({
