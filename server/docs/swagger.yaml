@@ -885,7 +885,7 @@ paths:
 
   /devices/{id}:
     get:
-      summary: Returns a devices by id
+      summary: Returns a device by id
       tags: [Devices]
       parameters:
         - in: path
@@ -895,13 +895,13 @@ paths:
           required: true
       responses:
         200:
-          description: Details of a devices
+          description: Details of a device
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Device'
     delete:
-      summary: Delete a devices by id
+      summary: Delete a device by id
       tags: [Devices]
       parameters:
         - in: path
@@ -911,7 +911,7 @@ paths:
           required: true
       responses:
         200:
-          description: The devices was successfully deleted and the data of the deleted devices is returned
+          description: The device was successfully deleted and the data of the deleted device is returned
           content:
             application/json:
               schema:
@@ -919,7 +919,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Device'
         500:
-          description: The devices could not be deleted
+          description: The device could not be deleted
           content:
             application/json:
               schema:
@@ -932,7 +932,7 @@ paths:
                     type: string
                     default: Error message
     patch:
-      summary: Update a devices by id
+      summary: Update a device by id
       tags: [Devices]
       parameters:
         - in: path
@@ -973,7 +973,7 @@ paths:
                   categoryId: 1
       responses:
         200:
-          description: The devices was successfully updated and the data of the updated devices is returned
+          description: The device was successfully updated and the data of the updated device is returned
           content:
             application/json:
               schema:
@@ -981,7 +981,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Device'
         500:
-          description: The devices could not be updated
+          description: The device could not be updated
           content:
             application/json:
               schema:
@@ -1028,7 +1028,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Device'
         500:
-          description: The devices could not be created
+          description: The device could not be created
           content:
             application/json:
               schema:

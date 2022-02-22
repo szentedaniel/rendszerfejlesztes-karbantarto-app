@@ -97,7 +97,7 @@ export const updateDeviceById = async (id: number, DeviceData: updateDeviceData)
         }
       })
       if (device) {
-        return {status: 403, message: `Already have a device with this identifier: ${wantToBeDeviceData.identifier}`}
+        return { status: 403, message: `Already have a device with this identifier: ${wantToBeDeviceData.identifier}` }
       }
     }
     const updatedDevice = await prisma.device.update({

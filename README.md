@@ -68,7 +68,7 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
 embereket)
 - [x] *d,* Eszköz kategóriák felvétele, hierarchiába rendezése
 - [x] *e,* Eszközök rögzítése (azonosító, név, helyszín, kategóriába sorolás)
-- [ ] *f,* Végzettségek felvétele és eszköz kategóriákhoz rendelése
+- [x] *f,* Végzettségek felvétele és eszköz kategóriákhoz rendelése
 
 &nbsp;
 
