@@ -2,6 +2,9 @@
 
 ## **🗿 Backend 🗿**
 
+<sup>szentedaniel</sup>
+[![szentedaniel](https://wakatime.com/badge/github/szentedaniel/rendszerfejlesztes-karbantarto-app.svg)](https://wakatime.com/badge/github/szentedaniel/rendszerfejlesztes-karbantarto-app)
+
 ---
 
 ### 💾 Telepítés 💾
