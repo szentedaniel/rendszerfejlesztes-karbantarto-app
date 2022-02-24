@@ -21,12 +21,6 @@ export interface updateCategoryData {
   parentId: any
 }
 
-export interface createInstructionData {
-  title: string,
-  body: string | null,
-  maintenanceId: number
-}
-
 export const getAllCategories = async () => {
   try {
     const allCategories = await prisma.category.findMany({
@@ -157,17 +151,5 @@ export const updateCategoryById = async (id: number, CategoryData: updateCategor
   } catch (error: any) {
     throw new Error(error)
 
-  }
-}
-
-//TODO: Ezt átrakni a megfelelő helyre
-export const createInstructionForMaintenanceById = async (id: number, InstructionData: createInstructionData) => {
-  try {
-    const createdInstruction = await prisma.instruction.create({
-      data: { ...InstructionData, maintenanceId: id }
-    })
-    return createdInstruction
-  } catch (error: any) {
-    throw new Error(error)
   }
 }

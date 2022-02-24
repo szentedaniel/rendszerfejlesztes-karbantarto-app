@@ -4,7 +4,7 @@ import { createDeviceApi, deleteDeviceByIdApi, getAllDeviceApi, getDeviceByIdApi
 import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
 import { createQualificationApi, deleteQualificationByIdApi, getAllQualificationsApi, getQualificationByIdApi, updateQualificationByIdApi } from '../controllers/api/api.qualification.controller'
 import { getAllMaintenanceApi, getAllMaintenanceWithDetailsApi, getMaintenanceByIdApi, getMaintenanceByIdWithDetailsApi, deleteMaintenanceByIdApi, updateMaintenanceByIdApi, createMaintenanceApi } from '../controllers/api/api.maintenance.controller'
-
+import { deleteInstructionByIdApi } from '../controllers/api/api.instruction.controller'
 const router = express.Router()
 
 
@@ -143,4 +143,8 @@ router.post('/maintenance', async (req: express.Request, res: express.Response, 
   createMaintenanceApi(req, res, next)
 })
 
+// Instruction ROUTES
+router.delete('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteInstructionByIdApi(req, res, next)
+})
 module.exports = router

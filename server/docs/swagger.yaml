@@ -306,6 +306,7 @@ components:
           password:
             type: string
             nullable: false
+      # Error schema
       NotFound:
         type: object
         properties:
@@ -315,6 +316,16 @@ components:
           message:
             type: string
             default: Not found with this id
+      ServerError:
+        type: object
+        properties:
+          status:
+            type: integer
+            default: 500
+          message:
+            type: string
+            default: Error message
+
 #      Post:
 #        type: object
 #        required:
@@ -398,14 +409,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
     patch:
       summary: Update a user by id
       tags: [Users]
@@ -459,14 +463,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
 
 
 
@@ -506,14 +503,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
   /login:
     post:
       summary: Login
@@ -599,14 +589,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
     patch:
       summary: Update a qualification by id
       tags: [Qualifications]
@@ -639,14 +622,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
   /qualification:
     post:
       summary: Adds a new qualification
@@ -674,14 +650,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
 
       
 # CATEGORIES
@@ -759,14 +728,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
     patch:
       summary: Update a category by id
       tags: [Categories]
@@ -837,14 +799,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
 
   /categories/{id}/details:
     get:
@@ -902,14 +857,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
 
 # DEVICES
   /devices:
@@ -972,14 +920,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
     patch:
       summary: Update a device by id
       tags: [Devices]
@@ -1040,14 +981,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
 
   /device:
     post:
@@ -1087,14 +1021,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
 
   # MAINTENANCES
   /maintenances:
@@ -1171,14 +1098,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
     patch:
       summary: Update a maintenance by id
       tags: [Maintenances]
@@ -1226,14 +1146,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
 
   /maintenances/{id}/details:
     get:
@@ -1286,11 +1199,50 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 500
-                  message:
-                    type: string
-                    default: Error message
+                $ref: '#/components/schemas/ServerError'
+# INSTRUCTIONS
+  /instructions:
+    get:
+      summary: Returns all instructions
+      tags: [Instructions]
+      responses:
+        200:
+          description: the list of the instructions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instruction'
+  
+  /instructions/{id}:
+    delete:
+      summary: Delete an instruction by id
+      tags: [Instructions]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The instruction was successfully deleted and the data of the deleted maintenance is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instruction'
+        404:
+          description: The instruction was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The instruction could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
