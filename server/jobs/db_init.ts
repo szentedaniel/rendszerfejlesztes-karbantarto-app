@@ -3,6 +3,14 @@ import inquirer from 'inquirer'
 import { createSpinner } from 'nanospinner'
 import colors from 'colors'
 
+let silent = true
+
+
+if (process.argv[2] && process.argv[2] === 'd') {
+  silent = false
+  console.log('Running in debug mode')
+  
+}
 
 const question = async (): Promise<Boolean> => {
   const foo = await inquirer.prompt({
@@ -21,7 +29,7 @@ const init = async () => {
     if (accepted) {
       let spinner = createSpinner('Creating database...').start()
       try {
-        sh.exec('npx prisma migrate reset --force').output //, { silent: true }
+        sh.exec('npx prisma migrate reset --force', { silent: silent }).output //
         spinner.success()
       } catch (error: any) {
         spinner.error()
@@ -30,8 +38,8 @@ const init = async () => {
 
       spinner = createSpinner('Seed the database with demo records 🌱').start()
       try {
-        sh.exec('npx prisma db push --accept-data-loss').output //, { silent: true }
-        sh.exec('npm run db_demo_seed').output //, { silent: true }
+        sh.exec('npx prisma db push --accept-data-loss', { silent: silent }).output
+        sh.exec('npm run db_demo_seed', { silent: silent }).output
         spinner.success()
       } catch (error: any) {
         spinner.error()

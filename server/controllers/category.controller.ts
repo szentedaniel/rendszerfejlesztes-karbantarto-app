@@ -43,12 +43,24 @@ export const getAllCategoriesWithDetails = async () => {
         parent: true,
         Device: true,
         Maintenance: {
-          select: {
-            id: true,
-            name: true,
-            exceptive: true,
-            categoryId: true,
-            Instruction: true
+          include: {
+            Instruction: true,
+            MaintenanceQualification: true,
+            Tasks: true,
+            category: true,
+            lastMaintenance: true,
+            period: true
+            //d: true,
+            //ame: true,
+            //astMaintenanceId: true,
+            //ormaInMinutes: true,
+            //eriod: true,
+            //eriodId: true,
+            //astMaintenance: true,
+
+            //ategoryId: true,
+            //nstruction: true,
+            
           }
         }
       },

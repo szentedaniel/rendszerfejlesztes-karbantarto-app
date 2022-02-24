@@ -6,26 +6,26 @@ import {
   Period,
   Maintenance
 } from '@prisma/client'
-import exp from 'constants'
-import {
-  create
-} from 'domain'
 const prisma = new PrismaClient()
 
 export const DemoPeriod = [{
-  name: 'Napi',
+  name: 'Heti',
   days: 1
 },
 {
-  name: 'Heti',
+  name: 'Havi',
   days: 7
 },
 {
-  name: 'Havi',
+  name: 'Negyedéves',
   days: 30
 },
 {
-  name: 'Évi',
+  name: 'Féléves',
+  days: 182
+},
+{
+  name: 'Éves',
   days: 365
 },
 ]
@@ -153,28 +153,24 @@ export const DemoDevice = [{
 
 export const DemoMaintenance = [{
   name: 'Kamerák ellenőrzése.',
-  exceptive: false,
   categoryId: 9,
   normaInMinutes: 60,
   periodId: 2
 },
 {
   name: 'CO2-Tűzoltó készülék csere.',
-  exceptive: false,
   categoryId: 4,
   normaInMinutes: 30,
   periodId: 3,
 },
 {
   name: 'Lézer ellenőrzés.',
-  exceptive: false,
   categoryId: 8,
   normaInMinutes: 30,
   periodId: 3,
 },
 {
   name: 'Elem csere.',
-  exceptive: false,
   categoryId: 5,
   normaInMinutes: 30,
   periodId: 3,
@@ -324,7 +320,7 @@ export const DemoTasks = [{
 ]
 
 export const DemoPriority = [{
-  name: 'Nagyon sürgős',
+  name: 'Rendkívüli',
   priority: 1
 },
 {

@@ -43,28 +43,16 @@ export const getAllUsers = async () => {
         Tasks: {
           select: {
             maintenance: {
-              select: {
-                name: true,
-                exceptive: true,
-                categoryId: true,
+              include: {
                 category: {
-                  select: {
-                    name: true,
+                  include: {
                     Device: {
-                      select: {
-                        name: true,
-                        description: true,
-                        identifier: true,
-                        location: {
-                          select: {
-                            name: true,
-                            building: true
-                          }
-                        }
+                      include: {
+                        location: true
                       }
                     }
                   }
-                },
+                }
               }
             },
             status: true

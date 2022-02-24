@@ -25,14 +25,8 @@ export const getAllQualifications = async () => {
         const allQualifications = await prisma.qualification.findMany({
             include: {
                 MaintenanceQualification: {
-                    select: {
-                        maintenance: {
-                            select: {
-                                name: true,
-                                exceptive: true,
-                                categoryId: true
-                            }
-                        }
+                    include: {
+                        maintenance: true
                     }
                 },
                 UserQualification:{
@@ -65,14 +59,8 @@ export const getQualificationById = async (id: number) => {
             },
             include: {
                 MaintenanceQualification: {
-                    select: {
-                        maintenance: {
-                            select: {
-                                name: true,
-                                exceptive: true,
-                                categoryId: true
-                            }
-                        }
+                    include: {
+                        maintenance: true
                     }
                 },
                 UserQualification:{
@@ -135,14 +123,8 @@ export const updateQualificationById = async (id: number, qualificationData: upd
             data: qualificationData,
             include: {
                 MaintenanceQualification: {
-                    select: {
-                        maintenance: {
-                            select: {
-                                name: true,
-                                exceptive: true,
-                                categoryId: true
-                            }
-                        }
+                    include: {
+                        maintenance: true
                     }
                 },
                 UserQualification:{

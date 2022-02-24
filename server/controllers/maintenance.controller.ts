@@ -6,17 +6,19 @@ import {
 const prisma = new PrismaClient()
 
 export interface createMaintenanceData {
-  name: string,
-  exceptive: boolean | undefined,
-  categoryId: number,
+  name: string
   normaInMinutes: number
+  lastMaintenanceId?: number | null
+  periodId?: number | null
+  categoryId?: number
 }
 
 export interface updateMaintenanceData {
-  name: any,
-  exceptive: any,
-  categoryId: any,
-  normaInMinutes: any
+  name?:  | string
+  normaInMinutes?:  | number
+  lastMaintenanceId?:  | number | null
+  periodId?:  | number | null
+  categoryId?:  | number
 }
 
 

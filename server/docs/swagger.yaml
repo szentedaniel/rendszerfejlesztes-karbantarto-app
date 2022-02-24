@@ -67,13 +67,6 @@ components:
             default: Auto-generated
           name: 
             type: string
-          normaInMinutes:
-            type: integer
-            nullable: true
-          lastMaintenance:
-            type: string
-            format: date-time
-            nullable: true
           Device:
             type: array
             items:
@@ -82,11 +75,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Maintenance'
-          period:
-            $ref: '#/components/schemas/Period'
-          periodId:
-            type: integer
-            nullable: true
           children:
             type: array
             items:
@@ -136,10 +124,10 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MaintenanceQualification'
-            MaintenanceUser:
+            Tasks:
               type: array
               items:
-                $ref: '#/components/schemas/MaintenanceUser'
+                $ref: '#/components/schemas/Tasks'
       # Instruction schema
       Instruction:
         type: object
@@ -152,6 +140,9 @@ components:
             nullable: true
           body:
             type: string
+          done:
+            type: boolean
+            default: false
           maintenance:
             $ref: '#/components/schemas/Maintenance'
           maintenanceId:
@@ -186,10 +177,10 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/UserQualification'
-          MaintenanceUser:
+          Tasks:
             type: array
             items:
-              $ref: '#/components/schemas/MaintenanceUser'
+              $ref: '#/components/schemas/Tasks'
       # Qualification schema
       Qualification:
         type: object
@@ -244,10 +235,12 @@ components:
             $ref: '#/components/schemas/Maintenance'
           maintenanceId:
             type: integer
-      # MaintenanceUser schema
-      MaintenanceUser:
+      # Tasks schema
+      Tasks:
         type: object
         properties:
+          id:
+            type: integer
           maintenanceId:
             type: integer
           maintenance:
@@ -256,6 +249,14 @@ components:
             type: integer
           user:
             $ref: '#/components/schemas/User'
+          description:
+            type: string
+            nullable: false
+          scheduled:
+            type: string
+            format: date-time
+          generated:
+            type: boolean
           assignedAt:
             type: string
             format: date-time
@@ -280,10 +281,17 @@ components:
             type: string
             format: date-time
             nullable: true
+          priorityId:
+            type: number
+            default: 3
+          priority:
+            $ref: '#/components/schemas/Priority'
           statusId:
             type: integer
           status:
             $ref: '#/components/schemas/Status'
+          lastTask:
+            $ref: '#/components/schemas/Maintenance'
       # Status schema
       Status:
         type: object
@@ -293,10 +301,25 @@ components:
             default: Auto-generated
           name:
             type: string
-          MaintenanceUser:
+          Tasks:
             type: array
             items:
-              $ref: '#/components/schemas/MaintenanceUser'
+              $ref: '#/components/schemas/Tasks'
+      # Priority schema
+      Priority:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          priority:
+            type: integer
+          Tasks:
+            type: array
+            items:
+              $ref: '#/components/schemas/Tasks'
+
       Login:
         type: object
         properties:
@@ -577,7 +600,7 @@ paths:
           required: true
       responses:
         200:
-          description: The qualification was successfully deleted and the data of the deleted category is returned
+          description: The qualification was successfully deleted and the data of the deleted qualification is returned
           content:
             application/json:
               schema:
@@ -610,7 +633,7 @@ paths:
                   name: New name
       responses:
         200:
-          description: The qualification was successfully updated and the data of the updated category is returned
+          description: The qualification was successfully updated and the data of the updated qualification is returned
           content:
             application/json:
               schema:
@@ -750,35 +773,7 @@ paths:
               Example2:   
                 value:
                   name: New name
-                  normaInMinutes: 5
-              Example3:   
-                value:
-                  name: New name
-                  normaInMinutes: 5
-                  lastMaintenance: '2022-02-20T18:37:49.809Z'
-              Example4:   
-                value:
-                  name: New name
-                  normaInMinutes: 5
-                  lastMaintenance: '2022-02-20T18:37:49.809Z'
-                  periodId: 1
-              Example5:   
-                value:
-                  name: New name
-                  normaInMinutes: 5
-                  lastMaintenance: '2022-02-20T18:37:49.809Z'
-                  periodId: 1
                   parentId: 1
-              Norma and Period:   
-                value:
-                  normaInMinutes: 5
-                  periodId: 1
-              Only norma:   
-                value:
-                  normaInMinutes: 5
-              Only period:   
-                value:
-                  periodId: 1
       responses:
         200:
           description: The category was successfully updated and the data of the updated category is returned
@@ -832,16 +827,10 @@ paths:
               Example1:   
                 value:
                   name: New name
-                  normaInMinutes: 5
-                  lastMaintenance: '2022-02-20T18:37:49.809Z'
-                  periodId: 1
                   parentId: 1
               Example2:   
                 value:
                   name: New name2
-                  normaInMinutes: null
-                  lastMaintenance: null
-                  periodId: null
                   parentId: null
       responses:
         200:
@@ -1120,12 +1109,35 @@ paths:
               Example2:   
                 value:
                   name: New name
-                  exceptive: false
+                  normaInMinutes: 50
               Example3:   
                 value:
                   name: New name
-                  exceptive: false
+                  normaInMinutes: 50
+                  lastMaintenanceId: 1
+              Example4:   
+                value:
+                  name: New name
+                  normaInMinutes: 50
+                  lastMaintenanceId: 1
+                  periodId: 1
+              Example5:   
+                value:
+                  name: New name
+                  normaInMinutes: 50
+                  lastMaintenanceId: 1
+                  periodId: 1
                   categoryId: 1
+              Norma and Period:   
+                value:
+                  normaInMinutes: 5
+                  periodId: 1
+              Only norma:   
+                value:
+                  normaInMinutes: 5
+              Only period:   
+                value:
+                  periodId: 1
       responses:
         200:
           description: The maintenance was successfully updated and the data of the updated maintenance is returned
@@ -1179,11 +1191,14 @@ paths:
               Example1:   
                 value:
                   name: New name
-                  exceptive: false
+                  normaInMinutes: 50
                   categoryId: 1
               Example2:   
                 value:
                   name: New name
+                  normaInMinutes: 50
+                  lastMaintenanceId: 1
+                  periodId: 1
                   categoryId: 1
       responses:
         200:

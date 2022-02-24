@@ -53,7 +53,6 @@ model Maintenance {
   id                       Int                        @id @default(autoincrement())
   name                     String
   Instruction              Instruction[]
-  exceptive                Boolean                    @default(false)
   normaInMinutes           Int
   lastMaintenanceId        Int?                       @unique
   lastMaintenance          Tasks?                     @relation(name: "LastTask", fields: [lastMaintenanceId], references: [id])
@@ -96,9 +95,9 @@ model Qualification {
 }
 
 model UserQualification {
-  qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: SetNull)
+  qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
   qualificationId Int
-  user            User          @relation(fields: [userId], references: [id])
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId          Int
 
   @@id([qualificationId, userId])
@@ -123,16 +122,18 @@ model Tasks {
   id            Int          @id @default(autoincrement())
   maintenanceId Int
   maintenance   Maintenance  @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
-  userId        Int
-  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int?
+  user          User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  description   String?
+  scheduled     DateTime     @default(now())
+  exceptive     Boolean      @default(false)
   assignedAt    DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  scheduled     DateTime     @default(now())
   acceptedAt    DateTime?
   declinedAt    DateTime?
   startedAt     DateTime?
   finishedAt    DateTime?
-  priorityId    Int          
+  priorityId    Int          @default(3)
   priority      Priority     @relation(fields: [priorityId], references: [id])
   statusId      Int
   status        Status       @relation(fields: [statusId], references: [id])
