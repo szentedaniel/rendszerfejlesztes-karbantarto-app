@@ -21,7 +21,7 @@ const init = async () => {
     if (accepted) {
       let spinner = createSpinner('Creating database...').start()
       try {
-        sh.exec('npx prisma migrate reset --force', { silent: true }).output
+        sh.exec('npx prisma migrate reset --force').output //, { silent: true }
         spinner.success()
       } catch (error: any) {
         spinner.error()
@@ -30,8 +30,8 @@ const init = async () => {
 
       spinner = createSpinner('Seed the database with demo records 🌱').start()
       try {
-        sh.exec('npx prisma db push --accept-data-loss', { silent: true }).output
-        sh.exec('npm run db_demo_seed', { silent: true }).output
+        sh.exec('npx prisma db push --accept-data-loss').output //, { silent: true }
+        sh.exec('npm run db_demo_seed').output //, { silent: true }
         spinner.success()
       } catch (error: any) {
         spinner.error()

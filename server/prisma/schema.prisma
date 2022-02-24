@@ -131,9 +131,18 @@ model Tasks {
   declinedAt    DateTime?
   startedAt     DateTime?
   finishedAt    DateTime?
+  priorityId    Int          
+  priority      Priority     @relation(fields: [priorityId], references: [id])
   statusId      Int
   status        Status       @relation(fields: [statusId], references: [id])
   lastTask      Maintenance? @relation("LastTask")
+}
+
+model Priority {
+  id       Int     @id @default(autoincrement())
+  name     String
+  priority Int
+  Tasks    Tasks[]
 }
 
 model Status {
