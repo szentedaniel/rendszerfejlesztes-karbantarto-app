@@ -78,15 +78,9 @@ embereket)
 **2. Mérföldkő:**
 
 - [x] *a,(Dani)* Eszköz kategóriához normaidők és karbantartási periódus rögzítése
-- [ ] *b,(Flórián)<a href="https://github.com/GaalFlorian" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/GaalFlorian/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/79801028?v=4" alt="@GaalFlorian" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
-      </a>*
-      Eszköz kategóriához a karbantartásra vonatkozó instrukciók rögzítése
+- [ ] *b,(Flórián)* Eszköz kategóriához a karbantartásra vonatkozó instrukciók rögzítése
 - [x] *c,(Dani)* Karbantartók felvétele a rendszerbe
-- [ ] *d,(Flórián)<a href="https://github.com/GaalFlorian" class="mr-2" data-hovercard-type="user" data-hovercard-url="/users/GaalFlorian/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self">
-        <img src="https://avatars.githubusercontent.com/u/79801028?v=4" alt="@GaalFlorian" size="32" height="32" width="32" data-view-component="true" class="avatar circle">
-      </a>*
-      Végzettségek karbantartóhoz rendelése
+- [ ] *d,(Flórián)* Végzettségek karbantartóhoz rendelése
 - [ ] *e,(Flórián)* Rendkívüli karbantartási feladatok rögzítése a rendszerbe (eszköz, időpont,
 hiba leírása)
 - [ ] *f,(Dani)* Időszakos karbantartási feladatok automatikus generálása (utolsó
@@ -103,4 +97,3 @@ végzettség egyeztetésével, automatikus megvalósítás opcionális)
 - [ ] *c,(Flórián)* Állapotok beállításának lehetősége (Elfogadva, Elutasítva, Megkezdve,
 Befejezve)
 - [ ] *d,(Backend szempontjából nem releváns)* ~Megkezdve állapotban az instrukciók megjelenítése~
-
