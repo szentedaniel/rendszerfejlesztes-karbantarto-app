@@ -40,7 +40,7 @@ export const getAllUsers = async () => {
             id: true
           }
         },
-        MaintenanceUser: {
+        Tasks: {
           select: {
             maintenance: {
               select: {
@@ -100,7 +100,7 @@ export const getUserById = async (id: number) => {
             id: true
           }
         },
-        MaintenanceUser: {
+        Tasks: {
           select: {
             maintenance: {
               select: {
@@ -184,7 +184,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
                     id: true
                   }
                 },
-                MaintenanceUser: {
+                Tasks: {
                   select: {
                     maintenance: {
                       select: {
@@ -218,7 +218,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
               id: true
             }
           },
-          MaintenanceUser: {
+          Tasks: {
             select: {
               maintenance: {
                 select: {

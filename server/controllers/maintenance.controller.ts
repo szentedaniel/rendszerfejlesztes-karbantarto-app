@@ -8,13 +8,15 @@ const prisma = new PrismaClient()
 export interface createMaintenanceData {
   name: string,
   exceptive: boolean | undefined,
-  categoryId: number
+  categoryId: number,
+  normaInMinutes: number
 }
 
 export interface updateMaintenanceData {
   name: any,
   exceptive: any,
-  categoryId: any
+  categoryId: any,
+  normaInMinutes: any
 }
 
 
@@ -38,7 +40,7 @@ export const getAllMaintenancesWithDetails = async () => {
             qualificationId: true
           }
         },
-        MaintenanceUser: {
+        Tasks: {
           include: {
             user: {
               include: {
@@ -88,7 +90,7 @@ export const getMaintenanceByIdWithDetails = async (id: number) => {
             qualificationId: true
           }
         },
-        MaintenanceUser: {
+        Tasks: {
           include: {
             user: {
               include: {

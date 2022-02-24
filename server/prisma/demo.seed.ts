@@ -418,17 +418,17 @@ async function main() {
       data: u
     })
   }
+  
+    for (const u of DemoPriority) {
+      const building = await prisma.priority.create({
+        data: u
+      })
+    }
 
   for (const u of DemoTasks) {
     console.log(u.userId,u.statusId,u.priorityId,u.maintenanceId)
     
     const building = await prisma.tasks.create({
-      data: u
-    })
-  }
-
-  for (const u of DemoPriority) {
-    const building = await prisma.priority.create({
       data: u
     })
   }
