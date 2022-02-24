@@ -65,25 +65,25 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
 
 **1. Mérföldkő:**
 
-- [x] *a,(Dani, Flórián)* A rendszer adatmodelljének megtervezése és előállítása
-- [x] *b,(Dani)* A rendszer architektúrájának megtervezése
-- [x] *c,(Dani)* Felhasználók beléptetése (regisztráció nincs, adminisztrátor adja hozzá az
+- [x] *a,(Szente, Flórián)* A rendszer adatmodelljének megtervezése és előállítása
+- [x] *b,(Szente)* A rendszer architektúrájának megtervezése
+- [x] *c,(Szente)* Felhasználók beléptetése (regisztráció nincs, adminisztrátor adja hozzá az
 embereket)
-- [x] *d,(Dani)* Eszköz kategóriák felvétele, hierarchiába rendezése
-- [x] *e,(Dani)* Eszközök rögzítése (azonosító, név, helyszín, kategóriába sorolás)
-- [x] *f,* Végzettségek felvétele és eszköz kategóriákhoz rendelése
+- [x] *d,(Szente)* Eszköz kategóriák felvétele, hierarchiába rendezése
+- [x] *e,(Szente)* Eszközök rögzítése (azonosító, név, helyszín, kategóriába sorolás)
+- [x] *f,(Flórián)* Végzettségek felvétele és eszköz kategóriákhoz rendelése
 
 &nbsp;
 
 **2. Mérföldkő:**
 
-- [x] *a,(Dani)* Eszköz kategóriához normaidők és karbantartási periódus rögzítése
+- [x] *a,(Szente)* Eszköz kategóriához normaidők és karbantartási periódus rögzítése
 - [ ] *b,(Flórián)* Eszköz kategóriához a karbantartásra vonatkozó instrukciók rögzítése
-- [x] *c,(Dani)* Karbantartók felvétele a rendszerbe
+- [x] *c,(Szente)* Karbantartók felvétele a rendszerbe
 - [ ] *d,(Flórián)* Végzettségek karbantartóhoz rendelése
 - [ ] *e,(Flórián)* Rendkívüli karbantartási feladatok rögzítése a rendszerbe (eszköz, időpont,
 hiba leírása)
-- [ ] *f,(Dani)* Időszakos karbantartási feladatok automatikus generálása (utolsó
+- [ ] *f,(Szente)* Időszakos karbantartási feladatok automatikus generálása (utolsó
 karbantartás és karbantartási periódus alapján)
 - [ ] *g,(Flórián)* Feladatok listázása, állapotok megjelenítése
 
@@ -91,7 +91,7 @@ karbantartás és karbantartási periódus alapján)
 
 **3. Mérföldkő:**
 
-- [ ] *a,(Dani)* Feladatok kiosztása karbantartók számára (manuális hozzárendelés a
+- [ ] *a,(Szente)* Feladatok kiosztása karbantartók számára (manuális hozzárendelés a
 végzettség egyeztetésével, automatikus megvalósítás opcionális)
 - [ ] *b,(Flórián)* Az adott karbantartóhoz rendelt feladatok listázása
 - [ ] *c,(Flórián)* Állapotok beállításának lehetősége (Elfogadva, Elutasítva, Megkezdve,
