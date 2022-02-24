@@ -3,7 +3,8 @@ import {
   PrismaClient,
   User,
   Category,
-  Period
+  Period,
+  Maintenance
 } from '@prisma/client'
 import exp from 'constants'
 import {
@@ -30,54 +31,36 @@ export const DemoPeriod = [{
 ]
 
 export const DemoCategory = [{
-  name: 'Nincs',
-  normaInMinutes: 0,
-  periodId: 1
+  name: 'Nincs'
 },
 {
-  name: 'Tűz',
-  normaInMinutes: 30,
-  periodId: 1
+  name: 'Tűz'
 },
 {
-  name: 'Biztonság',
-  normaInMinutes: 60,
-  periodId: 2
+  name: 'Biztonság'
 },
 {
   name: 'Tűz.Tűzoltó készülék',
-  normaInMinutes: 30,
-  periodId: 3,
   parentId: 0
 },
 {
   name: 'Tűz.Tűzoltó készülék.CO2-Tűzoltó készülék',
-  normaInMinutes: 30,
-  periodId: 0,
   parentId: 0
 },
 {
   name: 'Tűz.Füstjelző',
-  normaInMinutes: 50,
-  periodId: 0,
   parentId: 0
 },
 {
   name: 'Tűz.Tűzoltó készülék.Víz-Tűzoltó készülék',
-  normaInMinutes: 30,
-  periodId: 0,
   parentId: 0
 },
 {
   name: 'Biztonság.Lézer',
-  normaInMinutes: 0,
-  periodId: 0,
   parentId: 0
 },
 {
   name: 'Biztonság.Kamera',
-  normaInMinutes: 0,
-  periodId: 0,
   parentId: 0
 }
 ]
@@ -129,64 +112,72 @@ export const DemoDevice = [{
   description: 'CO2-t használ a tűz kioltására.',
   identifier: 'FIR3442',
   locationId: 1,
-  categoryId: 0
+  categoryId: 5
 },
 {
   name: 'CO2-Tűzoltó készülék',
   description: 'CO2-t használ a tűz kioltására.',
   identifier: 'FIR3462',
   locationId: 1,
-  categoryId: 0
+  categoryId: 5
 },
 {
   name: 'Füstjelző',
   description: 'Füst érzékelése esetén hangjelzést ad.',
   identifier: 'SMO4506',
   locationId: 2,
-  categoryId: 0
+  categoryId: 6
 },
 {
   name: 'Víz-Tűzoltó készülék',
   description: 'Vízzel kioltja a tüzet, jobb esetben.',
   identifier: 'WFIR3442',
   locationId: 3,
-  categoryId: 0
+  categoryId: 7
 },
 {
   name: 'Kamera',
   description: 'Megfigyel.',
   identifier: 'VID3442',
   locationId: 1,
-  categoryId: 0
+  categoryId: 9
 },
 {
   name: 'Kamera',
   description: 'Megfigyel',
   identifier: 'VID3443',
   locationId: 3,
-  categoryId: 0
+  categoryId: 9
 },
 ]
 
 export const DemoMaintenance = [{
   name: 'Kamerák ellenőrzése.',
   exceptive: false,
-  categoryId: 8
+  categoryId: 9,
+  normaInMinutes: 60,
+  periodId: 2
 },
 {
   name: 'CO2-Tűzoltó készülék csere.',
   exceptive: false,
-  categoryId: 4
+  categoryId: 4,
+  normaInMinutes: 30,
+  periodId: 3,
 },
 {
-  name: 'Tárhely ellenőrzés.',
+  name: 'Lézer ellenőrzés.',
   exceptive: false,
-  categoryId: 8
+  categoryId: 8,
+  normaInMinutes: 30,
+  periodId: 3,
 },
 {
   name: 'Elem csere.',
   exceptive: false,
-  categoryId: 5
+  categoryId: 5,
+  normaInMinutes: 30,
+  periodId: 3,
 },
 
 ]
@@ -298,27 +289,56 @@ export const DemoStatus = [{
 
 ]
 
-export const DemoMaintenanceUser = [{
+export const DemoTasks = [{
   maintenanceId: 1,
   userId: 1,
-  statusId: 1
+  priorityId: 3,
+  statusId: 1,
 },
 {
   maintenanceId: 2,
   userId: 3,
-  statusId: 3
+  priorityId: 3,
+  statusId: 3,
 },
 {
   maintenanceId: 3,
   userId: 3,
-  statusId: 2
+  priorityId: 3,
+  statusId: 2,
 },
 {
   maintenanceId: 4,
   userId: 2,
-  statusId: 5
+    statusId: 5,
+  priorityId: 3,
+  finishedAt: '2021-02-24T18:17:29.558Z'
+},
+{
+  maintenanceId: 4,
+  userId: 4,
+  priorityId: 3,
+  statusId: 3,
 }
 
+]
+
+export const DemoPriority = [{
+  name: 'Nagyon sürgős',
+  priority: 1
+},
+{
+  name: 'Sürgős',
+  priority: 2
+},
+{
+  name: 'Normál',
+  priority: 3
+},
+{
+  name: 'Kevésbé sürgős',
+  priority: 4
+},
 ]
 
 async function main() {
@@ -399,8 +419,16 @@ async function main() {
     })
   }
 
-  for (const u of DemoMaintenanceUser) {
-    const building = await prisma.maintenanceUser.create({
+  for (const u of DemoTasks) {
+    console.log(u.userId,u.statusId,u.priorityId,u.maintenanceId)
+    
+    const building = await prisma.tasks.create({
+      data: u
+    })
+  }
+
+  for (const u of DemoPriority) {
+    const building = await prisma.priority.create({
       data: u
     })
   }
@@ -428,15 +456,7 @@ const GenerateMissingCategoryInfromation = () => {
         }
       }
     }
-
-    if (u.periodId == 0) {
-      u.periodId = DemoCategory.at(u.parentId! - 1)!.periodId
-    }
-
-    if (u.normaInMinutes == 0) {
-      u.normaInMinutes = DemoCategory.at(u.parentId! - 1)!.normaInMinutes
-    }
-    console.log('parent: ' + u.parentId + ' period: ' + u.periodId)
+    console.log('parent: ' + u.parentId)
   }
 }
 
