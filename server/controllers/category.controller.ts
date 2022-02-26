@@ -46,7 +46,7 @@ export const getAllCategoriesWithDetails = async () => {
           include: {
             Instruction: true,
             MaintenanceQualification: true,
-            Tasks: true,
+            Task: true,
             category: true,
             period: true
             //d: true,
@@ -59,7 +59,7 @@ export const getAllCategoriesWithDetails = async () => {
 
             //ategoryId: true,
             //nstruction: true,
-            
+
           }
         }
       },

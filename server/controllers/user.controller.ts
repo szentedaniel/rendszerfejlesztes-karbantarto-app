@@ -42,7 +42,7 @@ export const getAllUsers = async () => {
             id: true
           }
         },
-        Tasks: {
+        Task: {
           select: {
             scheduledMaintenance: {
               include: {
@@ -90,7 +90,7 @@ export const getUserById = async (id: number) => {
             id: true
           }
         },
-        Tasks: {
+        Task: {
           select: {
             scheduledMaintenance: {
               select: {
@@ -132,7 +132,7 @@ export const deleteUserById = async (id: number) => {
       }
     })
     if (!validUser) return { status: 404, message: `User not found with id: ${id}` }
-    
+
     const deletedUser = await prisma.user.delete({
       where: {
         id: Number(id)
@@ -174,7 +174,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
                     id: true
                   }
                 },
-                Tasks: {
+                Task: {
                   select: {
                     scheduledMaintenance: {
                       select: {
@@ -208,7 +208,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
               id: true
             }
           },
-          Tasks: {
+          Task: {
             select: {
               scheduledMaintenance: {
                 select: {
@@ -232,7 +232,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
 
 export const login = async (userData: loginUserData) => {
   try {
-    const { password, username} = userData
+    const { password, username } = userData
     const User = await prisma.user.findFirst({
       where: {
         username: username
@@ -242,7 +242,7 @@ export const login = async (userData: loginUserData) => {
       },
     })
 
-    
+
 
     if (User) {
       const success = bcrypt.compareSync(password, User!.password)

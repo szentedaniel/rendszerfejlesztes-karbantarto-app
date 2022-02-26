@@ -34,20 +34,20 @@ model Building {
 }
 
 model Category {
-  id          Int                   @id @default(autoincrement())
+  id          Int                    @id @default(autoincrement())
   name        String
   Device      Device[]
-  Maintenance ScheduledMaintenance?
-  children    Category[]            @relation("ChildParent")
-  parent      Category?             @relation("ChildParent", fields: [parentId], references: [id], onDelete: SetNull)
+  Maintenance ScheduledMaintenance[]
+  children    Category[]             @relation("ChildParent")
+  parent      Category?              @relation("ChildParent", fields: [parentId], references: [id], onDelete: SetNull)
   parentId    Int?
 }
 
 model Period {
-  id          Int                    @id @default(autoincrement())
-  name        String
-  days        Int
-  Maintenance ScheduledMaintenance[]
+  id           Int                    @id @default(autoincrement())
+  name         String
+  periodInDays Int
+  Maintenance  ScheduledMaintenance[]
 }
 
 model ScheduledMaintenance {
@@ -55,32 +55,36 @@ model ScheduledMaintenance {
   name                     String
   normaInMinutes           Int
   lastMaintenance          DateTime?
-  periodId                 Int?
-  period                   Period?                             @relation(fields: [periodId], references: [id], onDelete: SetNull)
-  categoryId               Int                                 @unique @default(1)
+  periodId                 Int
+  period                   Period                              @relation(fields: [periodId], references: [id], onDelete: SetNull)
+  categoryId               Int                                 @default(1)
   category                 Category                            @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
+  priorityId               Int
+  priority                 Priority                            @relation(fields: [priorityId], references: [id], onDelete: Restrict)
   MaintenanceQualification ScheduledMaintenanceQualification[]
   Instruction              Instruction[]
-  Tasks                    Tasks[]
+  Task                     Task[]
 }
 
 model SpecialMaintenance {
   id                       Int                               @id @default(autoincrement())
   name                     String
+  description              String?
   normaInMinutes           Int
-  malfunctionDate          DateTime
-  deviceId                 Int                               @unique @default(1)
+  malfunctionDate          DateTime                          @default(now())
+  deviceId                 Int
   device                   Device                            @relation(fields: [deviceId], references: [id], onDelete: SetDefault)
+  priorityId               Int
+  priority                 Priority                          @relation(fields: [priorityId], references: [id], onDelete: Restrict)
   MaintenanceQualification SpecialMaintenanceQualification[]
   Instruction              Instruction[]
-  Tasks                    Tasks[]
+  Task                     Task[]
 }
 
 model Instruction {
   id                     Int                   @id @default(autoincrement())
   title                  String
   body                   String?
-  done                   Boolean               @default(false)
   scheduledMaintenance   ScheduledMaintenance? @relation(fields: [scheduledMaintenanceId], references: [id], onDelete: Cascade)
   scheduledMaintenanceId Int?
   specialMaintenance     SpecialMaintenance?   @relation(fields: [specialMaintenanceId], references: [id], onDelete: Cascade)
@@ -98,7 +102,7 @@ model User {
   roleId            Int
   active            Boolean
   UserQualification UserQualification[]
-  Tasks             Tasks[]
+  Task              Task[]
 
 }
 
@@ -143,36 +147,35 @@ model SpecialMaintenanceQualification {
   @@id([qualificationId, maintenanceId])
 }
 
-model Tasks {
-  id                     Int                  @id @default(autoincrement())
+model Task {
+  id                     Int                   @id @default(autoincrement())
   scheduledMaintenanceId Int?
   scheduledMaintenance   ScheduledMaintenance? @relation(fields: [scheduledMaintenanceId], references: [id], onDelete: Cascade)
   specialMaintenanceId   Int?
   specialMaintenance     SpecialMaintenance?   @relation(fields: [specialMaintenanceId], references: [id], onDelete: Cascade)
-  userId                 Int?
-  user                   User?                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                 Int
+  user                   User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   description            String?
-  assignedAt             DateTime             @default(now())
-  updatedAt              DateTime             @updatedAt
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
   acceptedAt             DateTime?
   declinedAt             DateTime?
   startedAt              DateTime?
   finishedAt             DateTime?
-  priorityId             Int                  @default(3)
-  priority               Priority             @relation(fields: [priorityId], references: [id])
-  statusId               Int
-  status                 Status               @relation(fields: [statusId], references: [id])
+  statusId               Int                  @default(1)
+  status                 Status                @relation(fields: [statusId], references: [id])
 }
 
 model Priority {
-  id       Int     @id @default(autoincrement())
-  name     String
-  priority Int
-  Tasks    Tasks[]
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  priority             Int
+  ScheduledMaintenance ScheduledMaintenance[]
+  SpecialMaintenance   SpecialMaintenance[]
 }
 
 model Status {
-  id    Int     @id @default(autoincrement())
-  name  String
-  Tasks Tasks[]
+  id   Int    @id @default(autoincrement())
+  name String
+  Task Task[]
 }

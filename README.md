@@ -37,11 +37,16 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
   - [**🗿 Backend 🗿**](#-backend-)
     - [💾 Telepítés 💾](#-telepítés-)
     - [📚 Tartalomjegyzék 📚](#-tartalomjegyzék-)
-    - [🗂 Architektúra 🗂](#-architektúra-)
+    - [🗂 Adatbázis 🗂](#-adatbázis-)
+    - [🪑 Architektúra 🪑](#-architektúra-)
     - [💿 Használt technológiák 💿](#-használt-technológiák-)
     - [🏆 Mérföldkövek 🏆](#-mérföldkövek-)
 
-### 🗂 Architektúra 🗂
+### 🗂 Adatbázis 🗂
+
+[db link](https://github.com/szentedaniel/rendszerfejlesztes-karbantarto-app/tree/main/server/docs/Database/db.md)
+
+### 🪑 Architektúra 🪑
 
 <p align="center">
   <img src="https://c.tenor.com/mUXqG0h_G70AAAAC/spongebob-patrick-star.gif" width="700">

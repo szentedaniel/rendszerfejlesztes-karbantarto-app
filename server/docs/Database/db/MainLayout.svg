@@ -1,0 +1,773 @@
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'   width='1824' height='1262' viewBox='0 0 1824 1262' >
+  <script type='text/ecmascript'>
+  <![CDATA[
+  function hghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','highlight');  }  }
+  function uhghl(el) { for ( var i in el ){ var elem = document.getElementById(el[i]); if ( elem != null ) elem.setAttribute('class','unhighlight'); }  } 
+  ]]>
+  </script> 
+
+<style type='text/css'>
+  text                { fill:#c5c5c5; font-family: Trebuchet MS, 'Trebuchet MS', Dialog; font-size:14.083333015441895px; }
+  a text:hover        { fill:#ffffff; text-shadow: 0px 0px 6px #d0ce00; font-size:13px; }
+  text.highlight      { fill:#e79a33; text-shadow: 0px 0px 4px #674210; font-size:13px; }
+  text.white          { fill:#c5c5c5; }
+  text.colType        { fill:#737373; }
+  text.relName        { fill:#85909a; }
+  text.legendTitle    { fill:#58c101; font-weight:bold; }
+  text.legendSubTitle { fill:#b0b0b0; font-size:11px; }
+  path                { stroke:#a2bac5; stroke-width:1.25; fill:none;}
+  path.virtual        { stroke:#a364b5; }
+  path.logo           { fill:#b5c8a9;fill-opacity:1;stroke-width:0.3;stroke:#222222; }
+  path.dotted         { stroke-dasharray:4,2; }
+  path.unhighlight    { stroke-width:10; opacity:0;}
+  path.highlight      { stroke-width:3; stroke:#6db3d6; opacity:0.6;}
+  path.line           { stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
+  rect.entity         { fill:#2a2b2c; stroke-width:0;shape-rendering:crispEdges; filter:url(#shadow); }
+  line.delim          { stroke-width:1; shape-rendering:crispEdges; }
+  line.topLine        { stroke-width:3px; shape-rendering:crispEdges; }
+  text.callout        { fill:#dfe0c5; font-family: Trebuchet MS, 'Trebuchet MS', Dialog; font-size:14.625px; }
+  rect.callout        { fill:url(#calloutGradient); stroke:#3f3f3f; stroke-width:0.5; }
+  rect.grp            { stroke:#5a5a5a; stroke-width:1.7; opacity:0.35; }
+  path.bgPattern      { fill:none;fill-opacity:1;stroke-width:0.6;stroke:#4c4e51; }
+  path.eval           { fill:#44484b;stroke-width:0.6;stroke:#5a5c5f; }
+  rect.palpable       { fill:#504d41; }
+</style>
+<defs>
+    <pattern id="layoutBgA" width="60" height="34.64" patternUnits="userSpaceOnUse">
+        <path class='bgPattern' d='M 0 17.32 L 10 0 L 30 0 L 40 17.326 L 30 34.64 L 10 34.64 Z' />
+        <path class='bgPattern' d='M 40 17.32 L 60 17.32 Z' />
+    </pattern>
+    <pattern id='layoutBgEval'  width='300' height='300' x='0' y='0' patternUnits="userSpaceOnUse">
+        <path class='eval' d='m 62.011835,91.267143 c 3.536475,3.175214 2.262669,8.705999 -1.637711,11.015197 -3.594697,5.8423 -6.34682,-2.892623 -9.715478,-4.653898 -5.609222,-2.838926 2.050802,-6.680123 4.77004,-8.319046 2.334696,-0.724067 4.935143,0.312302 6.583149,1.957747 z m -2.720492,2.538595 c -2.698397,-3.517732 -9.282815,1.269287 -3.69635,3.568637 2.765331,5.605665 7.052809,-0.56184 3.69635,-3.568637 z' />
+        <path class='eval' d='m 72.25864,84.624638 c 4.108046,3.143003 -0.737059,6.895259 -1.994918,8.323564 -3.586718,5.561143 -6.495079,-4.197379 -10.07759,-5.582178 -4.443422,-1.088878 1.349298,-7.249213 2.503526,-2.503449 2.464639,4.517161 2.304019,-3.70697 6.291113,-1.995914 1.280083,0.137865 2.410691,0.864819 3.277869,1.757977 z m -2.646109,2.323242 c -4.797162,-3.078383 -2.810517,6.305507 0.515161,1.990646 0.296432,-0.688582 0.01209,-1.493412 -0.515161,-1.990646 z' />
+        <path class='eval' d='m 78.230641,79.436735 c 4.142121,3.027466 -2.020102,10.435276 -3.450543,5.477315 3.306312,-5.248112 -9.186019,-2.220094 -5.805994,-8.77679 -0.544141,-3.93011 6.797826,-2.102227 3.386015,0.245477 -0.181085,2.915838 4.637371,1.019311 5.870522,3.053982 z' />
+        <path class='eval' d='m 82.744502,72.597397 c -4.901605,1.926521 1.146497,6.285555 2.559694,2.225783 6.21817,3.539297 -6.640186,8.416664 -7.590325,1.997457 -2.24365,-2.914883 4.026676,-10.148618 5.030631,-4.22324 z' />
+        <path class='eval' d='m 90.727458,64.259158 c 1.583987,1.690029 3.321317,3.2696 4.81267,5.026353 -2.535706,6.849794 -6.445583,-5.918773 -8.388458,-0.167017 0.782768,2.03426 5.877405,3.752079 2.670979,5.711199 -3.315119,1.519161 -5.782422,-5.157931 -8.858893,-6.780537 -4.229842,-1.139816 1.510134,-7.074128 2.586227,-2.385939 3.141198,5.495193 1.840537,-5.598295 7.177489,-1.404062 z' />
+        <path class='eval' d='m 99.622027,58.374253 c 1.493293,1.9548 -6.281936,7.024659 -0.885258,4.740447 0.386238,-4.434477 6.131941,-1.133173 2.175851,1.618005 -4.421491,6.12739 -13.666659,-3.151506 -7.058299,-7.136537 1.785129,-1.119329 4.348209,-0.743179 5.767706,0.778085 z m -2.900824,1.89746 c -3.608188,-2.208543 -2.280489,5.00803 -0.12563,0.329531 z' />
+        <path class='eval' d='m 115.18023,50.570441 c -1.61703,5.201678 -4.6204,-0.364502 -7.01598,-1.749619 -4.40977,2.122562 4.89641,4.913939 1.89606,7.018157 -2.48061,3.877635 -4.11404,-4.060614 -7.01192,-2.6391 -1.76318,3.107252 7.28394,6.252304 0.87346,7.876177 -1.74515,-2.956649 -9.055498,-5.610518 -3.950378,-8.66062 1.696478,1.897023 1.770418,-5.43503 5.347308,-3.072411 -0.44014,-5.474701 6.11995,-4.950882 7.7846,-0.815355 0.69076,0.682329 1.39587,1.351469 2.07685,2.042771 z' />
+        <path class='eval' d='m 120.54891,39.417125 c 2.50681,1.334124 4.80466,4.941837 0.75044,5.297362 -0.46414,1.89865 -5.25369,5.602652 -8.01742,1.815475 -3.87345,-2.809139 -0.0676,-7.603869 2.3036,-8.133924 1.6795,-3.853018 3.16703,-1.199465 4.96338,1.021087 z m -2.2464,2.175828 c -4.8049,-2.992167 -3.08987,6.380358 0.42374,2.036159 0.33052,-0.677508 0.12099,-1.525836 -0.42374,-2.036159 z' />
+        <path class='eval' d='m 128.50836,24.06821 c -5.10403,3.035506 3.20535,6.383175 5.05938,9.450276 -0.91853,2.95886 -4.06493,3.650723 -5.34691,0.265618 -2.25715,-2.089033 -4.65672,-6.948595 -7.07024,-2.584686 -4.71758,-3.764394 3.81217,-5.812054 5.12382,-9.226328 0.75738,0.677487 1.38637,1.498638 2.23389,2.095175 z' />
+        <path class='eval' d='m 137.14366,22.299812 c -3.09615,2.259885 0.71537,4.412454 1.99042,6.435866 -3.08975,5.080354 -5.91384,-2.98648 -8.92144,-4.094939 1.44369,-3.219573 3.3497,-1.335928 4.27156,-4.41058 0.97822,-0.894325 1.75044,1.871047 2.65946,2.069653 z' />
+        <path class='eval' d='m 136.85093,14.890174 c 2.31562,5.283511 -7.17975,1.771993 -1.29675,-0.475107 l 0.7108,0.08973 z m 4.867,5.317354 c 2.56912,1.439678 4.26517,4.725219 0.30678,5.233637 -1.56592,-3.098864 -9.51683,-5.749448 -3.64502,-8.633714 1.17746,0.325095 2.15375,2.591149 3.33824,3.400077 z' />
+        <path class='eval' d='m 149.95578,11.976423 c 2.50679,1.334142 4.80455,4.94192 0.75041,5.297394 -0.4641,1.898604 -5.25368,5.602645 -8.0174,1.81545 -3.87347,-2.80918 -0.0676,-7.603844 2.30366,-8.133968 1.67949,-3.8530525 3.16695,-1.1993573 4.96333,1.021124 z m -2.24641,2.175828 c -4.80489,-2.992177 -3.08986,6.380343 0.42374,2.036167 0.33055,-0.677518 0.121,-1.52585 -0.42374,-2.036167 z' />
+        <path class='eval' d='m 153.26135,7.538431 c 2.60497,1.5799548 6.03999,5.944272 1.08117,6.050232 -2.53319,-3.231828 -7.20316,-6.4304525 -8.84748,-9.4582682 1.89121,-2.8664883 3.78452,-2.247699 5.38514,0.8929426 0.78017,0.8503859 1.57195,1.6911437 2.38118,2.5150667 z' />
+    </pattern>
+    <linearGradient id='groupUnderTitleLine' x1='0%' y1='0%' x2='100%' y2='0%' >
+        <stop offset='0%' stop-color='#676767' stop-opacity='0.7'/>
+        <stop offset='100%' stop-color='#676767' stop-opacity='0' />
+    </linearGradient>
+    <radialGradient id='calloutGradient' cx='25%' cy='20%' r='80%' fx='10%' fy='10%'>
+        <stop offset='0%' stop-color='#64450d' />
+        <stop offset='100%' stop-color='#473619' />
+    </radialGradient>
+    <filter id='shadow' width='120%' height='120%'>
+        <feOffset result='offOut' in='SourceGraphic' dx='0' dy='0' />
+        <feColorMatrix result='matrixOut' in='offOut'
+                       values='0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.2 0' />
+        <feGaussianBlur result='blurOut' in='matrixOut' stdDeviation='4' />
+        <feBlend in='SourceGraphic' in2='blurOut' />
+    </filter>
+    <filter id='fkShadow' height='130%'>
+        <feGaussianBlur in='SourceAlpha' stdDeviation='1.5'/> <!-- stdDeviation is how much to blur -->
+        <feOffset dx='1.2' dy='1.2' result='offsetblur'/> <!-- how much to offset -->
+        <feMerge>
+            <feMergeNode/> <!-- this contains the offset blurred image -->
+            <feMergeNode in='SourceGraphic'/> <!-- this contains the element that the filter is applied to -->
+        </feMerge>
+    </filter>
+    <radialGradient id='legendGradient' cx='5%' cy='5%' r='100%' >
+        <stop offset='0%' stop-color='#42505b' stop-opacity='1'/>
+        <stop offset='100%' stop-color='#33393d' stop-opacity='1' />
+    </radialGradient>
+    <symbol id='calloutArrowDown' >
+        <path d='M 0,0 L 8,12 L 16,0 z' style='fill:#f8f6d1;stroke:none; filter: url(#shadow);' />
+        <path d='M 0,0 L 8,12 L 16,0' style='stroke:#bebdbd; stroke-width:0.5;' />
+    </symbol>
+    <symbol id='calloutArrowUp' >
+        <path d='M 0,16 L 8,4 L 16,16 z' style='fill:#ffffff; stroke:none; filter: url(#shadow);' />
+        <path d='M 0,16 L 8,4 L 16,16' style='stroke:#bebdbd; stroke-width:0.5;' />
+    </symbol>
+    <symbol id='pk' >
+        <g transform='scale(0.99)'>
+            <path style='fill:#fffa7d;stroke:#765f03;stroke-width:0.6;stroke-linecap:round;stroke-linejoin:round;'
+                  d='M 9.3678877,3.5695485 C 9.1030218,3.2729386 9.0796382,2.7628519 9.3396185,2.4517097 9.5449651,2.1956495 9.9040386,2.0980533 10.199638,2.2169415 10.533525,2.3415459 10.775153,2.706942 10.750675,3.0842709 10.737029,3.3980003 10.541153,3.699122 10.258248,3.8066067 9.966649,3.9250429 9.6169668,3.8418805 9.4008073,3.6062324 9.3894892,3.5943518 9.3785264,3.582104 9.3678886,3.5695487 z M 11.226617,6.9916004 C 11.888137,6.3548946 12.293488,5.4172188 12.311087,4.442353 12.378144,2.7379364 11.248678,1.0541269 9.7322318,0.44767357 8.3887112,-0.1280313 6.7865012,0.26822889 5.8918395,1.4007929 5.080823,2.3839145 4.9336815,3.8452096 5.3635544,5.101615 L 4.3670905,5.315913 C 4.0664984,5.3682645 4.0967703,5.6316724 4.2574957,5.8208829 L 4.9124,6.5655244 4.1543436,7.2512357 3.2136002,7.2163506 3.1674775,8.5586827 2.0406832,8.5086512 1.5965306,8.9299953 1.5471661,10.179833 0.75616674,10.195223 0.2112857,10.758575 0.15354288,11.735988 0.07199052,12.765553 c 0.36440953,0.238225 0.79006967,0.195492 1.44938278,-0.02675 L 6.3033562,8.1282037 6.8217102,8.6765688 C 6.9985465,8.8799427 7.3003699,8.7497574 7.358381,8.5016252 L 7.4938877,7.5084164 c 0.8537488,0.3985387 1.8303125,0.4711541 2.6851793,0.1427713 0.393927,-0.1407258 0.746858,-0.3701772 1.04755,-0.6595873 z'/>
+            <path d='M 6.8014948,6.3102123 0.15369063,13.024481 0.21560535,12.141962 6.0062342,6.2683782 z'
+                  style='fill:#ffe5a5;fill-opacity:1;stroke:#854e31;stroke-width:0.06912433;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:3.00300009'/>
+        </g>
+    </symbol>
+    <symbol id='idx1' >
+        <g transform='scale(0.99)'>
+            <rect width='4' height='4' x='7' y='1' style='fill:#ffff3f;stroke:#e3a23a;stroke-width:0.6;' ry='0.83'/>
+            <rect width='4' height='4' x='1' y='7' style='fill:#ffff3f;stroke:#e3a23a;stroke-width:0.6;' ry='0.832'/>
+            <rect width='4' height='4' x='7' y='7' style='fill:#ffff3f;stroke:#e3a23a;stroke-width:0.6;' ry='0.832'/>
+        </g>
+    </symbol>
+    <symbol id='idx2' >
+        <g transform='scale(0.99)'>
+            <rect width='4' height='3' x='6' y='1' style='fill:#7fc8e9;stroke:#2f6f8c;stroke-width:0.6;' ry='0.83'/>
+            <rect width='7' height='3' x='3' y='6' style='fill:#7fc8e9;stroke:#2f6f8c;stroke-width:0.6;' ry='0.832'/>
+        </g>
+    </symbol>
+    <symbol id='unq' >
+        <g transform='scale(0.99)'>
+            <rect style='fill:#fbea8e;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+                  width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+            <path style='fill:#323232;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+                  d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+                  transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+            <text x='5.8' y='7.4' style='font-size:7px;fill:#8a8a8a;'>U</text>
+        </g>
+    </symbol>
+    <symbol id='idx' >
+        <g transform='scale(0.99)'>
+            <rect style='fill:#fbea8e;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+                  width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+            <path style='fill:#323232;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+                  d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+                  transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+        </g>
+    </symbol>
+    <symbol id='fk' >
+        <g transform='scale(0.87)'>
+            <path style='fill:#3791c5;stroke:#3791c5;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+                  d='M 12.48,0.33 7.07,0.89 9.067,2.974 0.329,11.731 1.073,12.597 9.811,3.841 11.77,5.78 z' />
+        </g>
+    </symbol>
+    <symbol id='ref' >
+        <g transform='scale(0.87)'>
+            <path style='fill:#f3e1b7;stroke:#f3e1b7;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+                  d='M 0.10,12.70 5.31,12.15 3.40,10.06 11.82,1.32 11.11,0.45 2.68,9.19 0.80,7.24 z'/>
+        </g>
+    </symbol>
+    <symbol id='flag0' >
+        <g transform='scale(0.92)'>
+            <path style='fill:#b7d0f6;stroke:#404040;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+                  d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+        </g>
+    </symbol>
+    <symbol id='flag1' >
+        <g transform='scale(0.92)'>
+            <path style='fill:#f4a393;stroke:#404040;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+                  d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+        </g>
+    </symbol>
+    <symbol id='flag2' >
+        <g transform='scale(0.92)'>
+            <path style='fill:#77ec8b;stroke:#404040;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+                  d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+        </g>
+    </symbol>
+    <symbol id='nn' >
+        <path style='stroke:#9b3e50;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+              d='M 0,0 3,3 M 0,3 3,0 z'/>
+    </symbol>
+    <symbol id='view' >
+        <g transform='scale(0.99)'>
+            <line x1='12' y1='6' x2='19' y2='0' stroke='gray' stroke-width='0.5' />
+            <line x1='0' y1='6' x2='7' y2='0' stroke='gray' stroke-width='0.5' />
+            <circle cx='3' cy='6' r='3' fill='#f9ebbc' stroke='gray' stroke-width='0.5'/>
+            <circle cx='10' cy='6' r='3' fill='#f9ebbc' stroke='gray' stroke-width='0.5'/>
+        </g>
+    </symbol>
+</defs>
+
+<defs>  <marker id='arrow0u' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 8.000,4.000 L 16.000,4.000 L 8.000,0.000 L 16.000,4.000 L 8.000,8.000' />
+  </marker>
+  <marker id='arrow1u' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 8.000,4.000 L 16.000,4.000 L 8.000,0.000 L 16.000,4.000 L 8.000,8.000' />
+  </marker>
+  <marker id='arrow0' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <circle cx='4.00' cy='4.00' r='2.67' style='fill:white;stroke:#5e554d;' />
+    <path d='M 16.00,0.00 L 8.00,4.00 L 16.00,8.00' />
+  </marker>
+  <marker id='arrow1' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <path d='M 16.00,0.00 L 8.00,4.00 L 16.00,8.00' />
+  </marker>
+  <marker id='foot0u' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <circle cx='12.00' cy='4.00' r='2.67' style='fill:white;stroke:#5e554d;' />
+    <path d='M 4.00,0.00 L 4.00, 8.00 z' />
+  </marker>
+  <marker id='foot0' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <circle cx='12.00' cy='4.00' r='2.67' style='fill:white;stroke:#5e554d;' />
+    <path d='M 0.00,0.00 L 8.00,4.00 L 0.00,8.00' />
+  </marker>
+  <marker id='foot1u' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <path d='M 8.00,0.00 L 8.00, 8.00 z' />
+    <path d='M 4.00,0.00 L 4.00, 8.00 z' />
+  </marker>
+  <marker id='foot1' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+    <path d='M 8.00,0.00 L 8.00, 8.00 z' />
+    <path d='M 0.00,0.00 L 8.00,4.00 L 0.00,8.00' />
+  </marker>
+  <marker id='line_arrow' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 8.000,4.000 L 16.000,4.000 L 8.000,0.000 L 16.000,4.000 L 8.000,8.000' />
+  </marker>
+  <marker id='line_straight' viewBox='0 0 16.00 8.00' refX='8.00' refY='4.00' markerWidth='16.00' markerHeight='8.00' orient='auto'>
+    <path d='M 0.00,4.00 L 16.00,4.00 z' />
+  </marker>
+  <linearGradient id='tbg_ECF0F7' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#1E3764' /> 
+     <stop offset='40%' stop-color='#1F2C45' /> 
+     <stop offset='100%' stop-color='#222C3E' /> 
+  </linearGradient>
+  <linearGradient id='tbg_FFFF80' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#64641E' /> 
+     <stop offset='40%' stop-color='#45451F' /> 
+     <stop offset='100%' stop-color='#3E3E22' /> 
+  </linearGradient>
+  <linearGradient id='tbg_FF00FF' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#641E64' /> 
+     <stop offset='40%' stop-color='#451F45' /> 
+     <stop offset='100%' stop-color='#3E223E' /> 
+  </linearGradient>
+  <linearGradient id='tbg_CC3333' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#641E1E' /> 
+     <stop offset='40%' stop-color='#451F1F' /> 
+     <stop offset='100%' stop-color='#3E2222' /> 
+  </linearGradient>
+  <linearGradient id='tbg_EEF7EC' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#2A641E' /> 
+     <stop offset='40%' stop-color='#25451F' /> 
+     <stop offset='100%' stop-color='#273E22' /> 
+  </linearGradient>
+  <linearGradient id='tbg_3986C1' x1='0%' y1='0%' x2='0%' y2='100%' >
+     <stop offset='0%' stop-color='#1E4564' /> 
+     <stop offset='40%' stop-color='#1F3445' /> 
+     <stop offset='100%' stop-color='#22313E' /> 
+  </linearGradient>
+</defs>
+
+<!-- == Shape Colors == -->
+<!-- == Desktop == -->
+<rect x='1' y='1' width='1822' height='1260' rx='8' ry='8' style='fill:url(#layoutBgA); stroke:#aaa; stroke-width:1px;' />
+<rect x='1' y='1' width='1822' height='1260' rx='8' ry='8' style='fill:url(#layoutBgEval);' />
+
+<!-- == Legend == -->
+<g transform='translate(10,10)'>
+  <rect x='10' y='10' width='420' height='70' rx='6' ry='6' style='fill:url(#legendGradient);filter:url(#shadow);'/> 
+  <text x='20' y='25' class='legendTitle' >rendszerfejlesztes-karbantarto-app</text> 
+  <a xlink:href='https://dbschema.com'><text x='20' y='39' class='legendSubTitle'><tspan>@ DbSchema</tspan></text></a> 
+  <text x='20' y='53' class='legendSubTitle'><tspan>Read the schema comments as mouse-over tooltips.</tspan></text> 
+  <text x='20' y='67' class='legendSubTitle'><tspan>Zoom using CTRL with mouse wheel, pan diagram using drag with right-mouse button.</tspan></text> 
+</g>
+
+<g transform='translate(0,110)'>
+<!-- == Group 'Maintenance' == -->
+<rect class='grp' style='fill:#294F21;stroke:#40523D' x='32' y='669' width='672' height='418' />
+<text x='44' y='685'>Maintenance</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='44' y='689' width='648' height='2' />
+
+<!-- == Group 'Users' == -->
+<rect class='grp' style='fill:#4F214F;stroke:#523D52' x='1472' y='253' width='320' height='226' />
+<text x='1484' y='269'>Users</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='1484' y='273' width='296' height='2' />
+
+<!-- == Group 'Qualifications' == -->
+<rect class='grp' style='fill:#4F4F21;stroke:#52523D' x='1008' y='733' width='592' height='290' />
+<text x='1020' y='749'>Qualifications</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='1020' y='753' width='568' height='2' />
+
+<!-- == Group 'Category' == -->
+<rect class='grp' style='fill:#21314F;stroke:#3D4452' x='96' y='93' width='768' height='338' />
+<text x='108' y='109'>Category</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='108' y='113' width='744' height='2' />
+
+<!-- == Group 'Tasks' == -->
+<rect class='grp' style='fill:#4F2121;stroke:#523D3D' x='928' y='253' width='240' height='290' />
+<text x='940' y='269'>Tasks</text>
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='940' y='273' width='216' height='2' />
+
+<!-- == Fk 'Category_Category_parentId_fkey' == -->
+<path id='Category_Category_parentId_fkey'  onmouseover="hghl(['Category_Category_parentId_fkey','Default.Category.parentId','Default.Category.id'])" onmouseout="uhghl(['Category_Category_parentId_fkey','Default.Category.parentId','Default.Category.id'])" transform='translate(8,0)' class='unhighlight' d='M 208,208L 216,208Q 224,208 224,216L 224,232Q 224,240 216,240L 200,240Q 192,240 192,232L 192,224' >
+	<title>Fk Category_parentId_fkey
+Category ref Category ( parentId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0)' marker-end='url(#arrow1u)'  class='dotted '  d='M 208,208L 216,208Q 224,208 224,216L 224,232Q 224,240 216,240L 200,240Q 192,240 192,232L 192,224' ><title>Fk Category_parentId_fkey
+Category ref Category ( parentId -&gt; id )</title></path>
+<text x='218' y='203' transform='rotate(0 218,203)' class='relName'>parentId</text>
+<!-- == Fk 'Device_Device_locationId_fkey' == -->
+<path id='Device_Device_locationId_fkey'  onmouseover="hghl(['Device_Device_locationId_fkey','Default.Device.locationId','Default.Location.id'])" onmouseout="uhghl(['Device_Device_locationId_fkey','Default.Device.locationId','Default.Location.id'])" transform='translate(8,0)' class='unhighlight' d='M 416,144L 496,144' >
+	<title>Fk Device_locationId_fkey
+Device ref Location ( locationId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 416,144L 496,144' ><title>Fk Device_locationId_fkey
+Device ref Location ( locationId -&gt; id )</title></path>
+<text x='426' y='139' transform='rotate(0 426,139)' class='relName'>locationId</text>
+<!-- == Fk 'Device_Device_categoryId_fkey' == -->
+<path id='Device_Device_categoryId_fkey'  onmouseover="hghl(['Device_Device_categoryId_fkey','Default.Device.categoryId','Default.Category.id'])" onmouseout="uhghl(['Device_Device_categoryId_fkey','Default.Device.categoryId','Default.Category.id'])" transform='translate(8,0)' class='unhighlight' d='M 288,144L 208,144' >
+	<title>Fk Device_categoryId_fkey
+Device ref Category ( categoryId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 288,144L 208,144' ><title>Fk Device_categoryId_fkey
+Device ref Category ( categoryId -&gt; id )</title></path>
+<text x='232' y='139' transform='rotate(0 232,139)' class='relName'>categoryId</text>
+<!-- == Fk 'Location_Location_buildingId_fkey' == -->
+<path id='Location_Location_buildingId_fkey'  onmouseover="hghl(['Location_Location_buildingId_fkey','Default.Location.buildingId','Default.Building.id'])" onmouseout="uhghl(['Location_Location_buildingId_fkey','Default.Location.buildingId','Default.Building.id'])" transform='translate(8,0)' class='unhighlight' d='M 624,144L 704,144' >
+	<title>Fk Location_buildingId_fkey
+Location ref Building ( buildingId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 624,144L 704,144' ><title>Fk Location_buildingId_fkey
+Location ref Building ( buildingId -&gt; id )</title></path>
+<text x='634' y='139' transform='rotate(0 634,139)' class='relName'>buildingId</text>
+<!-- == Fk 'ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey' == -->
+<path id='ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey'  onmouseover="hghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey','Default.ScheduledMaintenanceQualification.maintenanceId','Default.ScheduledMaintenance.id'])" onmouseout="uhghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey','Default.ScheduledMaintenanceQualification.maintenanceId','Default.ScheduledMaintenance.id'])" transform='translate(8,0)' class='unhighlight' d='M 1360,1008L 1360,1080Q 1360,1088 1352,1088L 200,1088Q 192,1088 192,1080L 192,992' >
+	<title>Fk ScheduledMaintenanceQualification_maintenanceId_fkey
+ScheduledMaintenanceQualification ref ScheduledMaintenance ( maintenanceId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1360,1008L 1360,1080Q 1360,1088 1352,1088L 200,1088Q 192,1088 192,1080L 192,992' ><title>Fk ScheduledMaintenanceQualification_maintenanceId_fkey
+ScheduledMaintenanceQualification ref ScheduledMaintenance ( maintenanceId -&gt; id )</title></path>
+<text x='1373' y='1010' transform='rotate(90 1373,1010)' class='relName'>maintenanceId</text>
+<!-- == Fk 'ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey' == -->
+<path id='ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey'  onmouseover="hghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey','Default.ScheduledMaintenanceQualification.qualificationId','Default.Qualification.id'])" onmouseout="uhghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey','Default.ScheduledMaintenanceQualification.qualificationId','Default.Qualification.id'])" transform='translate(8,0)' class='unhighlight' d='M 1328,928L 1272,928Q 1264,928 1264,920L 1264,840Q 1264,832 1256,832L 1248,832' >
+	<title>Fk ScheduledMaintenanceQualification_qualificationId_fkey
+ScheduledMaintenanceQualification ref Qualification ( qualificationId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1328,928L 1272,928Q 1264,928 1264,920L 1264,840Q 1264,832 1256,832L 1248,832' ><title>Fk ScheduledMaintenanceQualification_qualificationId_fkey
+ScheduledMaintenanceQualification ref Qualification ( qualificationId -&gt; id )</title></path>
+<text x='1247' y='923' transform='rotate(0 1247,923)' class='relName'>qualificationId</text>
+<!-- == Fk 'SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey' == -->
+<path id='SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey'  onmouseover="hghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey','Default.SpecialMaintenanceQualification.maintenanceId','Default.SpecialMaintenance.id'])" onmouseout="uhghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey','Default.SpecialMaintenanceQualification.maintenanceId','Default.SpecialMaintenance.id'])" transform='translate(8,0)' class='unhighlight' d='M 1008,928L 688,928' >
+	<title>Fk SpecialMaintenanceQualification_maintenanceId_fkey
+SpecialMaintenanceQualification ref SpecialMaintenance ( maintenanceId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1008,928L 688,928' ><title>Fk SpecialMaintenanceQualification_maintenanceId_fkey
+SpecialMaintenanceQualification ref SpecialMaintenance ( maintenanceId -&gt; id )</title></path>
+<text x='925' y='923' transform='rotate(0 925,923)' class='relName'>maintenanceId</text>
+<!-- == Fk 'SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey' == -->
+<path id='SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey'  onmouseover="hghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey','Default.SpecialMaintenanceQualification.qualificationId','Default.Qualification.id'])" onmouseout="uhghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey','Default.SpecialMaintenanceQualification.qualificationId','Default.Qualification.id'])" transform='translate(8,0)' class='unhighlight' d='M 1168,912L 1168,848' >
+	<title>Fk SpecialMaintenanceQualification_qualificationId_fkey
+SpecialMaintenanceQualification ref Qualification ( qualificationId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1168,912L 1168,848' ><title>Fk SpecialMaintenanceQualification_qualificationId_fkey
+SpecialMaintenanceQualification ref Qualification ( qualificationId -&gt; id )</title></path>
+<text x='1171' y='910' transform='rotate(270 1171,910)' class='relName'>qualificationId</text>
+<!-- == Fk 'Task_Task_scheduledMaintenanceId_fkey' == -->
+<path id='Task_Task_scheduledMaintenanceId_fkey'  onmouseover="hghl(['Task_Task_scheduledMaintenanceId_fkey','Default.Task.scheduledMaintenanceId','Default.ScheduledMaintenance.id'])" onmouseout="uhghl(['Task_Task_scheduledMaintenanceId_fkey','Default.Task.scheduledMaintenanceId','Default.ScheduledMaintenance.id'])" transform='translate(8,0)' class='unhighlight' d='M 960,528L 960,776Q 960,784 952,784L 232,784Q 224,784 224,792L 224,840Q 224,848 216,848L 208,848' >
+	<title>Fk Task_scheduledMaintenanceId_fkey
+Task ref ScheduledMaintenance ( scheduledMaintenanceId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0)' marker-end='url(#arrow1u)'  class='dotted '  d='M 960,528L 960,776Q 960,784 952,784L 232,784Q 224,784 224,792L 224,840Q 224,848 216,848L 208,848' ><title>Fk Task_scheduledMaintenanceId_fkey
+Task ref ScheduledMaintenance ( scheduledMaintenanceId -&gt; id )</title></path>
+<text x='973' y='530' transform='rotate(90 973,530)' class='relName'>scheduledMaintenanceId</text>
+<!-- == Fk 'Task_Task_specialMaintenanceId_fkey' == -->
+<path id='Task_Task_specialMaintenanceId_fkey'  onmouseover="hghl(['Task_Task_specialMaintenanceId_fkey','Default.Task.specialMaintenanceId','Default.SpecialMaintenance.id'])" onmouseout="uhghl(['Task_Task_specialMaintenanceId_fkey','Default.Task.specialMaintenanceId','Default.SpecialMaintenance.id'])" transform='translate(8,0)' class='unhighlight' d='M 928,496L 680,496Q 672,496 672,504L 672,816' >
+	<title>Fk Task_specialMaintenanceId_fkey
+Task ref SpecialMaintenance ( specialMaintenanceId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0)' marker-end='url(#arrow1u)'  class='dotted '  d='M 928,496L 680,496Q 672,496 672,504L 672,816' ><title>Fk Task_specialMaintenanceId_fkey
+Task ref SpecialMaintenance ( specialMaintenanceId -&gt; id )</title></path>
+<text x='803' y='491' transform='rotate(0 803,491)' class='relName'>specialMaintenanceId</text>
+<!-- == Fk 'Task_Task_userId_fkey' == -->
+<path id='Task_Task_userId_fkey'  onmouseover="hghl(['Task_Task_userId_fkey','Default.Task.userId','Default.User.id'])" onmouseout="uhghl(['Task_Task_userId_fkey','Default.Task.userId','Default.User.id'])" transform='translate(8,0)' class='unhighlight' d='M 1152,304L 1472,304' >
+	<title>Fk Task_userId_fkey
+Task ref User ( userId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1152,304L 1472,304' ><title>Fk Task_userId_fkey
+Task ref User ( userId -&gt; id )</title></path>
+<text x='1162' y='299' transform='rotate(0 1162,299)' class='relName'>userId</text>
+<!-- == Fk 'Task_Task_statusId_fkey' == -->
+<path id='Task_Task_statusId_fkey'  onmouseover="hghl(['Task_Task_statusId_fkey','Default.Task.statusId','Default.Status.id'])" onmouseout="uhghl(['Task_Task_statusId_fkey','Default.Task.statusId','Default.Status.id'])" transform='translate(8,0)' class='unhighlight' d='M 928,480L 200,480Q 192,480 192,488L 192,688' >
+	<title>Fk Task_statusId_fkey
+Task ref Status ( statusId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 928,480L 200,480Q 192,480 192,488L 192,688' ><title>Fk Task_statusId_fkey
+Task ref Status ( statusId -&gt; id )</title></path>
+<text x='889' y='475' transform='rotate(0 889,475)' class='relName'>statusId</text>
+<!-- == Fk 'User_User_roleId_fkey' == -->
+<path id='User_User_roleId_fkey'  onmouseover="hghl(['User_User_roleId_fkey','Default.User.roleId','Default.Role.id'])" onmouseout="uhghl(['User_User_roleId_fkey','Default.User.roleId','Default.Role.id'])" transform='translate(8,0)' class='unhighlight' d='M 1600,304L 1680,304' >
+	<title>Fk User_roleId_fkey
+User ref Role ( roleId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1600,304L 1680,304' ><title>Fk User_roleId_fkey
+User ref Role ( roleId -&gt; id )</title></path>
+<text x='1610' y='299' transform='rotate(0 1610,299)' class='relName'>roleId</text>
+<!-- == Fk 'UserQualification_UserQualification_userId_fkey' == -->
+<path id='UserQualification_UserQualification_userId_fkey'  onmouseover="hghl(['UserQualification_UserQualification_userId_fkey','Default.UserQualification.userId','Default.User.id'])" onmouseout="uhghl(['UserQualification_UserQualification_userId_fkey','Default.UserQualification.userId','Default.User.id'])" transform='translate(8,0)' class='unhighlight' d='M 1456,752L 1456,440Q 1456,432 1464,432L 1472,432' >
+	<title>Fk UserQualification_userId_fkey
+UserQualification ref User ( userId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1456,752L 1456,440Q 1456,432 1464,432L 1472,432' ><title>Fk UserQualification_userId_fkey
+UserQualification ref User ( userId -&gt; id )</title></path>
+<text x='1459' y='750' transform='rotate(270 1459,750)' class='relName'>userId</text>
+<!-- == Fk 'UserQualification_UserQualification_qualificationId_fkey' == -->
+<path id='UserQualification_UserQualification_qualificationId_fkey'  onmouseover="hghl(['UserQualification_UserQualification_qualificationId_fkey','Default.UserQualification.qualificationId','Default.Qualification.id'])" onmouseout="uhghl(['UserQualification_UserQualification_qualificationId_fkey','Default.UserQualification.qualificationId','Default.Qualification.id'])" transform='translate(8,0)' class='unhighlight' d='M 1328,784L 1248,784' >
+	<title>Fk UserQualification_qualificationId_fkey
+UserQualification ref Qualification ( qualificationId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 1328,784L 1248,784' ><title>Fk UserQualification_qualificationId_fkey
+UserQualification ref Qualification ( qualificationId -&gt; id )</title></path>
+<text x='1247' y='779' transform='rotate(0 1247,779)' class='relName'>qualificationId</text>
+<!-- == Fk 'ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey' == -->
+<path id='ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey'  onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey','Default.ScheduledMaintenance.categoryId','Default.Category.id'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey','Default.ScheduledMaintenance.categoryId','Default.Category.id'])" transform='translate(8,0)' class='unhighlight' d='M 80,816L 80,200Q 80,192 88,192L 96,192' >
+	<title>Fk ScheduledMaintenance_categoryId_fkey
+ScheduledMaintenance ref Category ( categoryId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 80,816L 80,200Q 80,192 88,192L 96,192' ><title>Fk ScheduledMaintenance_categoryId_fkey
+ScheduledMaintenance ref Category ( categoryId -&gt; id )</title></path>
+<text x='83' y='814' transform='rotate(270 83,814)' class='relName'>categoryId</text>
+<!-- == Fk 'ScheduledMaintenance_ScheduledMaintenance_periodId_fkey' == -->
+<path id='ScheduledMaintenance_ScheduledMaintenance_periodId_fkey'  onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_periodId_fkey','Default.ScheduledMaintenance.periodId','Default.Period.id'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_periodId_fkey','Default.ScheduledMaintenance.periodId','Default.Period.id'])" transform='translate(8,0)' class='unhighlight' d='M 96,816L 96,392Q 96,384 104,384L 704,384' >
+	<title>Fk ScheduledMaintenance_periodId_fkey
+ScheduledMaintenance ref Period ( periodId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 96,816L 96,392Q 96,384 104,384L 704,384' ><title>Fk ScheduledMaintenance_periodId_fkey
+ScheduledMaintenance ref Period ( periodId -&gt; id )</title></path>
+<text x='99' y='814' transform='rotate(270 99,814)' class='relName'>periodId</text>
+<!-- == Fk 'ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey' == -->
+<path id='ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey'  onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey','Default.ScheduledMaintenance.priorityId','Default.Priority.id'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey','Default.ScheduledMaintenance.priorityId','Default.Priority.id'])" transform='translate(8,0)' class='unhighlight' d='M 208,864L 304,864' >
+	<title>Fk ScheduledMaintenance_priorityId_fkey
+ScheduledMaintenance ref Priority ( priorityId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 208,864L 304,864' ><title>Fk ScheduledMaintenance_priorityId_fkey
+ScheduledMaintenance ref Priority ( priorityId -&gt; id )</title></path>
+<text x='218' y='859' transform='rotate(0 218,859)' class='relName'>priorityId</text>
+<!-- == Fk 'Instruction_Instruction_scheduledMaintenanceId_fkey' == -->
+<path id='Instruction_Instruction_scheduledMaintenanceId_fkey'  onmouseover="hghl(['Instruction_Instruction_scheduledMaintenanceId_fkey','Default.Instruction.scheduledMaintenanceId','Default.ScheduledMaintenance.id'])" onmouseout="uhghl(['Instruction_Instruction_scheduledMaintenanceId_fkey','Default.Instruction.scheduledMaintenanceId','Default.ScheduledMaintenance.id'])" transform='translate(8,0)' class='unhighlight' d='M 224,944L 208,944' >
+	<title>Fk Instruction_scheduledMaintenanceId_fkey
+Instruction ref ScheduledMaintenance ( scheduledMaintenanceId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0)' marker-end='url(#arrow1u)'  class='dotted '  d='M 224,944L 208,944' ><title>Fk Instruction_scheduledMaintenanceId_fkey
+Instruction ref ScheduledMaintenance ( scheduledMaintenanceId -&gt; id )</title></path>
+<text x='80' y='939' transform='rotate(0 80,939)' class='relName'>scheduledMaintenanceId</text>
+<!-- == Fk 'Instruction_Instruction_specialMaintenanceId_fkey' == -->
+<path id='Instruction_Instruction_specialMaintenanceId_fkey'  onmouseover="hghl(['Instruction_Instruction_specialMaintenanceId_fkey','Default.Instruction.specialMaintenanceId','Default.SpecialMaintenance.id'])" onmouseout="uhghl(['Instruction_Instruction_specialMaintenanceId_fkey','Default.Instruction.specialMaintenanceId','Default.SpecialMaintenance.id'])" transform='translate(8,0)' class='unhighlight' d='M 448,960L 528,960' >
+	<title>Fk Instruction_specialMaintenanceId_fkey
+Instruction ref SpecialMaintenance ( specialMaintenanceId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot0)' marker-end='url(#arrow1u)'  class='dotted '  d='M 448,960L 528,960' ><title>Fk Instruction_specialMaintenanceId_fkey
+Instruction ref SpecialMaintenance ( specialMaintenanceId -&gt; id )</title></path>
+<text x='458' y='955' transform='rotate(0 458,955)' class='relName'>specialMaintenanceId</text>
+<!-- == Fk 'SpecialMaintenance_SpecialMaintenance_deviceId_fkey' == -->
+<path id='SpecialMaintenance_SpecialMaintenance_deviceId_fkey'  onmouseover="hghl(['SpecialMaintenance_SpecialMaintenance_deviceId_fkey','Default.SpecialMaintenance.deviceId','Default.Device.id'])" onmouseout="uhghl(['SpecialMaintenance_SpecialMaintenance_deviceId_fkey','Default.SpecialMaintenance.deviceId','Default.Device.id'])" transform='translate(8,0)' class='unhighlight' d='M 528,832L 440,832Q 432,832 432,824L 432,264Q 432,256 424,256L 416,256' >
+	<title>Fk SpecialMaintenance_deviceId_fkey
+SpecialMaintenance ref Device ( deviceId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 528,832L 440,832Q 432,832 432,824L 432,264Q 432,256 424,256L 416,256' ><title>Fk SpecialMaintenance_deviceId_fkey
+SpecialMaintenance ref Device ( deviceId -&gt; id )</title></path>
+<text x='486' y='827' transform='rotate(0 486,827)' class='relName'>deviceId</text>
+<!-- == Fk 'SpecialMaintenance_SpecialMaintenance_priorityId_fkey' == -->
+<path id='SpecialMaintenance_SpecialMaintenance_priorityId_fkey'  onmouseover="hghl(['SpecialMaintenance_SpecialMaintenance_priorityId_fkey','Default.SpecialMaintenance.priorityId','Default.Priority.id'])" onmouseout="uhghl(['SpecialMaintenance_SpecialMaintenance_priorityId_fkey','Default.SpecialMaintenance.priorityId','Default.Priority.id'])" transform='translate(8,0)' class='unhighlight' d='M 528,848L 416,848' >
+	<title>Fk SpecialMaintenance_priorityId_fkey
+SpecialMaintenance ref Priority ( priorityId -&gt; id )</title>
+</path>
+<path transform='translate(8,0)' marker-start='url(#foot1)' marker-end='url(#arrow1u)'    d='M 528,848L 416,848' ><title>Fk SpecialMaintenance_priorityId_fkey
+SpecialMaintenance ref Priority ( priorityId -&gt; id )</title></path>
+<text x='480' y='843' transform='rotate(0 480,843)' class='relName'>priorityId</text>
+<!-- == Table 'Building' == -->
+<rect id='depict_Default.Building' class='entity' style='stroke:none;' x='720' y='120' width='80' height='80' rx='8' ry='8' />
+<path d='M 720 148 L 720 128 Q 720 120 728 120 L 792 120 Q 800 120 800 128 L 800 148 L720 148 ' style='fill:url(#tbg_ECF0F7);stroke-width:0;' />
+<rect class='entity' x='720' y='120' width='80' height='80' rx='8' ry='8' style='fill:none;stroke:#27282C'/>
+<a xlink:href='#Default.Building'><text x='731' y='139' >Building</text><title>Table Default.Building</title></a>
+  <use id='nn' x='722' y='157' xlink:href='#nn'/><use id='pk' x='722' y='156' xlink:href='#pk'><title>Pk pk_Building ( id ) </title></use><a xlink:href='#Default.Building_id'><text id='Default.Building.id' x='739' y='167' onmouseover="hghl(['Location_Location_buildingId_fkey','Default.Location.buildingId'])" onmouseout="uhghl(['Location_Location_buildingId_fkey','Default.Location.buildingId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Building.id'><use id='ref' x='788' y='156' xlink:href='#ref'/><title>Referred by Location ( buildingId -&gt; id ) </title></a>
+  <use id='nn' x='722' y='173' xlink:href='#nn'/><a xlink:href='#Default.Building_name'><text id='Default.Building.name' x='739' y='183'>name</text><title>name
+* text</title></a>
+<text x='797' y='180' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'Category' == -->
+<rect id='depict_Default.Category' class='entity' style='stroke:none;' x='112' y='120' width='96' height='96' rx='8' ry='8' />
+<path d='M 112 148 L 112 128 Q 112 120 120 120 L 200 120 Q 208 120 208 128 L 208 148 L112 148 ' style='fill:url(#tbg_ECF0F7);stroke-width:0;' />
+<rect class='entity' x='112' y='120' width='96' height='96' rx='8' ry='8' style='fill:none;stroke:#27282C'/>
+<a xlink:href='#Default.Category'><text x='128' y='139' >Category</text><title>Table Default.Category</title></a>
+  <use id='nn' x='114' y='157' xlink:href='#nn'/><use id='pk' x='114' y='156' xlink:href='#pk'><title>Pk pk_Category ( id ) </title></use><a xlink:href='#Default.Category_id'><text id='Default.Category.id' x='131' y='167' onmouseover="hghl(['Category_Category_parentId_fkey','Default.Category.parentId','Device_Device_categoryId_fkey','Default.Device.categoryId','ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey','Default.ScheduledMaintenance.categoryId'])" onmouseout="uhghl(['Category_Category_parentId_fkey','Default.Category.parentId','Device_Device_categoryId_fkey','Default.Device.categoryId','ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey','Default.ScheduledMaintenance.categoryId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Category.id'><use id='ref' x='196' y='156' xlink:href='#ref'/><title>Referred by Category ( parentId -&gt; id ) 
+Referred by Device ( categoryId -&gt; id ) 
+Referred by ScheduledMaintenance ( categoryId -&gt; id ) </title></a>
+  <use id='nn' x='114' y='173' xlink:href='#nn'/><a xlink:href='#Default.Category_name'><text id='Default.Category.name' x='131' y='183'>name</text><title>name
+* text</title></a>
+<text x='205' y='180' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default.Category_parentId'><text id='Default.Category.parentId' x='131' y='199' onmouseover="hghl(['Category_Category_parentId_fkey','Default.Category.id'])" onmouseout="uhghl(['Category_Category_parentId_fkey','Default.Category.id'])">parentId</text><title>parentId
+integer</title></a>
+<a xlink:href='#Default.Category.parentId'><use id='fk' x='196' y='188' xlink:href='#fk'/><title>References Category ( parentId -&gt; id ) </title></a>
+
+<!-- == Table 'Device' == -->
+<rect id='depict_Default.Device' class='entity' style='stroke:none;' x='304' y='120' width='112' height='144' rx='8' ry='8' />
+<path d='M 304 148 L 304 128 Q 304 120 312 120 L 408 120 Q 416 120 416 128 L 416 148 L304 148 ' style='fill:url(#tbg_ECF0F7);stroke-width:0;' />
+<rect class='entity' x='304' y='120' width='112' height='144' rx='8' ry='8' style='fill:none;stroke:#27282C'/>
+<a xlink:href='#Default.Device'><text x='335' y='139' >Device</text><title>Table Default.Device</title></a>
+  <use id='nn' x='306' y='157' xlink:href='#nn'/><use id='pk' x='306' y='156' xlink:href='#pk'><title>Pk pk_Device ( id ) </title></use><a xlink:href='#Default.Device_id'><text id='Default.Device.id' x='323' y='167' onmouseover="hghl(['SpecialMaintenance_SpecialMaintenance_deviceId_fkey','Default.SpecialMaintenance.deviceId'])" onmouseout="uhghl(['SpecialMaintenance_SpecialMaintenance_deviceId_fkey','Default.SpecialMaintenance.deviceId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Device.id'><use id='ref' x='404' y='156' xlink:href='#ref'/><title>Referred by SpecialMaintenance ( deviceId -&gt; id ) </title></a>
+  <use id='nn' x='306' y='173' xlink:href='#nn'/><a xlink:href='#Default.Device_name'><text id='Default.Device.name' x='323' y='183'>name</text><title>name
+* text</title></a>
+<text x='413' y='180' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default.Device_description'><text id='Default.Device.description' x='323' y='199'>description</text><title>description
+text</title></a>
+<text x='413' y='196' text-anchor='end' class='colType'>t</text>  <use id='nn' x='306' y='205' xlink:href='#nn'/><use id='unq' x='306' y='204' xlink:href='#unq'><title>Unq Device_identifier_key ( identifier ) </title></use><a xlink:href='#Default.Device_identifier'><text id='Default.Device.identifier' x='323' y='215'>identifier</text><title>identifier
+* text</title></a>
+<text x='413' y='212' text-anchor='end' class='colType'>t</text>  <use id='nn' x='306' y='221' xlink:href='#nn'/><a xlink:href='#Default.Device_locationId'><text id='Default.Device.locationId' x='323' y='231' onmouseover="hghl(['Device_Device_locationId_fkey','Default.Location.id'])" onmouseout="uhghl(['Device_Device_locationId_fkey','Default.Location.id'])">locationId</text><title>locationId
+* integer</title></a>
+<a xlink:href='#Default.Device.locationId'><use id='fk' x='404' y='220' xlink:href='#fk'/><title>References Location ( locationId -&gt; id ) </title></a>
+  <use id='nn' x='306' y='237' xlink:href='#nn'/><a xlink:href='#Default.Device_categoryId'><text id='Default.Device.categoryId' x='323' y='247' onmouseover="hghl(['Device_Device_categoryId_fkey','Default.Category.id'])" onmouseout="uhghl(['Device_Device_categoryId_fkey','Default.Category.id'])">categoryId</text><title>categoryId
+* integer default 1</title></a>
+<a xlink:href='#Default.Device.categoryId'><use id='fk' x='404' y='236' xlink:href='#fk'/><title>References Category ( categoryId -&gt; id ) </title></a>
+
+<!-- == Table 'Location' == -->
+<rect id='depict_Default.Location' class='entity' style='stroke:none;' x='512' y='120' width='112' height='96' rx='8' ry='8' />
+<path d='M 512 148 L 512 128 Q 512 120 520 120 L 616 120 Q 624 120 624 128 L 624 148 L512 148 ' style='fill:url(#tbg_ECF0F7);stroke-width:0;' />
+<rect class='entity' x='512' y='120' width='112' height='96' rx='8' ry='8' style='fill:none;stroke:#27282C'/>
+<a xlink:href='#Default.Location'><text x='537' y='139' >Location</text><title>Table Default.Location</title></a>
+  <use id='nn' x='514' y='157' xlink:href='#nn'/><use id='pk' x='514' y='156' xlink:href='#pk'><title>Pk pk_Location ( id ) </title></use><a xlink:href='#Default.Location_id'><text id='Default.Location.id' x='531' y='167' onmouseover="hghl(['Device_Device_locationId_fkey','Default.Device.locationId'])" onmouseout="uhghl(['Device_Device_locationId_fkey','Default.Device.locationId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Location.id'><use id='ref' x='612' y='156' xlink:href='#ref'/><title>Referred by Device ( locationId -&gt; id ) </title></a>
+  <use id='nn' x='514' y='173' xlink:href='#nn'/><a xlink:href='#Default.Location_name'><text id='Default.Location.name' x='531' y='183'>name</text><title>name
+* text</title></a>
+<text x='621' y='180' text-anchor='end' class='colType'>t</text>  <use id='nn' x='514' y='189' xlink:href='#nn'/><a xlink:href='#Default.Location_buildingId'><text id='Default.Location.buildingId' x='531' y='199' onmouseover="hghl(['Location_Location_buildingId_fkey','Default.Building.id'])" onmouseout="uhghl(['Location_Location_buildingId_fkey','Default.Building.id'])">buildingId</text><title>buildingId
+* integer</title></a>
+<a xlink:href='#Default.Location.buildingId'><use id='fk' x='612' y='188' xlink:href='#fk'/><title>References Building ( buildingId -&gt; id ) </title></a>
+
+<!-- == Table 'Period' == -->
+<rect id='depict_Default.Period' class='entity' style='stroke:none;' x='720' y='312' width='128' height='96' rx='8' ry='8' />
+<path d='M 720 340 L 720 320 Q 720 312 728 312 L 840 312 Q 848 312 848 320 L 848 340 L720 340 ' style='fill:url(#tbg_ECF0F7);stroke-width:0;' />
+<rect class='entity' x='720' y='312' width='128' height='96' rx='8' ry='8' style='fill:none;stroke:#27282C'/>
+<a xlink:href='#Default.Period'><text x='760' y='331' >Period</text><title>Table Default.Period</title></a>
+  <use id='nn' x='722' y='349' xlink:href='#nn'/><use id='pk' x='722' y='348' xlink:href='#pk'><title>Pk pk_Period ( id ) </title></use><a xlink:href='#Default.Period_id'><text id='Default.Period.id' x='739' y='359' onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_periodId_fkey','Default.ScheduledMaintenance.periodId'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_periodId_fkey','Default.ScheduledMaintenance.periodId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Period.id'><use id='ref' x='836' y='348' xlink:href='#ref'/><title>Referred by ScheduledMaintenance ( periodId -&gt; id ) </title></a>
+  <use id='nn' x='722' y='365' xlink:href='#nn'/><a xlink:href='#Default.Period_name'><text id='Default.Period.name' x='739' y='375'>name</text><title>name
+* text</title></a>
+<text x='845' y='372' text-anchor='end' class='colType'>t</text>  <use id='nn' x='722' y='381' xlink:href='#nn'/><a xlink:href='#Default.Period_periodInDays'><text id='Default.Period.periodInDays' x='739' y='391'>periodInDays</text><title>periodInDays
+* integer</title></a>
+<text x='845' y='388' text-anchor='end' class='colType'>#</text>
+<!-- == Table 'Qualification' == -->
+<rect id='depict_Default.Qualification' class='entity' style='stroke:none;' x='1152' y='760' width='96' height='80' rx='8' ry='8' />
+<path d='M 1152 788 L 1152 768 Q 1152 760 1160 760 L 1240 760 Q 1248 760 1248 768 L 1248 788 L1152 788 ' style='fill:url(#tbg_FFFF80);stroke-width:0;' />
+<rect class='entity' x='1152' y='760' width='96' height='80' rx='8' ry='8' style='fill:none;stroke:#2C2C27'/>
+<a xlink:href='#Default.Qualification'><text x='1155' y='779' >Qualification</text><title>Table Default.Qualification</title></a>
+  <use id='nn' x='1154' y='797' xlink:href='#nn'/><use id='pk' x='1154' y='796' xlink:href='#pk'><title>Pk pk_Qualification ( id ) </title></use><a xlink:href='#Default.Qualification_id'><text id='Default.Qualification.id' x='1171' y='807' onmouseover="hghl(['UserQualification_UserQualification_qualificationId_fkey','Default.UserQualification.qualificationId','ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey','Default.ScheduledMaintenanceQualification.qualificationId','SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey','Default.SpecialMaintenanceQualification.qualificationId'])" onmouseout="uhghl(['UserQualification_UserQualification_qualificationId_fkey','Default.UserQualification.qualificationId','ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey','Default.ScheduledMaintenanceQualification.qualificationId','SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey','Default.SpecialMaintenanceQualification.qualificationId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Qualification.id'><use id='ref' x='1236' y='796' xlink:href='#ref'/><title>Referred by UserQualification ( qualificationId -&gt; id ) 
+Referred by ScheduledMaintenanceQualification ( qualificationId -&gt; id ) 
+Referred by SpecialMaintenanceQualification ( qualificationId -&gt; id ) </title></a>
+  <use id='nn' x='1154' y='813' xlink:href='#nn'/><a xlink:href='#Default.Qualification_name'><text id='Default.Qualification.name' x='1171' y='823'>name</text><title>name
+* text</title></a>
+<text x='1245' y='820' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'Role' == -->
+<rect id='depict_Default.Role' class='entity' style='stroke:none;' x='1696' y='280' width='80' height='80' rx='8' ry='8' />
+<path d='M 1696 308 L 1696 288 Q 1696 280 1704 280 L 1768 280 Q 1776 280 1776 288 L 1776 308 L1696 308 ' style='fill:url(#tbg_FF00FF);stroke-width:0;' />
+<rect class='entity' x='1696' y='280' width='80' height='80' rx='8' ry='8' style='fill:none;stroke:#2C272C'/>
+<a xlink:href='#Default.Role'><text x='1718' y='299' >Role</text><title>Table Default.Role</title></a>
+  <use id='nn' x='1698' y='317' xlink:href='#nn'/><use id='pk' x='1698' y='316' xlink:href='#pk'><title>Pk pk_Role ( id ) </title></use><a xlink:href='#Default.Role_id'><text id='Default.Role.id' x='1715' y='327' onmouseover="hghl(['User_User_roleId_fkey','Default.User.roleId'])" onmouseout="uhghl(['User_User_roleId_fkey','Default.User.roleId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Role.id'><use id='ref' x='1764' y='316' xlink:href='#ref'/><title>Referred by User ( roleId -&gt; id ) </title></a>
+  <use id='nn' x='1698' y='333' xlink:href='#nn'/><a xlink:href='#Default.Role_name'><text id='Default.Role.name' x='1715' y='343'>name</text><title>name
+* text</title></a>
+<text x='1773' y='340' text-anchor='end' class='colType'>t</text>
+<!-- == Table 'ScheduledMaintenanceQualification' == -->
+<rect id='depict_Default.ScheduledMaintenanceQualification' class='entity' style='stroke:none;' x='1344' y='920' width='240' height='80' rx='8' ry='8' />
+<path d='M 1344 948 L 1344 928 Q 1344 920 1352 920 L 1576 920 Q 1584 920 1584 928 L 1584 948 L1344 948 ' style='fill:url(#tbg_FFFF80);stroke-width:0;' />
+<rect class='entity' x='1344' y='920' width='240' height='80' rx='8' ry='8' style='fill:none;stroke:#2C2C27'/>
+<a xlink:href='#Default.ScheduledMaintenanceQualification'><text x='1347' y='939' >ScheduledMaintenanceQualification</text><title>Table Default.ScheduledMaintenanceQualification</title></a>
+  <use id='nn' x='1346' y='957' xlink:href='#nn'/><use id='pk' x='1346' y='956' xlink:href='#pk'><title>Pk pk_ScheduledMaintenanceQualification ( qualificationId, maintenanceId ) </title></use><a xlink:href='#Default.ScheduledMaintenanceQualification_qualificationId'><text id='Default.ScheduledMaintenanceQualification.qualificationId' x='1363' y='967' onmouseover="hghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey','Default.Qualification.id'])" onmouseout="uhghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_qualificationId_fkey','Default.Qualification.id'])">qualificationId</text><title>qualificationId
+* integer</title></a>
+<a xlink:href='#Default.ScheduledMaintenanceQualification.qualificationId'><use id='fk' x='1572' y='956' xlink:href='#fk'/><title>References Qualification ( qualificationId -&gt; id ) </title></a>
+  <use id='nn' x='1346' y='973' xlink:href='#nn'/><use id='pk' x='1346' y='972' xlink:href='#pk'><title>Pk pk_ScheduledMaintenanceQualification ( qualificationId, maintenanceId ) </title></use><a xlink:href='#Default.ScheduledMaintenanceQualification_maintenanceId'><text id='Default.ScheduledMaintenanceQualification.maintenanceId' x='1363' y='983' onmouseover="hghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey','Default.ScheduledMaintenance.id'])" onmouseout="uhghl(['ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey','Default.ScheduledMaintenance.id'])">maintenanceId</text><title>maintenanceId
+* integer</title></a>
+<a xlink:href='#Default.ScheduledMaintenanceQualification.maintenanceId'><use id='fk' x='1572' y='972' xlink:href='#fk'/><title>References ScheduledMaintenance ( maintenanceId -&gt; id ) </title></a>
+
+<!-- == Table 'SpecialMaintenanceQualification' == -->
+<rect id='depict_Default.SpecialMaintenanceQualification' class='entity' style='stroke:none;' x='1024' y='920' width='224' height='80' rx='8' ry='8' />
+<path d='M 1024 948 L 1024 928 Q 1024 920 1032 920 L 1240 920 Q 1248 920 1248 928 L 1248 948 L1024 948 ' style='fill:url(#tbg_FFFF80);stroke-width:0;' />
+<rect class='entity' x='1024' y='920' width='224' height='80' rx='8' ry='8' style='fill:none;stroke:#2C2C27'/>
+<a xlink:href='#Default.SpecialMaintenanceQualification'><text x='1029' y='939' >SpecialMaintenanceQualification</text><title>Table Default.SpecialMaintenanceQualification</title></a>
+  <use id='nn' x='1026' y='957' xlink:href='#nn'/><use id='pk' x='1026' y='956' xlink:href='#pk'><title>Pk pk_SpecialMaintenanceQualification ( qualificationId, maintenanceId ) </title></use><a xlink:href='#Default.SpecialMaintenanceQualification_qualificationId'><text id='Default.SpecialMaintenanceQualification.qualificationId' x='1043' y='967' onmouseover="hghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey','Default.Qualification.id'])" onmouseout="uhghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_qualificationId_fkey','Default.Qualification.id'])">qualificationId</text><title>qualificationId
+* integer</title></a>
+<a xlink:href='#Default.SpecialMaintenanceQualification.qualificationId'><use id='fk' x='1236' y='956' xlink:href='#fk'/><title>References Qualification ( qualificationId -&gt; id ) </title></a>
+  <use id='nn' x='1026' y='973' xlink:href='#nn'/><use id='pk' x='1026' y='972' xlink:href='#pk'><title>Pk pk_SpecialMaintenanceQualification ( qualificationId, maintenanceId ) </title></use><a xlink:href='#Default.SpecialMaintenanceQualification_maintenanceId'><text id='Default.SpecialMaintenanceQualification.maintenanceId' x='1043' y='983' onmouseover="hghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey','Default.SpecialMaintenance.id'])" onmouseout="uhghl(['SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey','Default.SpecialMaintenance.id'])">maintenanceId</text><title>maintenanceId
+* integer</title></a>
+<a xlink:href='#Default.SpecialMaintenanceQualification.maintenanceId'><use id='fk' x='1236' y='972' xlink:href='#fk'/><title>References SpecialMaintenance ( maintenanceId -&gt; id ) </title></a>
+
+<!-- == Table 'Task' == -->
+<rect id='depict_Default.Task' class='entity' style='stroke:none;' x='944' y='280' width='208' height='240' rx='8' ry='8' />
+<path d='M 944 308 L 944 288 Q 944 280 952 280 L 1144 280 Q 1152 280 1152 288 L 1152 308 L944 308 ' style='fill:url(#tbg_CC3333);stroke-width:0;' />
+<rect class='entity' x='944' y='280' width='208' height='240' rx='8' ry='8' style='fill:none;stroke:#2C2727'/>
+<a xlink:href='#Default.Task'><text x='1030' y='299' >Task</text><title>Table Default.Task</title></a>
+  <use id='nn' x='946' y='317' xlink:href='#nn'/><use id='pk' x='946' y='316' xlink:href='#pk'><title>Pk pk_Task ( id ) </title></use><a xlink:href='#Default.Task_id'><text id='Default.Task.id' x='963' y='327'>id</text><title>id
+* integer</title></a>
+<text x='1149' y='324' text-anchor='end' class='colType'>#</text>  <a xlink:href='#Default.Task_scheduledMaintenanceId'><text id='Default.Task.scheduledMaintenanceId' x='963' y='343' onmouseover="hghl(['Task_Task_scheduledMaintenanceId_fkey','Default.ScheduledMaintenance.id'])" onmouseout="uhghl(['Task_Task_scheduledMaintenanceId_fkey','Default.ScheduledMaintenance.id'])">scheduledMaintenanceId</text><title>scheduledMaintenanceId
+integer</title></a>
+<a xlink:href='#Default.Task.scheduledMaintenanceId'><use id='fk' x='1140' y='332' xlink:href='#fk'/><title>References ScheduledMaintenance ( scheduledMaintenanceId -&gt; id ) </title></a>
+  <a xlink:href='#Default.Task_specialMaintenanceId'><text id='Default.Task.specialMaintenanceId' x='963' y='359' onmouseover="hghl(['Task_Task_specialMaintenanceId_fkey','Default.SpecialMaintenance.id'])" onmouseout="uhghl(['Task_Task_specialMaintenanceId_fkey','Default.SpecialMaintenance.id'])">specialMaintenanceId</text><title>specialMaintenanceId
+integer</title></a>
+<a xlink:href='#Default.Task.specialMaintenanceId'><use id='fk' x='1140' y='348' xlink:href='#fk'/><title>References SpecialMaintenance ( specialMaintenanceId -&gt; id ) </title></a>
+  <use id='nn' x='946' y='365' xlink:href='#nn'/><a xlink:href='#Default.Task_userId'><text id='Default.Task.userId' x='963' y='375' onmouseover="hghl(['Task_Task_userId_fkey','Default.User.id'])" onmouseout="uhghl(['Task_Task_userId_fkey','Default.User.id'])">userId</text><title>userId
+* integer</title></a>
+<a xlink:href='#Default.Task.userId'><use id='fk' x='1140' y='364' xlink:href='#fk'/><title>References User ( userId -&gt; id ) </title></a>
+  <a xlink:href='#Default.Task_description'><text id='Default.Task.description' x='963' y='391'>description</text><title>description
+text</title></a>
+<text x='1149' y='388' text-anchor='end' class='colType'>t</text>  <use id='nn' x='946' y='397' xlink:href='#nn'/><a xlink:href='#Default.Task_createdAt'><text id='Default.Task.createdAt' x='963' y='407'>createdAt</text><title>createdAt
+* datetime default CURRENT_TIMESTAMP</title></a>
+<text x='1149' y='404' text-anchor='end' class='colType'>d</text>  <use id='nn' x='946' y='413' xlink:href='#nn'/><a xlink:href='#Default.Task_updatedAt'><text id='Default.Task.updatedAt' x='963' y='423'>updatedAt</text><title>updatedAt
+* datetime</title></a>
+<text x='1149' y='420' text-anchor='end' class='colType'>d</text>  <a xlink:href='#Default.Task_acceptedAt'><text id='Default.Task.acceptedAt' x='963' y='439'>acceptedAt</text><title>acceptedAt
+datetime</title></a>
+<text x='1149' y='436' text-anchor='end' class='colType'>d</text>  <a xlink:href='#Default.Task_declinedAt'><text id='Default.Task.declinedAt' x='963' y='455'>declinedAt</text><title>declinedAt
+datetime</title></a>
+<text x='1149' y='452' text-anchor='end' class='colType'>d</text>  <a xlink:href='#Default.Task_startedAt'><text id='Default.Task.startedAt' x='963' y='471'>startedAt</text><title>startedAt
+datetime</title></a>
+<text x='1149' y='468' text-anchor='end' class='colType'>d</text>  <a xlink:href='#Default.Task_finishedAt'><text id='Default.Task.finishedAt' x='963' y='487'>finishedAt</text><title>finishedAt
+datetime</title></a>
+<text x='1149' y='484' text-anchor='end' class='colType'>d</text>  <use id='nn' x='946' y='493' xlink:href='#nn'/><a xlink:href='#Default.Task_statusId'><text id='Default.Task.statusId' x='963' y='503' onmouseover="hghl(['Task_Task_statusId_fkey','Default.Status.id'])" onmouseout="uhghl(['Task_Task_statusId_fkey','Default.Status.id'])">statusId</text><title>statusId
+* integer default 1</title></a>
+<a xlink:href='#Default.Task.statusId'><use id='fk' x='1140' y='492' xlink:href='#fk'/><title>References Status ( statusId -&gt; id ) </title></a>
+
+<!-- == Table 'User' == -->
+<rect id='depict_Default.User' class='entity' style='stroke:none;' x='1488' y='280' width='112' height='176' rx='8' ry='8' />
+<path d='M 1488 308 L 1488 288 Q 1488 280 1496 280 L 1592 280 Q 1600 280 1600 288 L 1600 308 L1488 308 ' style='fill:url(#tbg_FF00FF);stroke-width:0;' />
+<rect class='entity' x='1488' y='280' width='112' height='176' rx='8' ry='8' style='fill:none;stroke:#2C272C'/>
+<a xlink:href='#Default.User'><text x='1526' y='299' >User</text><title>Table Default.User</title></a>
+  <use id='nn' x='1490' y='317' xlink:href='#nn'/><use id='pk' x='1490' y='316' xlink:href='#pk'><title>Pk pk_User ( id ) </title></use><a xlink:href='#Default.User_id'><text id='Default.User.id' x='1507' y='327' onmouseover="hghl(['UserQualification_UserQualification_userId_fkey','Default.UserQualification.userId','Task_Task_userId_fkey','Default.Task.userId'])" onmouseout="uhghl(['UserQualification_UserQualification_userId_fkey','Default.UserQualification.userId','Task_Task_userId_fkey','Default.Task.userId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.User.id'><use id='ref' x='1588' y='316' xlink:href='#ref'/><title>Referred by UserQualification ( userId -&gt; id ) 
+Referred by Task ( userId -&gt; id ) </title></a>
+  <use id='nn' x='1490' y='333' xlink:href='#nn'/><a xlink:href='#Default.User_createdAt'><text id='Default.User.createdAt' x='1507' y='343'>createdAt</text><title>createdAt
+* datetime default CURRENT_TIMESTAMP</title></a>
+<text x='1597' y='340' text-anchor='end' class='colType'>d</text>  <use id='nn' x='1490' y='349' xlink:href='#nn'/><a xlink:href='#Default.User_updatedAt'><text id='Default.User.updatedAt' x='1507' y='359'>updatedAt</text><title>updatedAt
+* datetime</title></a>
+<text x='1597' y='356' text-anchor='end' class='colType'>d</text>  <use id='nn' x='1490' y='365' xlink:href='#nn'/><a xlink:href='#Default.User_name'><text id='Default.User.name' x='1507' y='375'>name</text><title>name
+* text</title></a>
+<text x='1597' y='372' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1490' y='381' xlink:href='#nn'/><a xlink:href='#Default.User_username'><text id='Default.User.username' x='1507' y='391'>username</text><title>username
+* text</title></a>
+<text x='1597' y='388' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1490' y='397' xlink:href='#nn'/><a xlink:href='#Default.User_password'><text id='Default.User.password' x='1507' y='407'>password</text><title>password
+* text</title></a>
+<text x='1597' y='404' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1490' y='413' xlink:href='#nn'/><a xlink:href='#Default.User_roleId'><text id='Default.User.roleId' x='1507' y='423' onmouseover="hghl(['User_User_roleId_fkey','Default.Role.id'])" onmouseout="uhghl(['User_User_roleId_fkey','Default.Role.id'])">roleId</text><title>roleId
+* integer</title></a>
+<a xlink:href='#Default.User.roleId'><use id='fk' x='1588' y='412' xlink:href='#fk'/><title>References Role ( roleId -&gt; id ) </title></a>
+  <use id='nn' x='1490' y='429' xlink:href='#nn'/><a xlink:href='#Default.User_active'><text id='Default.User.active' x='1507' y='439'>active</text><title>active
+* boolean</title></a>
+<text x='1597' y='436' text-anchor='end' class='colType'>b</text>
+<!-- == Table 'UserQualification' == -->
+<rect id='depict_Default.UserQualification' class='entity' style='stroke:none;' x='1344' y='760' width='144' height='80' rx='8' ry='8' />
+<path d='M 1344 788 L 1344 768 Q 1344 760 1352 760 L 1480 760 Q 1488 760 1488 768 L 1488 788 L1344 788 ' style='fill:url(#tbg_FFFF80);stroke-width:0;' />
+<rect class='entity' x='1344' y='760' width='144' height='80' rx='8' ry='8' style='fill:none;stroke:#2C2C27'/>
+<a xlink:href='#Default.UserQualification'><text x='1357' y='779' >UserQualification</text><title>Table Default.UserQualification</title></a>
+  <use id='nn' x='1346' y='797' xlink:href='#nn'/><use id='pk' x='1346' y='796' xlink:href='#pk'><title>Pk pk_UserQualification ( qualificationId, userId ) </title></use><a xlink:href='#Default.UserQualification_qualificationId'><text id='Default.UserQualification.qualificationId' x='1363' y='807' onmouseover="hghl(['UserQualification_UserQualification_qualificationId_fkey','Default.Qualification.id'])" onmouseout="uhghl(['UserQualification_UserQualification_qualificationId_fkey','Default.Qualification.id'])">qualificationId</text><title>qualificationId
+* integer</title></a>
+<a xlink:href='#Default.UserQualification.qualificationId'><use id='fk' x='1476' y='796' xlink:href='#fk'/><title>References Qualification ( qualificationId -&gt; id ) </title></a>
+  <use id='nn' x='1346' y='813' xlink:href='#nn'/><use id='pk' x='1346' y='812' xlink:href='#pk'><title>Pk pk_UserQualification ( qualificationId, userId ) </title></use><a xlink:href='#Default.UserQualification_userId'><text id='Default.UserQualification.userId' x='1363' y='823' onmouseover="hghl(['UserQualification_UserQualification_userId_fkey','Default.User.id'])" onmouseout="uhghl(['UserQualification_UserQualification_userId_fkey','Default.User.id'])">userId</text><title>userId
+* integer</title></a>
+<a xlink:href='#Default.UserQualification.userId'><use id='fk' x='1476' y='812' xlink:href='#fk'/><title>References User ( userId -&gt; id ) </title></a>
+
+<!-- == Table 'ScheduledMaintenance' == -->
+<rect id='depict_Default.ScheduledMaintenance' class='entity' style='stroke:none;' x='48' y='824' width='160' height='160' rx='8' ry='8' />
+<path d='M 48 852 L 48 832 Q 48 824 56 824 L 200 824 Q 208 824 208 832 L 208 852 L48 852 ' style='fill:url(#tbg_EEF7EC);stroke-width:0;' />
+<rect class='entity' x='48' y='824' width='160' height='160' rx='8' ry='8' style='fill:none;stroke:#272C27'/>
+<a xlink:href='#Default.ScheduledMaintenance'><text x='52' y='843' >ScheduledMaintenance</text><title>Table Default.ScheduledMaintenance</title></a>
+  <use id='nn' x='50' y='861' xlink:href='#nn'/><use id='pk' x='50' y='860' xlink:href='#pk'><title>Pk pk_ScheduledMaintenance ( id ) </title></use><a xlink:href='#Default.ScheduledMaintenance_id'><text id='Default.ScheduledMaintenance.id' x='67' y='871' onmouseover="hghl(['Instruction_Instruction_scheduledMaintenanceId_fkey','Default.Instruction.scheduledMaintenanceId','ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey','Default.ScheduledMaintenanceQualification.maintenanceId','Task_Task_scheduledMaintenanceId_fkey','Default.Task.scheduledMaintenanceId'])" onmouseout="uhghl(['Instruction_Instruction_scheduledMaintenanceId_fkey','Default.Instruction.scheduledMaintenanceId','ScheduledMaintenanceQualification_ScheduledMaintenanceQualification_maintenanceId_fkey','Default.ScheduledMaintenanceQualification.maintenanceId','Task_Task_scheduledMaintenanceId_fkey','Default.Task.scheduledMaintenanceId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.ScheduledMaintenance.id'><use id='ref' x='196' y='860' xlink:href='#ref'/><title>Referred by Instruction ( scheduledMaintenanceId -&gt; id ) 
+Referred by ScheduledMaintenanceQualification ( maintenanceId -&gt; id ) 
+Referred by Task ( scheduledMaintenanceId -&gt; id ) </title></a>
+  <use id='nn' x='50' y='877' xlink:href='#nn'/><a xlink:href='#Default.ScheduledMaintenance_name'><text id='Default.ScheduledMaintenance.name' x='67' y='887'>name</text><title>name
+* text</title></a>
+<text x='205' y='884' text-anchor='end' class='colType'>t</text>  <use id='nn' x='50' y='893' xlink:href='#nn'/><a xlink:href='#Default.ScheduledMaintenance_normaInMinutes'><text id='Default.ScheduledMaintenance.normaInMinutes' x='67' y='903'>normaInMinutes</text><title>normaInMinutes
+* integer</title></a>
+<text x='205' y='900' text-anchor='end' class='colType'>#</text>  <a xlink:href='#Default.ScheduledMaintenance_lastMaintenance'><text id='Default.ScheduledMaintenance.lastMaintenance' x='67' y='919'>lastMaintenance</text><title>lastMaintenance
+datetime</title></a>
+<text x='205' y='916' text-anchor='end' class='colType'>d</text>  <use id='nn' x='50' y='925' xlink:href='#nn'/><a xlink:href='#Default.ScheduledMaintenance_periodId'><text id='Default.ScheduledMaintenance.periodId' x='67' y='935' onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_periodId_fkey','Default.Period.id'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_periodId_fkey','Default.Period.id'])">periodId</text><title>periodId
+* integer</title></a>
+<a xlink:href='#Default.ScheduledMaintenance.periodId'><use id='fk' x='196' y='924' xlink:href='#fk'/><title>References Period ( periodId -&gt; id ) </title></a>
+  <use id='nn' x='50' y='941' xlink:href='#nn'/><a xlink:href='#Default.ScheduledMaintenance_categoryId'><text id='Default.ScheduledMaintenance.categoryId' x='67' y='951' onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey','Default.Category.id'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_categoryId_fkey','Default.Category.id'])">categoryId</text><title>categoryId
+* integer default 1</title></a>
+<a xlink:href='#Default.ScheduledMaintenance.categoryId'><use id='fk' x='196' y='940' xlink:href='#fk'/><title>References Category ( categoryId -&gt; id ) </title></a>
+  <use id='nn' x='50' y='957' xlink:href='#nn'/><a xlink:href='#Default.ScheduledMaintenance_priorityId'><text id='Default.ScheduledMaintenance.priorityId' x='67' y='967' onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey','Default.Priority.id'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey','Default.Priority.id'])">priorityId</text><title>priorityId
+* integer</title></a>
+<a xlink:href='#Default.ScheduledMaintenance.priorityId'><use id='fk' x='196' y='956' xlink:href='#fk'/><title>References Priority ( priorityId -&gt; id ) </title></a>
+
+<!-- == Table 'Instruction' == -->
+<rect id='depict_Default.Instruction' class='entity' style='stroke:none;' x='240' y='936' width='208' height='128' rx='8' ry='8' />
+<path d='M 240 964 L 240 944 Q 240 936 248 936 L 440 936 Q 448 936 448 944 L 448 964 L240 964 ' style='fill:url(#tbg_EEF7EC);stroke-width:0;' />
+<rect class='entity' x='240' y='936' width='208' height='128' rx='8' ry='8' style='fill:none;stroke:#272C27'/>
+<a xlink:href='#Default.Instruction'><text x='306' y='955' >Instruction</text><title>Table Default.Instruction</title></a>
+  <use id='nn' x='242' y='973' xlink:href='#nn'/><use id='pk' x='242' y='972' xlink:href='#pk'><title>Pk pk_Instruction ( id ) </title></use><a xlink:href='#Default.Instruction_id'><text id='Default.Instruction.id' x='259' y='983'>id</text><title>id
+* integer</title></a>
+<text x='445' y='980' text-anchor='end' class='colType'>#</text>  <use id='nn' x='242' y='989' xlink:href='#nn'/><a xlink:href='#Default.Instruction_title'><text id='Default.Instruction.title' x='259' y='999'>title</text><title>title
+* text</title></a>
+<text x='445' y='996' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default.Instruction_body'><text id='Default.Instruction.body' x='259' y='1015'>body</text><title>body
+text</title></a>
+<text x='445' y='1012' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default.Instruction_scheduledMaintenanceId'><text id='Default.Instruction.scheduledMaintenanceId' x='259' y='1031' onmouseover="hghl(['Instruction_Instruction_scheduledMaintenanceId_fkey','Default.ScheduledMaintenance.id'])" onmouseout="uhghl(['Instruction_Instruction_scheduledMaintenanceId_fkey','Default.ScheduledMaintenance.id'])">scheduledMaintenanceId</text><title>scheduledMaintenanceId
+integer</title></a>
+<a xlink:href='#Default.Instruction.scheduledMaintenanceId'><use id='fk' x='436' y='1020' xlink:href='#fk'/><title>References ScheduledMaintenance ( scheduledMaintenanceId -&gt; id ) </title></a>
+  <a xlink:href='#Default.Instruction_specialMaintenanceId'><text id='Default.Instruction.specialMaintenanceId' x='259' y='1047' onmouseover="hghl(['Instruction_Instruction_specialMaintenanceId_fkey','Default.SpecialMaintenance.id'])" onmouseout="uhghl(['Instruction_Instruction_specialMaintenanceId_fkey','Default.SpecialMaintenance.id'])">specialMaintenanceId</text><title>specialMaintenanceId
+integer</title></a>
+<a xlink:href='#Default.Instruction.specialMaintenanceId'><use id='fk' x='436' y='1036' xlink:href='#fk'/><title>References SpecialMaintenance ( specialMaintenanceId -&gt; id ) </title></a>
+
+<!-- == Table 'SpecialMaintenance' == -->
+<rect id='depict_Default.SpecialMaintenance' class='entity' style='stroke:none;' x='544' y='824' width='144' height='160' rx='8' ry='8' />
+<path d='M 544 852 L 544 832 Q 544 824 552 824 L 680 824 Q 688 824 688 832 L 688 852 L544 852 ' style='fill:url(#tbg_EEF7EC);stroke-width:0;' />
+<rect class='entity' x='544' y='824' width='144' height='160' rx='8' ry='8' style='fill:none;stroke:#272C27'/>
+<a xlink:href='#Default.SpecialMaintenance'><text x='550' y='843' >SpecialMaintenance</text><title>Table Default.SpecialMaintenance</title></a>
+  <use id='nn' x='546' y='861' xlink:href='#nn'/><use id='pk' x='546' y='860' xlink:href='#pk'><title>Pk pk_SpecialMaintenance ( id ) </title></use><a xlink:href='#Default.SpecialMaintenance_id'><text id='Default.SpecialMaintenance.id' x='563' y='871' onmouseover="hghl(['Instruction_Instruction_specialMaintenanceId_fkey','Default.Instruction.specialMaintenanceId','SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey','Default.SpecialMaintenanceQualification.maintenanceId','Task_Task_specialMaintenanceId_fkey','Default.Task.specialMaintenanceId'])" onmouseout="uhghl(['Instruction_Instruction_specialMaintenanceId_fkey','Default.Instruction.specialMaintenanceId','SpecialMaintenanceQualification_SpecialMaintenanceQualification_maintenanceId_fkey','Default.SpecialMaintenanceQualification.maintenanceId','Task_Task_specialMaintenanceId_fkey','Default.Task.specialMaintenanceId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.SpecialMaintenance.id'><use id='ref' x='676' y='860' xlink:href='#ref'/><title>Referred by Instruction ( specialMaintenanceId -&gt; id ) 
+Referred by SpecialMaintenanceQualification ( maintenanceId -&gt; id ) 
+Referred by Task ( specialMaintenanceId -&gt; id ) </title></a>
+  <use id='nn' x='546' y='877' xlink:href='#nn'/><a xlink:href='#Default.SpecialMaintenance_name'><text id='Default.SpecialMaintenance.name' x='563' y='887'>name</text><title>name
+* text</title></a>
+<text x='685' y='884' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default.SpecialMaintenance_description'><text id='Default.SpecialMaintenance.description' x='563' y='903'>description</text><title>description
+text</title></a>
+<text x='685' y='900' text-anchor='end' class='colType'>t</text>  <use id='nn' x='546' y='909' xlink:href='#nn'/><a xlink:href='#Default.SpecialMaintenance_normaInMinutes'><text id='Default.SpecialMaintenance.normaInMinutes' x='563' y='919'>normaInMinutes</text><title>normaInMinutes
+* integer</title></a>
+<text x='685' y='916' text-anchor='end' class='colType'>#</text>  <use id='nn' x='546' y='925' xlink:href='#nn'/><a xlink:href='#Default.SpecialMaintenance_malfunctionDate'><text id='Default.SpecialMaintenance.malfunctionDate' x='563' y='935'>malfunctionDate</text><title>malfunctionDate
+* datetime default CURRENT_TIMESTAMP</title></a>
+<text x='685' y='932' text-anchor='end' class='colType'>d</text>  <use id='nn' x='546' y='941' xlink:href='#nn'/><a xlink:href='#Default.SpecialMaintenance_deviceId'><text id='Default.SpecialMaintenance.deviceId' x='563' y='951' onmouseover="hghl(['SpecialMaintenance_SpecialMaintenance_deviceId_fkey','Default.Device.id'])" onmouseout="uhghl(['SpecialMaintenance_SpecialMaintenance_deviceId_fkey','Default.Device.id'])">deviceId</text><title>deviceId
+* integer</title></a>
+<a xlink:href='#Default.SpecialMaintenance.deviceId'><use id='fk' x='676' y='940' xlink:href='#fk'/><title>References Device ( deviceId -&gt; id ) </title></a>
+  <use id='nn' x='546' y='957' xlink:href='#nn'/><a xlink:href='#Default.SpecialMaintenance_priorityId'><text id='Default.SpecialMaintenance.priorityId' x='563' y='967' onmouseover="hghl(['SpecialMaintenance_SpecialMaintenance_priorityId_fkey','Default.Priority.id'])" onmouseout="uhghl(['SpecialMaintenance_SpecialMaintenance_priorityId_fkey','Default.Priority.id'])">priorityId</text><title>priorityId
+* integer</title></a>
+<a xlink:href='#Default.SpecialMaintenance.priorityId'><use id='fk' x='676' y='956' xlink:href='#fk'/><title>References Priority ( priorityId -&gt; id ) </title></a>
+
+<!-- == Table 'Priority' == -->
+<rect id='depict_Default.Priority' class='entity' style='stroke:none;' x='320' y='808' width='96' height='96' rx='8' ry='8' />
+<path d='M 320 836 L 320 816 Q 320 808 328 808 L 408 808 Q 416 808 416 816 L 416 836 L320 836 ' style='fill:url(#tbg_EEF7EC);stroke-width:0;' />
+<rect class='entity' x='320' y='808' width='96' height='96' rx='8' ry='8' style='fill:none;stroke:#272C27'/>
+<a xlink:href='#Default.Priority'><text x='341' y='827' >Priority</text><title>Table Default.Priority</title></a>
+  <use id='nn' x='322' y='845' xlink:href='#nn'/><use id='pk' x='322' y='844' xlink:href='#pk'><title>Pk pk_Priority ( id ) </title></use><a xlink:href='#Default.Priority_id'><text id='Default.Priority.id' x='339' y='855' onmouseover="hghl(['ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey','Default.ScheduledMaintenance.priorityId','SpecialMaintenance_SpecialMaintenance_priorityId_fkey','Default.SpecialMaintenance.priorityId'])" onmouseout="uhghl(['ScheduledMaintenance_ScheduledMaintenance_priorityId_fkey','Default.ScheduledMaintenance.priorityId','SpecialMaintenance_SpecialMaintenance_priorityId_fkey','Default.SpecialMaintenance.priorityId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Priority.id'><use id='ref' x='404' y='844' xlink:href='#ref'/><title>Referred by ScheduledMaintenance ( priorityId -&gt; id ) 
+Referred by SpecialMaintenance ( priorityId -&gt; id ) </title></a>
+  <use id='nn' x='322' y='861' xlink:href='#nn'/><a xlink:href='#Default.Priority_name'><text id='Default.Priority.name' x='339' y='871'>name</text><title>name
+* text</title></a>
+<text x='413' y='868' text-anchor='end' class='colType'>t</text>  <use id='nn' x='322' y='877' xlink:href='#nn'/><a xlink:href='#Default.Priority_priority'><text id='Default.Priority.priority' x='339' y='887'>priority</text><title>priority
+* integer</title></a>
+<text x='413' y='884' text-anchor='end' class='colType'>#</text>
+<!-- == Table 'Status' == -->
+<rect id='depict_Default.Status' class='entity' style='stroke:none;' x='128' y='696' width='80' height='80' rx='8' ry='8' />
+<path d='M 128 724 L 128 704 Q 128 696 136 696 L 200 696 Q 208 696 208 704 L 208 724 L128 724 ' style='fill:url(#tbg_EEF7EC);stroke-width:0;' />
+<rect class='entity' x='128' y='696' width='80' height='80' rx='8' ry='8' style='fill:none;stroke:#272C27'/>
+<a xlink:href='#Default.Status'><text x='145' y='715' >Status</text><title>Table Default.Status</title></a>
+  <use id='nn' x='130' y='733' xlink:href='#nn'/><use id='pk' x='130' y='732' xlink:href='#pk'><title>Pk pk_Status ( id ) </title></use><a xlink:href='#Default.Status_id'><text id='Default.Status.id' x='147' y='743' onmouseover="hghl(['Task_Task_statusId_fkey','Default.Task.statusId'])" onmouseout="uhghl(['Task_Task_statusId_fkey','Default.Task.statusId'])">id</text><title>id
+* integer</title></a>
+<a xlink:href='#Default.Status.id'><use id='ref' x='196' y='732' xlink:href='#ref'/><title>Referred by Task ( statusId -&gt; id ) </title></a>
+  <use id='nn' x='130' y='749' xlink:href='#nn'/><a xlink:href='#Default.Status_name'><text id='Default.Status.name' x='147' y='759'>name</text><title>name
+* text</title></a>
+<text x='205' y='756' text-anchor='end' class='colType'>t</text>
+<!-- == Table '_prisma_migrations' == -->
+<rect id='depict_Default._prisma_migrations' class='entity' style='stroke:none;' x='1232' y='72' width='176' height='176' rx='8' ry='8' />
+<path d='M 1232 100 L 1232 80 Q 1232 72 1240 72 L 1400 72 Q 1408 72 1408 80 L 1408 100 L1232 100 ' style='fill:url(#tbg_3986C1);stroke-width:0;' />
+<rect class='entity' x='1232' y='72' width='176' height='176' rx='8' ry='8' style='fill:none;stroke:#27292C'/>
+<a xlink:href='#Default._prisma_migrations'><text x='1254' y='91' >_prisma_migrations</text><title>Table Default._prisma_migrations</title></a>
+  <use id='nn' x='1234' y='109' xlink:href='#nn'/><use id='pk' x='1234' y='108' xlink:href='#pk'><title>Pk pk__prisma_migrations ( id ) </title></use><a xlink:href='#Default._prisma_migrations_id'><text id='Default._prisma_migrations.id' x='1251' y='119'>id</text><title>id
+* text</title></a>
+<text x='1405' y='116' text-anchor='end' class='colType'>t</text>  <use id='nn' x='1234' y='125' xlink:href='#nn'/><a xlink:href='#Default._prisma_migrations_checksum'><text id='Default._prisma_migrations.checksum' x='1251' y='135'>checksum</text><title>checksum
+* text</title></a>
+<text x='1405' y='132' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default._prisma_migrations_finished_at'><text id='Default._prisma_migrations.finished_at' x='1251' y='151'>finished_at</text><title>finished_at
+datetime</title></a>
+<text x='1405' y='148' text-anchor='end' class='colType'>d</text>  <use id='nn' x='1234' y='157' xlink:href='#nn'/><a xlink:href='#Default._prisma_migrations_migration_name'><text id='Default._prisma_migrations.migration_name' x='1251' y='167'>migration_name</text><title>migration_name
+* text</title></a>
+<text x='1405' y='164' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default._prisma_migrations_logs'><text id='Default._prisma_migrations.logs' x='1251' y='183'>logs</text><title>logs
+text</title></a>
+<text x='1405' y='180' text-anchor='end' class='colType'>t</text>  <a xlink:href='#Default._prisma_migrations_rolled_back_at'><text id='Default._prisma_migrations.rolled_back_at' x='1251' y='199'>rolled_back_at</text><title>rolled_back_at
+datetime</title></a>
+<text x='1405' y='196' text-anchor='end' class='colType'>d</text>  <use id='nn' x='1234' y='205' xlink:href='#nn'/><a xlink:href='#Default._prisma_migrations_started_at'><text id='Default._prisma_migrations.started_at' x='1251' y='215'>started_at</text><title>started_at
+* datetime default current_timestamp</title></a>
+<text x='1405' y='212' text-anchor='end' class='colType'>d</text>  <use id='nn' x='1234' y='221' xlink:href='#nn'/><a xlink:href='#Default._prisma_migrations_applied_steps_count'><text id='Default._prisma_migrations.applied_steps_count' x='1251' y='231'>applied_steps_count</text><title>applied_steps_count
+* integer default 0</title></a>
+<text x='1405' y='228' text-anchor='end' class='colType'>#</text>
+</g></svg>

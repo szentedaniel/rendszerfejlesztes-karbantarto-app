@@ -14,11 +14,11 @@ export interface createMaintenanceData {
 }
 
 export interface updateMaintenanceData {
-  name?:  | string
-  normaInMinutes?:  | number
-  lastMaintenanceId?:  | number | null
-  periodId?:  | number | null
-  categoryId?:  | number
+  name?: | string
+  normaInMinutes?: | number
+  lastMaintenanceId?: | number | null
+  periodId?: | number | null
+  categoryId?: | number
 }
 
 
@@ -42,7 +42,7 @@ export const getAllMaintenancesWithDetails = async () => {
             qualificationId: true
           }
         },
-        Tasks: {
+        Task: {
           include: {
             user: {
               include: {
@@ -92,7 +92,7 @@ export const getMaintenanceByIdWithDetails = async (id: number) => {
             qualificationId: true
           }
         },
-        Tasks: {
+        Task: {
           include: {
             user: {
               include: {
@@ -115,7 +115,7 @@ export const getMaintenanceByIdWithDetails = async (id: number) => {
   }
 }
 
-export const createMaintenance = async (MaintenanceData: createMaintenanceData): Promise<ScheduledMaintenance> => {
+export const createMaintenance = async (MaintenanceData: ScheduledMaintenance): Promise<ScheduledMaintenance> => {
   try {
     const createdMaintenance = await prisma.scheduledMaintenance.create({
       data: MaintenanceData,
@@ -130,10 +130,12 @@ export const createMaintenance = async (MaintenanceData: createMaintenanceData):
 
 export const deleteMaintenanceById = async (id: number) => {
   try {
-    const validMaintenance = await prisma.scheduledMaintenance.findFirst({where: {
-      id: id
-    }})
-    if (!validMaintenance) return {status: 404, message: `Maintenance not found with id: ${id}`}
+    const validMaintenance = await prisma.scheduledMaintenance.findFirst({
+      where: {
+        id: id
+      }
+    })
+    if (!validMaintenance) return { status: 404, message: `Maintenance not found with id: ${id}` }
     const deletedMaintenance = await prisma.scheduledMaintenance.delete({
       where: {
         id: Number(id)
@@ -146,7 +148,7 @@ export const deleteMaintenanceById = async (id: number) => {
   }
 }
 
-export const updateMaintenanceById = async (id: number, MaintenanceData: updateMaintenanceData) => {
+export const updateMaintenanceById = async (id: number, MaintenanceData: ScheduledMaintenance) => {
   try {
     let wantToBeMaintenanceData = MaintenanceData
 

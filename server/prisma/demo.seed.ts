@@ -4,110 +4,185 @@ import {
   User,
   Category,
   Period,
-  ScheduledMaintenance
+  ScheduledMaintenance,
+  Building,
+  Location,
+  Device,
+  Priority,
+  Instruction,
+  Qualification,
+  UserQualification,
+  ScheduledMaintenanceQualification,
+  Status,
+  Task
 } from '@prisma/client'
 const prisma = new PrismaClient()
 
-export const DemoPeriod = [{
-  name: 'Heti',
-  days: 1
+interface TaskWithoutDefaults {
+  id: number;
+  scheduledMaintenanceId: number | null;
+  specialMaintenanceId: number | null;
+  userId: number;
+  description: string | null;
+  acceptedAt: Date | null;
+  declinedAt: Date | null;
+  startedAt: Date | null;
+  finishedAt: Date | null;
+  statusId: number;
+}
+
+export const DemoPriority: Priority[] = [{
+  id: 1,
+  name: 'Sürgős',
+  priority: 2
 },
 {
-  name: 'Havi',
-  days: 7
+  id: 2,
+  name: 'Normál',
+  priority: 3
 },
 {
-  name: 'Negyedéves',
-  days: 30
+  id: 3,
+  name: 'Kevésbé sürgős',
+  priority: 4
 },
 {
-  name: 'Féléves',
-  days: 182
-},
-{
-  name: 'Éves',
-  days: 365
+  id: 4,
+  name: 'Ütemezett',
+  priority: 4
 },
 ]
 
-export const DemoCategory = [{
-  name: 'Nincs'
+
+export const DemoPeriod: Period[] = [{
+  id: 1,
+  name: 'Heti',
+  periodInDays: 1
 },
 {
-  name: 'Tűz'
+  id: 2,
+  name: 'Havi',
+  periodInDays: 7
 },
 {
-  name: 'Biztonság'
+  id: 3,
+  name: 'Negyedéves',
+  periodInDays: 30
 },
 {
-  name: 'Tűz.Tűzoltó készülék',
-  parentId: 0
+  id: 4,
+  name: 'Féléves',
+  periodInDays: 182
 },
 {
-  name: 'Tűz.Tűzoltó készülék.CO2-Tűzoltó készülék',
-  parentId: 0
+  id: 5,
+  name: 'Éves',
+  periodInDays: 365
+},
+]
+
+export const DemoCategory: Category[] = [{
+  id: 1,
+  name: 'Nincs',
+  parentId: null
 },
 {
+  id: 2,
+  name: 'Tűz',
+  parentId: null
+},
+{
+  id: 3,
+  name: 'Biztonság',
+  parentId: null
+},
+{
+  id: 4,
+  name: 'Tűzoltó készülék',
+  parentId: 2
+},
+{
+  id: 5,
+  name: 'CO2-Tűzoltó készülék',
+  parentId: 4
+},
+{
+  id: 6,
   name: 'Tűz.Füstjelző',
-  parentId: 0
+  parentId: 2
 },
 {
-  name: 'Tűz.Tűzoltó készülék.Víz-Tűzoltó készülék',
-  parentId: 0
+  id: 7,
+  name: 'Víz-Tűzoltó készülék',
+  parentId: 4
 },
 {
-  name: 'Biztonság.Lézer',
-  parentId: 0
+  id: 8,
+  name: 'Lézer',
+  parentId: 3
 },
 {
-  name: 'Biztonság.Kamera',
-  parentId: 0
+  id: 9,
+  name: 'Kamera',
+  parentId: 3
 }
 ]
 
-export const DemoBuilding = [{
+export const DemoBuilding: Building[] = [{
+  id: 1,
   name: 'A-Épület'
 },
 {
+  id: 2,
   name: 'B-Épület'
 },
 {
+  id: 3,
   name: 'C-Épület'
 },
 {
+  id: 4,
   name: 'D-Épület'
 },
 {
+  id: 5,
   name: 'E-Épület'
 },
 {
+  id: 6,
   name: 'F-Épület'
 },
 ]
 
-export const DemoLocation = [{
+export const DemoLocation: Location[] = [{
+  id: 1,
   name: 'Konyha',
   buildingId: 1
 },
 {
+  id: 2,
   name: 'Kondi terem',
   buildingId: 2
 },
 {
+  id: 3,
   name: 'Iroda1',
   buildingId: 3
 },
 {
+  id: 4,
   name: 'Iroda2',
   buildingId: 3
 },
 {
+  id: 5,
   name: 'Öltöző',
   buildingId: 1
 },
 ]
 
-export const DemoDevice = [{
+export const DemoDevice: Device[] = [{
+  id: 1,
   name: 'CO2-Tűzoltó készülék',
   description: 'CO2-t használ a tűz kioltására.',
   identifier: 'FIR3442',
@@ -115,6 +190,7 @@ export const DemoDevice = [{
   categoryId: 5
 },
 {
+  id: 2,
   name: 'CO2-Tűzoltó készülék',
   description: 'CO2-t használ a tűz kioltására.',
   identifier: 'FIR3462',
@@ -122,6 +198,7 @@ export const DemoDevice = [{
   categoryId: 5
 },
 {
+  id: 3,
   name: 'Füstjelző',
   description: 'Füst érzékelése esetén hangjelzést ad.',
   identifier: 'SMO4506',
@@ -129,6 +206,7 @@ export const DemoDevice = [{
   categoryId: 6
 },
 {
+  id: 4,
   name: 'Víz-Tűzoltó készülék',
   description: 'Vízzel kioltja a tüzet, jobb esetben.',
   identifier: 'WFIR3442',
@@ -136,6 +214,7 @@ export const DemoDevice = [{
   categoryId: 7
 },
 {
+  id: 5,
   name: 'Kamera',
   description: 'Megfigyel.',
   identifier: 'VID3442',
@@ -143,6 +222,7 @@ export const DemoDevice = [{
   categoryId: 9
 },
 {
+  id: 6,
   name: 'Kamera',
   description: 'Megfigyel',
   identifier: 'VID3443',
@@ -151,73 +231,60 @@ export const DemoDevice = [{
 },
 ]
 
-export const DemoMaintenance = [{
-  name: 'Kamerák ellenőrzése.',
-  categoryId: 9,
-  normaInMinutes: 60,
-  periodId: 2
-},
-{
-  name: 'CO2-Tűzoltó készülék csere.',
-  categoryId: 4,
-  normaInMinutes: 30,
-  periodId: 3,
-},
-{
-  name: 'Lézer ellenőrzés.',
-  categoryId: 8,
-  normaInMinutes: 30,
-  periodId: 3,
-},
-{
-  name: 'Elem csere.',
-  categoryId: 5,
-  normaInMinutes: 30,
-  periodId: 3,
-},
 
-]
-
-export const DemoInstruction = [{
+export const DemoInstruction: Instruction[] = [{
+  id: 1,
   title: 'Kamera ellenőrzés.',
   body: 'Mutass be a kamerának. Ha jön a biztonságis és lebasz egyet, akkor működik.',
-  scheduledMaintenanceId: 1
+  scheduledMaintenanceId: 1,
+  specialMaintenanceId: null
 },
 {
-  title: 'Kamera tárhely ellenőrzés.',
-  body: 'Meghajtón jobb egér gomb, tulajdonságok, és a tárhely megtekintése onnan.',
-  scheduledMaintenanceId: 3
-},
-{
+  id: 2,
   title: 'Készülék csere',
   body: 'Készülék forgatása jobbra, balra. Teszt tüzelés. Ha jó, akkor vissza a helyére. Ha nem, akkor vegyél újat.',
-  scheduledMaintenanceId: 2
+  scheduledMaintenanceId: 2,
+  specialMaintenanceId: null
 },
 {
+  id: 3,
+  title: 'Kamera tárhely ellenőrzés.',
+  body: 'Meghajtón jobb egér gomb, tulajdonságok, és a tárhely megtekintése onnan.',
+  scheduledMaintenanceId: 3,
+  specialMaintenanceId: null
+},
+{
+  id: 4,
   title: 'Elem csere',
   body: 'Fedő eltávolítása. Elem kivétele. Új elem betétele. Fedő visszarakása.',
-  scheduledMaintenanceId: 4
+  scheduledMaintenanceId: 4,
+  specialMaintenanceId: null
 },
 ]
 
-export const DemoQualification = [{
+export const DemoQualification: Qualification[] = [{
+  id: 1,
   name: 'Villamosmérnök'
 },
 {
-  name: 'Kertész'
+  id: 2,
+  name: 'Műszerész'
 },
 {
+  id: 3,
   name: 'Informatikus'
 },
 {
+  id: 4,
   name: 'Tűzbiztonsági szakértő'
 },
 {
+  id: 5,
   name: 'Titkár'
 }
 ]
 
-export const DemoUserQualification = [{
+export const DemoUserQualification: UserQualification[] = [{
   qualificationId: 1,
   userId: 2
 },
@@ -240,7 +307,7 @@ export const DemoUserQualification = [{
 
 ]
 
-export const DemoMaintenanceQualification = [{
+export const DemoScheduledMaintenanceQualification: ScheduledMaintenanceQualification[] = [{
   qualificationId: 1,
   maintenanceId: 1
 },
@@ -267,85 +334,151 @@ export const DemoMaintenanceQualification = [{
 
 ]
 
-export const DemoStatus = [{
+export const DemoStatus: Status[] = [{
+  id: 1,
   name: 'Kiosztva'
 },
 {
+  id: 2,
   name: 'Elfogadva'
 },
 {
+  id: 3,
   name: 'Elutasítva'
 },
 {
+  id: 4,
   name: 'Elkezdve'
 },
 {
+  id: 5,
   name: 'Befejezve'
 }
 
 ]
 
-export const DemoTasks = [{
-  scheduledMaintenanceId: 1,
+export const DemoTask: Task[] = [{
+  id: 1,
+  specialMaintenanceId: null,
   userId: 1,
-  priorityId: 3,
+  description: null,
+  acceptedAt: null,
+  declinedAt: null,
+  startedAt: null,
+  finishedAt: null,
+  scheduledMaintenanceId: 1,
   statusId: 1,
+  createdAt: new Date(Date.now()),
+  updatedAt: new Date(Date.now())
+
 },
 {
+  id: 2,
+  specialMaintenanceId: null,
+  description: null,
+  acceptedAt: null,
+  declinedAt: null,
+  startedAt: null,
+  finishedAt: null,
   scheduledMaintenanceId: 2,
   userId: 3,
-  priorityId: 3,
   statusId: 3,
+  createdAt: new Date(Date.now()),
+  updatedAt: new Date(Date.now())
 },
 {
+  id: 3,
+  specialMaintenanceId: null,
+  description: null,
+  acceptedAt: null,
+  declinedAt: null,
+  startedAt: null,
+  finishedAt: null,
   scheduledMaintenanceId: 3,
   userId: 3,
-  priorityId: 3,
   statusId: 2,
+  createdAt: new Date(Date.now()),
+  updatedAt: new Date(Date.now())
 },
 {
+  id: 4,
+  specialMaintenanceId: null,
+  description: null,
+  acceptedAt: null,
+  declinedAt: null,
+  startedAt: null,
   scheduledMaintenanceId: 4,
   userId: 2,
   statusId: 5,
-  priorityId: 3,
-  finishedAt: '2021-02-24T18:17:29.558Z'
+  finishedAt: new Date('2021-02-24T18:17:29.558Z'),
+  createdAt: new Date(Date.now()),
+  updatedAt: new Date(Date.now())
 },
 {
+  id: 5,
+  specialMaintenanceId: null,
+  description: null,
+  acceptedAt: null,
+  declinedAt: null,
+  startedAt: null,
+  finishedAt: null,
   scheduledMaintenanceId: 4,
   userId: 4,
-  priorityId: 3,
   statusId: 3,
+  createdAt: new Date(Date.now()),
+  updatedAt: new Date(Date.now()),
 }
 
 ]
 
-export const DemoPriority = [{
-  name: 'Rendkívüli',
-  priority: 1
+export const DemoScheduledMaintenance: ScheduledMaintenance[] = [{
+  id: 1,
+  name: 'Kamerák ellenőrzése.',
+  normaInMinutes: 60,
+  lastMaintenance: null,
+  periodId: 2,
+  categoryId: 9,
+  priorityId: 4
 },
 {
-  name: 'Sürgős',
-  priority: 2
+  id: 2,
+  name: 'CO2-Tűzoltó készülék csere.',
+  normaInMinutes: 30,
+  lastMaintenance: null,
+  periodId: 3,
+  categoryId: 4,
+  priorityId: 4
 },
 {
-  name: 'Normál',
-  priority: 3
+  id: 3,
+  name: 'Lézer ellenőrzés.',
+  categoryId: 8,
+  normaInMinutes: 30,
+  lastMaintenance: null,
+  periodId: 3,
+  priorityId: 4
 },
 {
-  name: 'Kevésbé sürgős',
-  priority: 4
+  id: 4,
+  name: 'Elem csere.',
+  categoryId: 5,
+  lastMaintenance: null,
+  normaInMinutes: 30,
+  periodId: 3,
+  priorityId: 4
 },
+
 ]
+
 
 async function main() {
   console.log(`🌱  Start seeding ...\n`)
+
   for (const u of DemoPeriod) {
     const per = await prisma.period.create({
       data: u
     })
   }
-
-  GenerateMissingCategoryInfromation()
 
   for (const u of DemoCategory) {
     if (u.name.includes('.')) {
@@ -371,25 +504,14 @@ async function main() {
     })
   }
 
-  GenerateCategoryOfDevices()
-
   for (const u of DemoDevice) {
     const building = await prisma.device.create({
       data: u
     })
   }
 
-  for (const u of DemoMaintenance) {
-    const building = await prisma.scheduledMaintenance.create({
-      data: u
-    })
-  }
 
-  for (const u of DemoInstruction) {
-    const building = await prisma.instruction.create({
-      data: u
-    })
-  }
+
 
   for (const u of DemoQualification) {
     const building = await prisma.qualification.create({
@@ -403,32 +525,50 @@ async function main() {
     })
   }
 
-  for (const u of DemoMaintenanceQualification) {
-    const building = await prisma.scheduledMaintenanceQualification.create({
-      data: u
-    })
-  }
+
 
   for (const u of DemoStatus) {
     const building = await prisma.status.create({
       data: u
     })
   }
-  
-    for (const u of DemoPriority) {
-      const building = await prisma.priority.create({
-        data: u
-      })
-    }
 
-  for (const u of DemoTasks) {
-    console.log(u.userId,u.statusId,u.priorityId,u.scheduledMaintenanceId)
-    
-    const building = await prisma.tasks.create({
+  for (const u of DemoPriority) {
+    const building = await prisma.priority.create({
+      data: u
+    })
+  }
+
+
+
+  
+  for (const u of DemoScheduledMaintenance) {
+    const building = await prisma.scheduledMaintenance.create({
+      data: u
+    })
+  }
+
+  for (const u of DemoInstruction) {
+    const building = await prisma.instruction.create({
+      data: u
+    })
+  }
+  
+  for (const u of DemoScheduledMaintenanceQualification) {
+    const building = await prisma.scheduledMaintenanceQualification.create({
+      data: u
+    })
+  }
+
+
+
+  for (const u of DemoTask) {
+    const building = await prisma.task.create({
       data: u
     })
   }
 }
+
 
 main()
   .catch((e) => {
@@ -439,30 +579,3 @@ main()
     await prisma.$disconnect()
   })
 
-const GenerateMissingCategoryInfromation = () => {
-  for (const u of DemoCategory) {
-    if (u.name.includes('.')) {
-      const prefix = u.name.substring(0, u.name.lastIndexOf('.'))
-      console.log(prefix)
-      for (const p of DemoCategory) {
-        if (p.name == prefix) {
-          u.parentId = DemoCategory.indexOf(p) + 1
-          console.log('Parent found')
-          break
-        }
-      }
-    }
-    console.log('parent: ' + u.parentId)
-  }
-}
-
-const GenerateCategoryOfDevices = () => {
-  for (const u of DemoDevice) {
-    for (const cat of DemoCategory) {
-      if (u.name == cat.name) {
-        u.categoryId = DemoCategory.indexOf(cat) + 1
-        break
-      }
-    }
-  }
-}

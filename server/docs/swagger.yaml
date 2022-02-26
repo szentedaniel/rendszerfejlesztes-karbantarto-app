@@ -124,10 +124,10 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MaintenanceQualification'
-            Tasks:
+            Task:
               type: array
               items:
-                $ref: '#/components/schemas/Tasks'
+                $ref: '#/components/schemas/Task'
       # Instruction schema
       Instruction:
         type: object
@@ -177,10 +177,10 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/UserQualification'
-          Tasks:
+          Task:
             type: array
             items:
-              $ref: '#/components/schemas/Tasks'
+              $ref: '#/components/schemas/Task'
       # Qualification schema
       Qualification:
         type: object
@@ -235,8 +235,8 @@ components:
             $ref: '#/components/schemas/Maintenance'
           maintenanceId:
             type: integer
-      # Tasks schema
-      Tasks:
+      # Task schema
+      Task:
         type: object
         properties:
           id:
@@ -301,10 +301,10 @@ components:
             default: Auto-generated
           name:
             type: string
-          Tasks:
+          Task:
             type: array
             items:
-              $ref: '#/components/schemas/Tasks'
+              $ref: '#/components/schemas/Task'
       # Priority schema
       Priority:
         type: object
@@ -315,10 +315,10 @@ components:
             type: string
           priority:
             type: integer
-          Tasks:
+          Task:
             type: array
             items:
-              $ref: '#/components/schemas/Tasks'
+              $ref: '#/components/schemas/Task'
 
       Login:
         type: object
