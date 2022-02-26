@@ -18,25 +18,37 @@ export interface createInstructionData {
     maintenanceId: number
 }
 
+export const getAllInstructions =async () => {
+  try {
+    const instructions = await prisma.instruction.findMany({
+      
+    })
+    return instructions
+  } catch (error:any) {
+    throw new Error(error)
+  }
+}
+
 export const getInstructionById = async (id: number) => {
     try {
-      const Instruction = await prisma.instruction.findUnique({
+      const instruction = await prisma.instruction.findUnique({
         where: {
           id: Number(id)
         },
       })
-      return Instruction
+      return instruction
     } catch (error: any) {
       throw new Error(error)
     }
   }
 
-export const createInstructionForMaintenanceById = async (id: number, InstructionData: createInstructionDataWithoutId) => {
+export const createInstructionForScheduledMaintenanceById = async (id: number, InstructionData: createInstructionDataWithoutId) => {
     try {
         const createdInstruction = await prisma.instruction.create({
             data: {
                 ...InstructionData,
-                maintenanceId: id
+                scheduledMaintenanceId: Number(id),
+                specialMaintenanceId: Number(undefined)
             }
         })
         return createdInstruction

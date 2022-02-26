@@ -4,7 +4,7 @@ import {
   User,
   Category,
   Period,
-  Maintenance
+  ScheduledMaintenance
 } from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -181,22 +181,22 @@ export const DemoMaintenance = [{
 export const DemoInstruction = [{
   title: 'Kamera ellenőrzés.',
   body: 'Mutass be a kamerának. Ha jön a biztonságis és lebasz egyet, akkor működik.',
-  maintenanceId: 1
+  scheduledMaintenanceId: 1
 },
 {
   title: 'Kamera tárhely ellenőrzés.',
   body: 'Meghajtón jobb egér gomb, tulajdonságok, és a tárhely megtekintése onnan.',
-  maintenanceId: 3
+  scheduledMaintenanceId: 3
 },
 {
   title: 'Készülék csere',
   body: 'Készülék forgatása jobbra, balra. Teszt tüzelés. Ha jó, akkor vissza a helyére. Ha nem, akkor vegyél újat.',
-  maintenanceId: 2
+  scheduledMaintenanceId: 2
 },
 {
   title: 'Elem csere',
   body: 'Fedő eltávolítása. Elem kivétele. Új elem betétele. Fedő visszarakása.',
-  maintenanceId: 4
+  scheduledMaintenanceId: 4
 },
 ]
 
@@ -286,32 +286,32 @@ export const DemoStatus = [{
 ]
 
 export const DemoTasks = [{
-  maintenanceId: 1,
+  scheduledMaintenanceId: 1,
   userId: 1,
   priorityId: 3,
   statusId: 1,
 },
 {
-  maintenanceId: 2,
+  scheduledMaintenanceId: 2,
   userId: 3,
   priorityId: 3,
   statusId: 3,
 },
 {
-  maintenanceId: 3,
+  scheduledMaintenanceId: 3,
   userId: 3,
   priorityId: 3,
   statusId: 2,
 },
 {
-  maintenanceId: 4,
+  scheduledMaintenanceId: 4,
   userId: 2,
-    statusId: 5,
+  statusId: 5,
   priorityId: 3,
   finishedAt: '2021-02-24T18:17:29.558Z'
 },
 {
-  maintenanceId: 4,
+  scheduledMaintenanceId: 4,
   userId: 4,
   priorityId: 3,
   statusId: 3,
@@ -380,7 +380,7 @@ async function main() {
   }
 
   for (const u of DemoMaintenance) {
-    const building = await prisma.maintenance.create({
+    const building = await prisma.scheduledMaintenance.create({
       data: u
     })
   }
@@ -404,7 +404,7 @@ async function main() {
   }
 
   for (const u of DemoMaintenanceQualification) {
-    const building = await prisma.maintenanceQualification.create({
+    const building = await prisma.scheduledMaintenanceQualification.create({
       data: u
     })
   }
@@ -422,7 +422,7 @@ async function main() {
     }
 
   for (const u of DemoTasks) {
-    console.log(u.userId,u.statusId,u.priorityId,u.maintenanceId)
+    console.log(u.userId,u.statusId,u.priorityId,u.scheduledMaintenanceId)
     
     const building = await prisma.tasks.create({
       data: u

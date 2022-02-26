@@ -8,6 +8,7 @@ const userData = [
         name: 'Admin',
         username: 'admin',
         password: 'admin',
+        active: true,
         Role: {
             create: {
                 name: 'Admin'
@@ -18,6 +19,7 @@ const userData = [
         name: 'Eszközfelelős',
         username: 'eszkozfelelos',
         password: 'jelszo',
+        active: true,
         Role: {
             create: {
                 name: 'Eszközfelelős'
@@ -28,6 +30,7 @@ const userData = [
         name: 'Operátor',
         username: 'oprator',
         password: 'jelszo',
+        active: true,
         Role: {
             create: {
                 name: 'Operátor'
@@ -38,6 +41,7 @@ const userData = [
         name: 'Karbantartó',
         username: 'karbantarto',
         password: 'jelszo',
+        active: true,
         Role: {
             create: {
                 name: 'Karbantartó'

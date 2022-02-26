@@ -1,6 +1,6 @@
 import {
   PrismaClient,
-  Maintenance
+  ScheduledMaintenance
 } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -24,7 +24,7 @@ export interface updateMaintenanceData {
 
 export const getAllMaintenances = async () => {
   try {
-    const allMaintenances = await prisma.maintenance.findMany({})
+    const allMaintenances = await prisma.scheduledMaintenance.findMany({})
     return allMaintenances
   } catch (error: any) {
     throw new Error(error)
@@ -33,7 +33,7 @@ export const getAllMaintenances = async () => {
 
 export const getAllMaintenancesWithDetails = async () => {
   try {
-    const allMaintenances = await prisma.maintenance.findMany({
+    const allMaintenances = await prisma.scheduledMaintenance.findMany({
       include: {
         Instruction: true,
         MaintenanceQualification: {
@@ -67,7 +67,7 @@ export const getAllMaintenancesWithDetails = async () => {
 
 export const getMaintenanceById = async (id: number) => {
   try {
-    const Maintenance = await prisma.maintenance.findUnique({
+    const Maintenance = await prisma.scheduledMaintenance.findUnique({
       where: {
         id: Number(id)
       },
@@ -80,7 +80,7 @@ export const getMaintenanceById = async (id: number) => {
 
 export const getMaintenanceByIdWithDetails = async (id: number) => {
   try {
-    const Maintenance = await prisma.maintenance.findUnique({
+    const Maintenance = await prisma.scheduledMaintenance.findUnique({
       where: {
         id: Number(id)
       },
@@ -115,9 +115,9 @@ export const getMaintenanceByIdWithDetails = async (id: number) => {
   }
 }
 
-export const createMaintenance = async (MaintenanceData: createMaintenanceData): Promise<Maintenance> => {
+export const createMaintenance = async (MaintenanceData: createMaintenanceData): Promise<ScheduledMaintenance> => {
   try {
-    const createdMaintenance = await prisma.maintenance.create({
+    const createdMaintenance = await prisma.scheduledMaintenance.create({
       data: MaintenanceData,
     })
     return createdMaintenance
@@ -130,11 +130,11 @@ export const createMaintenance = async (MaintenanceData: createMaintenanceData):
 
 export const deleteMaintenanceById = async (id: number) => {
   try {
-    const validMaintenance = await prisma.maintenance.findFirst({where: {
+    const validMaintenance = await prisma.scheduledMaintenance.findFirst({where: {
       id: id
     }})
     if (!validMaintenance) return {status: 404, message: `Maintenance not found with id: ${id}`}
-    const deletedMaintenance = await prisma.maintenance.delete({
+    const deletedMaintenance = await prisma.scheduledMaintenance.delete({
       where: {
         id: Number(id)
       }
@@ -150,14 +150,14 @@ export const updateMaintenanceById = async (id: number, MaintenanceData: updateM
   try {
     let wantToBeMaintenanceData = MaintenanceData
 
-    const validMaintenance = await prisma.maintenance.findFirst({
+    const validMaintenance = await prisma.scheduledMaintenance.findFirst({
       where: {
         id: id
       }
     })
     if (!validMaintenance) return { status: 404, message: `Maintenance not found with id: ${id}` }
 
-    const updatedMaintenance = await prisma.maintenance.update({
+    const updatedMaintenance = await prisma.scheduledMaintenance.update({
       where: {
         id: Number(id),
       },

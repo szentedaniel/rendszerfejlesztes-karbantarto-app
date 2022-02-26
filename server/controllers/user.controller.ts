@@ -10,7 +10,8 @@ export interface createUserData {
   name: string,
   username: string,
   password: string,
-  roleId: number
+  roleId: number,
+  active: boolean
 }
 
 export interface updateUserData {
@@ -18,6 +19,7 @@ export interface updateUserData {
   username: any,
   password: any,
   roleId: any,
+  active: any
 }
 
 export interface loginUserData {
@@ -42,7 +44,7 @@ export const getAllUsers = async () => {
         },
         Tasks: {
           select: {
-            maintenance: {
+            scheduledMaintenance: {
               include: {
                 category: {
                   include: {
@@ -90,7 +92,7 @@ export const getUserById = async (id: number) => {
         },
         Tasks: {
           select: {
-            maintenance: {
+            scheduledMaintenance: {
               select: {
                 name: true,
               }
@@ -174,7 +176,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
                 },
                 Tasks: {
                   select: {
-                    maintenance: {
+                    scheduledMaintenance: {
                       select: {
                         name: true,
 
@@ -208,7 +210,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
           },
           Tasks: {
             select: {
-              maintenance: {
+              scheduledMaintenance: {
                 select: {
                   name: true,
 

@@ -8,14 +8,15 @@ generator client {
 }
 
 model Device {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  identifier  String   @unique
-  location    Location @relation(fields: [locationId], references: [id])
-  locationId  Int
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
-  categoryId  Int      @default(1)
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  description        String?
+  identifier         String               @unique
+  location           Location             @relation(fields: [locationId], references: [id])
+  locationId         Int
+  category           Category             @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
+  categoryId         Int                  @default(1)
+  SpecialMaintenance SpecialMaintenance[]
 }
 
 model Location {
@@ -33,44 +34,57 @@ model Building {
 }
 
 model Category {
-  id          Int          @id @default(autoincrement())
+  id          Int                   @id @default(autoincrement())
   name        String
   Device      Device[]
-  Maintenance Maintenance?
-  children    Category[]   @relation("ChildParent")
-  parent      Category?    @relation("ChildParent", fields: [parentId], references: [id], onDelete: SetNull)
+  Maintenance ScheduledMaintenance?
+  children    Category[]            @relation("ChildParent")
+  parent      Category?             @relation("ChildParent", fields: [parentId], references: [id], onDelete: SetNull)
   parentId    Int?
 }
 
 model Period {
-  id          Int           @id @default(autoincrement())
+  id          Int                    @id @default(autoincrement())
   name        String
   days        Int
-  Maintenance Maintenance[]
+  Maintenance ScheduledMaintenance[]
 }
 
-model Maintenance {
-  id                       Int                        @id @default(autoincrement())
+model ScheduledMaintenance {
+  id                       Int                                 @id @default(autoincrement())
   name                     String
-  Instruction              Instruction[]
   normaInMinutes           Int
-  lastMaintenanceId        Int?                       @unique
-  lastMaintenance          Tasks?                     @relation(name: "LastTask", fields: [lastMaintenanceId], references: [id])
-  period                   Period?                    @relation(fields: [periodId], references: [id], onDelete: SetNull)
+  lastMaintenance          DateTime?
   periodId                 Int?
-  categoryId               Int                        @unique @default(1)
-  category                 Category                   @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
-  MaintenanceQualification MaintenanceQualification[]
+  period                   Period?                             @relation(fields: [periodId], references: [id], onDelete: SetNull)
+  categoryId               Int                                 @unique @default(1)
+  category                 Category                            @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
+  MaintenanceQualification ScheduledMaintenanceQualification[]
+  Instruction              Instruction[]
+  Tasks                    Tasks[]
+}
+
+model SpecialMaintenance {
+  id                       Int                               @id @default(autoincrement())
+  name                     String
+  normaInMinutes           Int
+  malfunctionDate          DateTime
+  deviceId                 Int                               @unique @default(1)
+  device                   Device                            @relation(fields: [deviceId], references: [id], onDelete: SetDefault)
+  MaintenanceQualification SpecialMaintenanceQualification[]
+  Instruction              Instruction[]
   Tasks                    Tasks[]
 }
 
 model Instruction {
-  id            Int         @id @default(autoincrement())
-  title         String
-  body          String?
-  done          Boolean     @default(false)
-  maintenance   Maintenance @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
-  maintenanceId Int
+  id                     Int                   @id @default(autoincrement())
+  title                  String
+  body                   String?
+  done                   Boolean               @default(false)
+  scheduledMaintenance   ScheduledMaintenance? @relation(fields: [scheduledMaintenanceId], references: [id], onDelete: Cascade)
+  scheduledMaintenanceId Int?
+  specialMaintenance     SpecialMaintenance?   @relation(fields: [specialMaintenanceId], references: [id], onDelete: Cascade)
+  specialMaintenanceId   Int?
 }
 
 model User {
@@ -82,16 +96,18 @@ model User {
   password          String
   Role              Role                @relation(fields: [roleId], references: [id])
   roleId            Int
+  active            Boolean
   UserQualification UserQualification[]
   Tasks             Tasks[]
 
 }
 
 model Qualification {
-  id                       Int                        @id @default(autoincrement())
-  name                     String
-  UserQualification        UserQualification[]
-  MaintenanceQualification MaintenanceQualification[]
+  id                                Int                                 @id @default(autoincrement())
+  name                              String
+  UserQualification                 UserQualification[]
+  ScheduledMaintenanceQualification ScheduledMaintenanceQualification[]
+  SpecialMaintenanceQualification   SpecialMaintenanceQualification[]
 }
 
 model UserQualification {
@@ -109,35 +125,43 @@ model Role {
   User User[]
 }
 
-model MaintenanceQualification {
-  qualification   Qualification @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
+model ScheduledMaintenanceQualification {
+  qualification   Qualification        @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
   qualificationId Int
-  maintenance     Maintenance   @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
+  maintenance     ScheduledMaintenance @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
+  maintenanceId   Int
+
+  @@id([qualificationId, maintenanceId])
+}
+
+model SpecialMaintenanceQualification {
+  qualification   Qualification      @relation(fields: [qualificationId], references: [id], onDelete: Cascade)
+  qualificationId Int
+  maintenance     SpecialMaintenance @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
   maintenanceId   Int
 
   @@id([qualificationId, maintenanceId])
 }
 
 model Tasks {
-  id            Int          @id @default(autoincrement())
-  maintenanceId Int
-  maintenance   Maintenance  @relation(fields: [maintenanceId], references: [id], onDelete: Cascade)
-  userId        Int?
-  user          User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  description   String?
-  scheduled     DateTime     @default(now())
-  exceptive     Boolean      @default(false)
-  assignedAt    DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  acceptedAt    DateTime?
-  declinedAt    DateTime?
-  startedAt     DateTime?
-  finishedAt    DateTime?
-  priorityId    Int          @default(3)
-  priority      Priority     @relation(fields: [priorityId], references: [id])
-  statusId      Int
-  status        Status       @relation(fields: [statusId], references: [id])
-  lastTask      Maintenance? @relation("LastTask")
+  id                     Int                  @id @default(autoincrement())
+  scheduledMaintenanceId Int?
+  scheduledMaintenance   ScheduledMaintenance? @relation(fields: [scheduledMaintenanceId], references: [id], onDelete: Cascade)
+  specialMaintenanceId   Int?
+  specialMaintenance     SpecialMaintenance?   @relation(fields: [specialMaintenanceId], references: [id], onDelete: Cascade)
+  userId                 Int?
+  user                   User?                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  description            String?
+  assignedAt             DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+  acceptedAt             DateTime?
+  declinedAt             DateTime?
+  startedAt              DateTime?
+  finishedAt             DateTime?
+  priorityId             Int                  @default(3)
+  priority               Priority             @relation(fields: [priorityId], references: [id])
+  statusId               Int
+  status                 Status               @relation(fields: [statusId], references: [id])
 }
 
 model Priority {

@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
 export interface createCategoryData {
   name: string,
   normaInMinutes: number,
-  lastMaintenance: Date,
+  lastMaintenance: Date | null,
   periodId: number,
   parentId: number
 }
@@ -48,7 +48,6 @@ export const getAllCategoriesWithDetails = async () => {
             MaintenanceQualification: true,
             Tasks: true,
             category: true,
-            lastMaintenance: true,
             period: true
             //d: true,
             //ame: true,
