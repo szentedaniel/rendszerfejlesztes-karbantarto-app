@@ -44,7 +44,11 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
 
 ### 🗂 Adatbázis 🗂
 
-[db link](https://github.com/szentedaniel/rendszerfejlesztes-karbantarto-app/tree/main/server/docs/Database/db.md)
+<!-- ![Database image](/server/docs/Database/db.png) -->
+ 
+![img](/server/docs/Database/db/MainLayout.svg)
+
+[Click here to database details](/server/docs/Database/db.md)
 
 ### 🪑 Architektúra 🪑
 

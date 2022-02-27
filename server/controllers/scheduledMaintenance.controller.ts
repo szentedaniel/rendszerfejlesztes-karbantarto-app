@@ -22,18 +22,18 @@ export interface updateMaintenanceData {
 }
 
 
-export const getAllMaintenances = async () => {
+export const getAllScheduledMaintenances = async () => {
   try {
-    const allMaintenances = await prisma.scheduledMaintenance.findMany({})
-    return allMaintenances
+    const allScheduledMaintenances = await prisma.scheduledMaintenance.findMany({})
+    return allScheduledMaintenances
   } catch (error: any) {
     throw new Error(error)
   }
 }
 
-export const getAllMaintenancesWithDetails = async () => {
+export const getAllScheduledMaintenancesWithDetails = async () => {
   try {
-    const allMaintenances = await prisma.scheduledMaintenance.findMany({
+    const allScheduledMaintenances = await prisma.scheduledMaintenance.findMany({
       include: {
         Instruction: true,
         MaintenanceQualification: {
@@ -59,7 +59,7 @@ export const getAllMaintenancesWithDetails = async () => {
         },
       },
     })
-    return allMaintenances
+    return allScheduledMaintenances
   } catch (error: any) {
     throw new Error(error)
   }

@@ -3,7 +3,7 @@ import { createCategoryApi, deleteCategoryByIdApi, getAllCategoryApi, getAllCate
 import { createDeviceApi, deleteDeviceByIdApi, getAllDeviceApi, getDeviceByIdApi, updateDeviceByIdApi } from '../controllers/api/api.device.controller'
 import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
 import { createQualificationApi, deleteQualificationByIdApi, getAllQualificationsApi, getQualificationByIdApi, updateQualificationByIdApi } from '../controllers/api/api.qualification.controller'
-import { getAllMaintenanceApi, getAllMaintenanceWithDetailsApi, getMaintenanceByIdApi, getMaintenanceByIdWithDetailsApi, deleteMaintenanceByIdApi, updateMaintenanceByIdApi, createMaintenanceApi } from '../controllers/api/api.maintenance.controller'
+import { getAllMaintenanceApi, getAllMaintenanceWithDetailsApi, getMaintenanceByIdApi, getMaintenanceByIdWithDetailsApi, deleteMaintenanceByIdApi, updateMaintenanceByIdApi, createMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
 import { deleteInstructionByIdApi } from '../controllers/api/api.instruction.controller'
 const router = express.Router()
 
@@ -105,7 +105,7 @@ router.post('/qualification', async (req: express.Request, res: express.Response
   createQualificationApi(req, res, next)
 })
 
-router.delete('/qualification/:id',async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/qualification/:id', async (req: express.Request, res: express.Response, next: any) => {
   deleteQualificationByIdApi(req, res, next)
 })
 
@@ -115,27 +115,27 @@ router.patch('/qualification/:id', async (req: express.Request, res: express.Res
 
 
 // Maintenance ROUTES
-router.get('/maintenances', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenances', async (req: express.Request, res: express.Response, next: any) => {
   getAllMaintenanceApi(req, res, next)
 })
 
-router.get('/maintenances/details', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenances/details', async (req: express.Request, res: express.Response, next: any) => {
   getAllMaintenanceWithDetailsApi(req, res, next)
 })
 
-router.get('/maintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
   getMaintenanceByIdApi(req, res, next)
 })
 
-router.get('/maintenances/:id/details', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenances/:id/details', async (req: express.Request, res: express.Response, next: any) => {
   getMaintenanceByIdWithDetailsApi(req, res, next)
 })
 
-router.delete('/maintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/scheduledMaintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
   deleteMaintenanceByIdApi(req, res, next)
 })
 
-router.patch('/maintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/scheduledMaintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
   updateMaintenanceByIdApi(req, res, next)
 })
 

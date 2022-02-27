@@ -53,15 +53,15 @@ const userData = [
 async function main() {
   console.log(`🌱  Start seeding ...\n`)
   for (const u of userData) {
-    bcrypt.genSalt(10, async (err, salt) => {
-      bcrypt.hash(u.password, salt, async (err, hash) => {
-        u.password = hash
-        const user = await prisma.user.create({
-          data: u,
-        })
-        console.log(`👨  Created user with id: ${user.id}`)
-      })
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(u.password, salt);
+
+    u.password = hash
+    const user = await prisma.user.create({
+      data: u,
     })
+    console.log(`👨  Created user with id: ${user.id}`)
+
   }
 }
 

@@ -3,6 +3,7 @@ import {
   User
 } from '@prisma/client'
 import bcrypt from 'bcrypt'
+import { exclude, removePasswordFromUserArray } from '../utils'
 
 const prisma = new PrismaClient()
 
@@ -61,6 +62,7 @@ export const getAllUsers = async () => {
           },
         },
       },
+
       // where: {
       //   maintenanceUsers: {
       //     some: {
@@ -71,7 +73,10 @@ export const getAllUsers = async () => {
       //   }
       // }
     })
-    return allUsers
+
+
+
+    return removePasswordFromUserArray(allUsers)
   } catch (error: any) {
     throw new Error(error)
   }
@@ -108,7 +113,7 @@ export const getUserById = async (id: number) => {
   }
 }
 
-export const createUser = async (userData: createUserData): Promise<User> => {
+export const createUser = async (userData: createUserData): Promise<Omit<User, "password">> => {
   try {
     const salt = bcrypt.genSaltSync(10)
     const hash = bcrypt.hashSync(userData.password, salt)
@@ -116,7 +121,7 @@ export const createUser = async (userData: createUserData): Promise<User> => {
     const createdUser = await prisma.user.create({
       data: userData,
     })
-    return createdUser
+    return exclude(createdUser, 'password')
 
 
   } catch (error: any) {
@@ -138,7 +143,7 @@ export const deleteUserById = async (id: number) => {
         id: Number(id)
       }
     })
-    return deletedUser
+    return exclude(deletedUser, 'password') 
   } catch (error: any) {
     throw new Error(error)
 
@@ -187,7 +192,7 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
                 },
               },
             })
-            return updatedUser
+            return exclude(updatedUser, 'password') 
 
           } catch (error: any) {
             throw new Error(error)
@@ -221,7 +226,8 @@ export const updateUserById = async (id: number, userData: updateUserData) => {
           },
         },
       })
-      return updatedUser
+      return exclude(updatedUser, 'password') 
+
     }
 
   } catch (error: any) {
@@ -247,8 +253,7 @@ export const login = async (userData: loginUserData) => {
     if (User) {
       const success = bcrypt.compareSync(password, User!.password)
       if (success) {
-        const response: any = User
-        delete response.password
+        const response = exclude(User, 'password')
         return response
       }
       else return { status: 401, message: 'Wrong password' }

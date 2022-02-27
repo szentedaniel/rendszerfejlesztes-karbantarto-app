@@ -26,7 +26,11 @@ export const getAllDevices = async () => {
     const allDevices = await prisma.device.findMany({
       include: {
         category: true,
-        location: true
+        location: {
+          include: {
+            building: true
+          }
+        }
       },
     })
     return allDevices

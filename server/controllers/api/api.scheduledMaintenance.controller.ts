@@ -1,10 +1,10 @@
 import { ScheduledMaintenance } from '@prisma/client'
 import express from 'express'
-import { createMaintenance, createMaintenanceData, deleteMaintenanceById, getAllMaintenances, getAllMaintenancesWithDetails, getMaintenanceById, getMaintenanceByIdWithDetails, updateMaintenanceById, updateMaintenanceData } from '../maintenance.controller'
+import { createMaintenance, createMaintenanceData, deleteMaintenanceById, getAllScheduledMaintenances, getAllScheduledMaintenancesWithDetails, getMaintenanceById, getMaintenanceByIdWithDetails, updateMaintenanceById, updateMaintenanceData } from '../scheduledMaintenance.controller'
 
 export const getAllMaintenanceApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
-    const response = await getAllMaintenances()
+    const response = await getAllScheduledMaintenances()
     res.json(response)
   } catch (error) {
     next(error)
@@ -13,7 +13,7 @@ export const getAllMaintenanceApi = async (req: express.Request, res: express.Re
 
 export const getAllMaintenanceWithDetailsApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
-    const response = await getAllMaintenancesWithDetails()
+    const response = await getAllScheduledMaintenancesWithDetails()
     res.json(response)
   } catch (error) {
     next(error)

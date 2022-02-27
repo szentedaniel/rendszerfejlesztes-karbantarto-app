@@ -2,6 +2,7 @@ import {
   PrismaClient,
   Category
 } from '@prisma/client'
+import createHttpError from 'http-errors'
 
 const prisma = new PrismaClient()
 
@@ -49,17 +50,6 @@ export const getAllCategoriesWithDetails = async () => {
             Task: true,
             category: true,
             period: true
-            //d: true,
-            //ame: true,
-            //astMaintenanceId: true,
-            //ormaInMinutes: true,
-            //eriod: true,
-            //eriodId: true,
-            //astMaintenance: true,
-
-            //ategoryId: true,
-            //nstruction: true,
-
           }
         }
       },
@@ -120,6 +110,8 @@ export const createCategory = async (CategoryData: createCategoryData): Promise<
 
 export const deleteCategoryById = async (id: number) => {
   try {
+    if (id === 1) return { status: 403, message: 'A kategória nem törölhető!' }
+
     const validCategory = await prisma.category.findFirst({
       where: {
         id: id
@@ -143,6 +135,9 @@ export const updateCategoryById = async (id: number, CategoryData: updateCategor
   try {
     let wantToBeCategoryData = CategoryData
 
+    if (id === 1) return { status: 403, message: 'A kategória nem Módosítható!' }
+    
+    
     const validCategory = await prisma.category.findFirst({
       where: {
         id: id

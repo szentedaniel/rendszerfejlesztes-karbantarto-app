@@ -1013,13 +1013,13 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 
   # MAINTENANCES
-  /maintenances:
+  /scheduledMaintenances:
     get:
-      summary: Returns all maintenances
-      tags: [Maintenances]
+      summary: Returns all scheduledMaintenances
+      tags: [ScheduledMaintenances]
       responses:
         200:
-          description: the list of the maintenances
+          description: the list of the scheduledMaintenances
           content:
             application/json:
               schema:
@@ -1027,13 +1027,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/Maintenance'
   
-  /maintenances/details:
+  /scheduledMaintenances/details:
     get:
-      summary: Returns all maintenances with details
-      tags: [Maintenances]
+      summary: Returns all scheduledMaintenances with details
+      tags: [ScheduledMaintenances]
       responses:
         200:
-          description: the list of the maintenances
+          description: the list of the scheduledMaintenances
           content:
             application/json:
               schema:
@@ -1041,10 +1041,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/Maintenance'
         
-  /maintenances/{id}:
+  /scheduledMaintenances/{id}:
     get:
       summary: Returns a maintenance by id
-      tags: [Maintenances]
+      tags: [ScheduledMaintenances]
       parameters:
         - in: path
           name: id
@@ -1060,7 +1060,7 @@ paths:
                 $ref: '#/components/schemas/Maintenance'
     delete:
       summary: Delete a maintenance by id
-      tags: [Maintenances]
+      tags: [ScheduledMaintenances]
       parameters:
         - in: path
           name: id
@@ -1090,7 +1090,7 @@ paths:
                 $ref: '#/components/schemas/ServerError'
     patch:
       summary: Update a maintenance by id
-      tags: [Maintenances]
+      tags: [ScheduledMaintenances]
       parameters:
         - in: path
           name: id
@@ -1160,10 +1160,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /maintenances/{id}/details:
+  /scheduledMaintenances/{id}/details:
     get:
       summary: Returns a maintenance by id
-      tags: [Maintenances]
+      tags: [ScheduledMaintenances]
       parameters:
         - in: path
           name: id
@@ -1181,7 +1181,7 @@ paths:
   /maintenance:
     post:
       summary: Adds a new maintenance
-      tags: [Maintenances]
+      tags: [ScheduledMaintenances]
       requestBody:
         content:
           application/json:     
