@@ -90,11 +90,11 @@ embereket)
 - [x] *b,(Flórián)* Eszköz kategóriához a karbantartásra vonatkozó instrukciók rögzítése
 - [x] *c,(Szente)* Karbantartók felvétele a rendszerbe
 - [x] *d,(Flórián)* Végzettségek karbantartóhoz rendelése
-- [ ] *e,(Flórián)* Rendkívüli karbantartási feladatok rögzítése a rendszerbe (eszköz, időpont,
+- [x] *e,(Flórián)* Rendkívüli karbantartási feladatok rögzítése a rendszerbe (eszköz, időpont,
 hiba leírása)
 - [ ] *f,(Szente)* Időszakos karbantartási feladatok automatikus generálása (utolsó
 karbantartás és karbantartási periódus alapján)
-- [ ] *g,(Flórián)* Feladatok listázása, állapotok megjelenítése
+- [x] *g,(Flórián)* Feladatok listázása, állapotok megjelenítése
 
 &nbsp;
 

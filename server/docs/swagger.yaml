@@ -1524,7 +1524,7 @@ paths:
           required: true
       responses:
         200:
-          description: The instruction was successfully deleted and the data of the deleted maintenance is returned
+          description: The instruction was successfully deleted and the data of the deleted instruction is returned
           content:
             application/json:
               schema:
@@ -1539,6 +1539,153 @@ paths:
                 $ref: '#/components/schemas/NotFound'
         500:
           description: The instruction could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+# TASKS
+  /tasks:
+    get:
+      summary: Returns all tasks
+      tags: [Tasks]
+      responses:
+        200:
+          description: the list of the tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        
+  /task/{id}:
+    get:
+      summary: Returns a task by id
+      tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+    delete:
+      summary: Delete a task by id
+      tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The task was successfully deleted and the data of the deleted task is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        404:
+          description: The task was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The task could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a task by id
+      tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Task'
+            examples:    
+              Example1:   
+                value:
+                  scheduledMaintenanceId: 1
+                  specialMaintenanceId: null
+                  userId: 1
+                  description: null
+                  acceptedAt: 2022-02-20T11:11:12
+                  declinedAt: null
+                  startedAt: null
+                  finishedAt: null
+                  statusId: 2
+      responses:
+        200:
+          description: The task was successfully updated and the data of the updated task is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        404:
+          description: The task was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The task could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+  /task:
+    post:
+      summary: Adds a new tsak
+      tags: [Tasks]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Task'   
+            examples:    
+              Example1:   
+                value:
+                  scheduledMaintenanceId: 1
+                  specialMaintenanceId: null
+                  userId: 1
+                  description: null
+                  acceptedAt: 2022-02-20T11:11:12
+                  declinedAt: null
+                  startedAt: null
+                  finishedAt: null
+                  statusId: 2
+      responses:
+        200:
+          description: The task was successfully created and the data of the created task is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        500:
+          description: The task could not be created
           content:
             application/json:
               schema:

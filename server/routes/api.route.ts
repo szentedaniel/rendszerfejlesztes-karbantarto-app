@@ -8,6 +8,7 @@ import { getAllScheduledMaintenanceQualificationsApi, getAllSpecialMaintenanceQu
 import { getAllScheduledMaintenanceWithDetailsApi, getScheduledMaintenanceByIdApi, getScheduledMaintenanceByIdWithDetailsApi, deleteScheduledMaintenanceByIdApi, updateScheduledMaintenanceByIdApi, createScheduledMaintenanceApi, getAllScheduledMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
 import { getAllSpecialMaintenanceApi, getAllSpecialMaintenanceWithDetailsApi, getSpecialMaintenanceByIdApi, getSpecialMaintenanceByIdWithDetailsApi, deleteSpecialMaintenanceByIdApi, updateSpecialMaintenanceByIdApi, createSpecialMaintenanceApi } from '../controllers/api/api.specialMaintenance.controller'
 import { getAllInstructionsApi, getInstructionByIdApi, createInstructionApi, deleteInstructionApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
+import { createTaskApi, deleteTaskByIdApi, getAllTasksApi, getTaskByIdApi, updateTaskByIdApi } from '../controllers/api/api.task.controller'
 const router = express.Router()
 
 
@@ -259,4 +260,56 @@ router.delete('/userQualification/:id', async (req: express.Request, res: expres
 router.patch('/userQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
   updateInstructionApi(req, res, next)
 })
+
+//Task ROUTES
+router.get('/tasks', async (req: express.Request, res: express.Response, next: any) => {
+  getAllTasksApi(req, res, next)
+})
+
+router.get('/task/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getTaskByIdApi(req, res, next)
+})
+
+router.post('/task', async (req: express.Request, res: express.Response, next: any) => {
+  createTaskApi(req, res, next)
+})
+
+router.delete('/task/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteTaskByIdApi(req, res, next)
+})
+
+router.patch('/task/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateTaskByIdApi(req, res, next)
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router
