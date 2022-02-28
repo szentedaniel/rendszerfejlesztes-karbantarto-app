@@ -89,7 +89,7 @@ embereket)
 - [x] *a,(Szente)* Eszköz kategóriához normaidők és karbantartási periódus rögzítése
 - [x] *b,(Flórián)* Eszköz kategóriához a karbantartásra vonatkozó instrukciók rögzítése
 - [x] *c,(Szente)* Karbantartók felvétele a rendszerbe
-- [ ] *d,(Flórián)* Végzettségek karbantartóhoz rendelése
+- [x] *d,(Flórián)* Végzettségek karbantartóhoz rendelése
 - [ ] *e,(Flórián)* Rendkívüli karbantartási feladatok rögzítése a rendszerbe (eszköz, időpont,
 hiba leírása)
 - [ ] *f,(Szente)* Időszakos karbantartási feladatok automatikus generálása (utolsó

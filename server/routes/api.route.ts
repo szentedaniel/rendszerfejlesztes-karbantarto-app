@@ -75,15 +75,15 @@ router.get('/devices', async (req: express.Request, res: express.Response, next:
   getAllDeviceApi(req, res, next)
 })
 
-router.get('/devices/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/device/:id', async (req: express.Request, res: express.Response, next: any) => {
   getDeviceByIdApi(req, res, next)
 })
 
-router.delete('/devices/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/device/:id', async (req: express.Request, res: express.Response, next: any) => {
   deleteDeviceByIdApi(req, res, next)
 })
 
-router.patch('/devices/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/device/:id', async (req: express.Request, res: express.Response, next: any) => {
   updateDeviceByIdApi(req, res, next)
 })
 
@@ -124,19 +124,19 @@ router.get('/scheduledMaintenances/details', async (req: express.Request, res: e
   getAllMaintenanceWithDetailsApi(req, res, next)
 })
 
-router.get('/scheduledMaintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenance/:id', async (req: express.Request, res: express.Response, next: any) => {
   getMaintenanceByIdApi(req, res, next)
 })
 
-router.get('/scheduledMaintenances/:id/details', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenance/:id/details', async (req: express.Request, res: express.Response, next: any) => {
   getMaintenanceByIdWithDetailsApi(req, res, next)
 })
 
-router.delete('/scheduledMaintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/scheduledMaintenance/:id', async (req: express.Request, res: express.Response, next: any) => {
   deleteMaintenanceByIdApi(req, res, next)
 })
 
-router.patch('/scheduledMaintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/scheduledMaintenance/:id', async (req: express.Request, res: express.Response, next: any) => {
   updateMaintenanceByIdApi(req, res, next)
 })
 
@@ -187,24 +187,44 @@ router.patch('/specialMaintenanceQualification/:id', async (req: express.Request
 })
 
 // Instruction ROUTES
-router.get('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/instructions', async (req: express.Request, res: express.Response, next: any) => {
   getAllInstructionsApi(req, res, next)
 })
 
-router.get('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/instruction/:id', async (req: express.Request, res: express.Response, next: any) => {
   getInstructionByIdApi(req, res, next)
 })
 
-router.post('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.post('/instruction', async (req: express.Request, res: express.Response, next: any) => {
   createInstructionApi(req, res, next)
 })
 
-router.delete('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/instruction/:id', async (req: express.Request, res: express.Response, next: any) => {
   deleteInstructionApi(req, res, next)
 })
 
-router.patch('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/instruction/:id', async (req: express.Request, res: express.Response, next: any) => {
   updateInstructionApi(req, res, next)
 })
 
+//UserQualification ROUTES
+router.get('/userQualifications', async (req: express.Request, res: express.Response, next: any) => {
+  getAllInstructionsApi(req, res, next)
+})
+
+router.get('/userQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getInstructionByIdApi(req, res, next)
+})
+
+router.post('/userQualification', async (req: express.Request, res: express.Response, next: any) => {
+  createInstructionApi(req, res, next)
+})
+
+router.delete('/userQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteInstructionApi(req, res, next)
+})
+
+router.patch('/userQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateInstructionApi(req, res, next)
+})
 module.exports = router

@@ -945,7 +945,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Device'
 
-  /devices/{id}:
+  /device/{id}:
     get:
       summary: Returns a device by id
       tags: [Devices]
@@ -1123,7 +1123,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ScheduledMaintenance'
         
-  /scheduledMaintenances/{id}:
+  /scheduledMaintenance/{id}:
     get:
       summary: Returns a maintenance by id
       tags: [ScheduledMaintenances]
@@ -1242,7 +1242,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /scheduledMaintenances/{id}/details:
+  /scheduledMaintenance/{id}/details:
     get:
       summary: Returns a maintenance by id
       tags: [ScheduledMaintenances]
@@ -1312,7 +1312,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Instruction'
   
-  /instructions/{id}:
+  /instruction/{id}:
     delete:
       summary: Delete an instruction by id
       tags: [Instructions]
