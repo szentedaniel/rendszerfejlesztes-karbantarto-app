@@ -5,7 +5,7 @@ import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginA
 import { createQualificationApi, deleteQualificationByIdApi, getAllQualificationsApi, getQualificationByIdApi, updateQualificationByIdApi } from '../controllers/api/api.qualification.controller'
 import { getAllMaintenanceApi, getAllMaintenanceWithDetailsApi, getMaintenanceByIdApi, getMaintenanceByIdWithDetailsApi, deleteMaintenanceByIdApi, updateMaintenanceByIdApi, createMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
 import { getAllScheduledMaintenanceQualificationsApi, getAllSpecialMaintenanceQualificationsApi, getScheduledMaintenanceQualificationByIdApi, getSpecialMaintenanceQualificationByIdApi, createScheduledMaintenanceQualificationApi, createSpecialMaintenanceQualificationApi, deleteScheduledMaintenanceQualificationApi, deleteSpecialMaintenanceQualificationApi, updateScheduledMaintenanceQualificationApi, updateSpecialMaintenanceQualificationApi} from '../controllers/api/api.maintenanceQualification.controller'
-import { deleteInstructionByIdApi } from '../controllers/api/api.instruction.controller'
+import { deleteInstructionApi, createInstructionApi, getAllInstructionsApi, getInstructionByIdApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
 const router = express.Router()
 
 
@@ -187,8 +187,24 @@ router.patch('/specialMaintenanceQualification/:id', async (req: express.Request
 })
 
 // Instruction ROUTES
+router.get('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getAllInstructionsApi(req, res, next)
+})
+
+router.get('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getInstructionByIdApi(req, res, next)
+})
+
+router.post('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+  createInstructionApi(req, res, next)
+})
+
 router.delete('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
-  deleteInstructionByIdApi(req, res, next)
+  deleteInstructionApi(req, res, next)
+})
+
+router.patch('/instructions/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateInstructionApi(req, res, next)
 })
 
 module.exports = router
