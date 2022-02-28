@@ -87,7 +87,7 @@ embereket)
 **2. Mérföldkő:**
 
 - [x] *a,(Szente)* Eszköz kategóriához normaidők és karbantartási periódus rögzítése
-- [ ] *b,(Flórián)* Eszköz kategóriához a karbantartásra vonatkozó instrukciók rögzítése
+- [x] *b,(Flórián)* Eszköz kategóriához a karbantartásra vonatkozó instrukciók rögzítése
 - [x] *c,(Szente)* Karbantartók felvétele a rendszerbe
 - [ ] *d,(Flórián)* Végzettségek karbantartóhoz rendelése
 - [ ] *e,(Flórián)* Rendkívüli karbantartási feladatok rögzítése a rendszerbe (eszköz, időpont,
