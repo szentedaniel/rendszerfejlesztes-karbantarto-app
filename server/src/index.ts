@@ -61,7 +61,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: any) => 
 app.listen(PORT, () => {
   console.log(`🏃 Server is running on http://localhost:${PORT}/ 🏃`)
   console.log(`📚 API Documentation on http://localhost:${PORT}/api-docs 📚`)
-  console.log(`🖨 Database schema on http://localhost:${PORT}/db 🖨`)
+  console.log(`🖨  Database schema on http://localhost:${PORT}/db 🖨`)
 
 })
 

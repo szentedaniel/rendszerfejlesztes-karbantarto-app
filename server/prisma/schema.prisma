@@ -56,7 +56,7 @@ model ScheduledMaintenance {
   normaInMinutes           Int
   lastMaintenance          DateTime?
   periodId                 Int
-  period                   Period                              @relation(fields: [periodId], references: [id], onDelete: SetNull)
+  period                   Period                              @relation(fields: [periodId], references: [id], onDelete: Restrict)
   categoryId               Int                                 @default(1)
   category                 Category                            @relation(fields: [categoryId], references: [id], onDelete: SetDefault)
   priorityId               Int

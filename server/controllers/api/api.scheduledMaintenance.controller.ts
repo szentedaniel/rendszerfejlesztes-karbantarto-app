@@ -1,8 +1,9 @@
 import { ScheduledMaintenance } from '@prisma/client'
 import express from 'express'
-import { createMaintenance, createMaintenanceData, deleteMaintenanceById, getAllScheduledMaintenances, getAllScheduledMaintenancesWithDetails, getMaintenanceById, getMaintenanceByIdWithDetails, updateMaintenanceById, updateMaintenanceData } from '../scheduledMaintenance.controller'
+import { getAllScheduledMaintenances, getAllScheduledMaintenancesWithDetails, getScheduledMaintenanceByIdWithDetails, deleteScheduledMaintenanceById, updateScheduledMaintenanceById, createScheduledMaintenance, getScheduledMaintenanceById, createScheduledMaintenanceData, updateScheduledMaintenanceData } from '../scheduledMaintenance.controller'
 
-export const getAllMaintenanceApi = async (req: express.Request, res: express.Response, next: any) => {
+
+export const getAllScheduledMaintenanceApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
     const response = await getAllScheduledMaintenances()
     res.json(response)
@@ -11,7 +12,7 @@ export const getAllMaintenanceApi = async (req: express.Request, res: express.Re
   }
 }
 
-export const getAllMaintenanceWithDetailsApi = async (req: express.Request, res: express.Response, next: any) => {
+export const getAllScheduledMaintenanceWithDetailsApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
     const response = await getAllScheduledMaintenancesWithDetails()
     res.json(response)
@@ -20,57 +21,80 @@ export const getAllMaintenanceWithDetailsApi = async (req: express.Request, res:
   }
 }
 
-export const getMaintenanceByIdApi = async (req: express.Request, res: express.Response, next: any) => {
+export const getScheduledMaintenanceByIdApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
     const {
       id
     } = req.params
-    const response = await getMaintenanceById(Number(id))
+    const response = await getScheduledMaintenanceById(Number(id))
     res.json(response)
   } catch (error) {
     next(error)
   }
 }
 
-export const getMaintenanceByIdWithDetailsApi = async (req: express.Request, res: express.Response, next: any) => {
+export const getScheduledMaintenanceByIdWithDetailsApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
     const {
       id
     } = req.params
-    const response = await getMaintenanceByIdWithDetails(Number(id))
+    const response = await getScheduledMaintenanceByIdWithDetails(Number(id))
     res.json(response)
   } catch (error) {
     next(error)
   }
 }
 
-export const deleteMaintenanceByIdApi = async (req: express.Request, res: express.Response, next: any) => {
+export const deleteScheduledMaintenanceByIdApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
     const {
       id
     } = req.params
-    const response = await deleteMaintenanceById(Number(id))
+    const response = await deleteScheduledMaintenanceById(Number(id))
     res.json(response)
   } catch (error) {
     next(error)
   }
 }
 
-export const updateMaintenanceByIdApi = async (req: express.Request, res: express.Response, next: any) => {
+export const updateScheduledMaintenanceByIdApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
     const { id } = req.params
-    let wantToBeMaintenanceData: ScheduledMaintenance = req.body
-    const response = await updateMaintenanceById(Number(id), wantToBeMaintenanceData)
+    let wantToBeMaintenanceData: updateScheduledMaintenanceData = req.body
+
+    const lastMaintenanceToBeParse = wantToBeMaintenanceData.lastMaintenance
+    if (lastMaintenanceToBeParse) {
+      wantToBeMaintenanceData = {
+        ...wantToBeMaintenanceData, priorityId: 4, lastMaintenance: new Date(lastMaintenanceToBeParse).toISOString()
+      }
+    } else {
+      wantToBeMaintenanceData = {
+        ...wantToBeMaintenanceData, priorityId: 4
+      }
+    }
+    
+    const response = await updateScheduledMaintenanceById(Number(id), wantToBeMaintenanceData)
     res.json(response)
   } catch (error) {
     next(error)
   }
 }
 
-export const createMaintenanceApi = async (req: express.Request, res: express.Response, next: any) => {
+export const createScheduledMaintenanceApi = async (req: express.Request, res: express.Response, next: any) => {
   try {
-    let MaintenanceData: ScheduledMaintenance = req.body
-    const response = await createMaintenance(MaintenanceData)
+    let MaintenanceData: createScheduledMaintenanceData = req.body
+    const lastMaintenanceToBeParse = MaintenanceData.lastMaintenance
+    if (lastMaintenanceToBeParse) {
+      MaintenanceData = {
+        ...MaintenanceData, priorityId: 4, lastMaintenance: new Date(lastMaintenanceToBeParse).toISOString()
+      }
+    } else {
+      MaintenanceData = {
+        ...MaintenanceData, priorityId: 4
+      }
+    }
+
+    const response = await createScheduledMaintenance(MaintenanceData)
     res.json(response)
   } catch (error) {
     next(error)
