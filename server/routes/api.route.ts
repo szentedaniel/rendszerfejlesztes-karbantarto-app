@@ -4,6 +4,7 @@ import { createDeviceApi, deleteDeviceByIdApi, getAllDeviceApi, getDeviceByIdApi
 import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
 import { createQualificationApi, deleteQualificationByIdApi, getAllQualificationsApi, getQualificationByIdApi, updateQualificationByIdApi } from '../controllers/api/api.qualification.controller'
 import { getAllMaintenanceApi, getAllMaintenanceWithDetailsApi, getMaintenanceByIdApi, getMaintenanceByIdWithDetailsApi, deleteMaintenanceByIdApi, updateMaintenanceByIdApi, createMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
+import { getAllScheduledMaintenanceQualificationsApi, getAllSpecialMaintenanceQualificationsApi, getScheduledMaintenanceQualificationByIdApi, getSpecialMaintenanceQualificationByIdApi, createScheduledMaintenanceQualificationApi, createSpecialMaintenanceQualificationApi, deleteScheduledMaintenanceQualificationApi, deleteSpecialMaintenanceQualificationApi, updateScheduledMaintenanceQualificationApi, updateSpecialMaintenanceQualificationApi} from '../controllers/api/api.maintenanceQualification.controller'
 import { deleteInstructionByIdApi } from '../controllers/api/api.instruction.controller'
 const router = express.Router()
 
@@ -141,6 +142,48 @@ router.patch('/scheduledMaintenances/:id', async (req: express.Request, res: exp
 
 router.post('/maintenance', async (req: express.Request, res: express.Response, next: any) => {
   createMaintenanceApi(req, res, next)
+})
+
+// MaintenanceQualification ROUTES
+
+router.get('/scheduledMaintenanceQualifications', async (req: express.Request, res: express.Response, next: any) => {
+  getAllScheduledMaintenanceQualificationsApi(req, res, next)
+})
+
+router.get('/specialMaintenanceQualifications', async (req: express.Request, res: express.Response, next: any) => {
+  getAllSpecialMaintenanceQualificationsApi(req, res, next)
+})
+
+router.get('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getScheduledMaintenanceQualificationByIdApi(req, res, next)
+})
+
+router.get('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getSpecialMaintenanceQualificationByIdApi(req, res, next)
+})
+
+router.post('/scheduledMaintenanceQualification', async (req: express.Request, res: express.Response, next: any) => {
+  createScheduledMaintenanceQualificationApi(req, res, next)
+})
+
+router.post('/specialMaintenanceQualification', async (req: express.Request, res: express.Response, next: any) => {
+  createSpecialMaintenanceQualificationApi(req, res, next)
+})
+
+router.delete('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteScheduledMaintenanceQualificationApi(req, res, next)
+})
+
+router.delete('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteSpecialMaintenanceQualificationApi(req, res, next)
+})
+
+router.patch('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateScheduledMaintenanceQualificationApi(req, res, next)
+})
+
+router.patch('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateSpecialMaintenanceQualificationApi(req, res, next)
 })
 
 // Instruction ROUTES
