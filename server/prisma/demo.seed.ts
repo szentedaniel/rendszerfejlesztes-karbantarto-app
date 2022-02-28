@@ -14,7 +14,9 @@ import {
   UserQualification,
   ScheduledMaintenanceQualification,
   Status,
-  Task
+  Task,
+  SpecialMaintenance,
+  SpecialMaintenanceQualification
 } from '@prisma/client'
 const prisma = new PrismaClient()
 
@@ -331,8 +333,14 @@ export const DemoScheduledMaintenanceQualification: ScheduledMaintenanceQualific
   qualificationId: 3,
   maintenanceId: 4
 }
-
 ]
+
+export const DemoSpecialMaintenanceQualification: SpecialMaintenanceQualification[] = [
+{
+  qualificationId: 4,
+  maintenanceId: 1
+}
+] 
 
 export const DemoStatus: Status[] = [{
   id: 1,
@@ -427,6 +435,20 @@ export const DemoTask: Task[] = [{
   statusId: 3,
   createdAt: new Date(Date.now()),
   updatedAt: new Date(Date.now()),
+},
+{
+  id: 6,
+  specialMaintenanceId: 1,
+  description: null,
+  acceptedAt: null,
+  declinedAt: null,
+  startedAt: null,
+  finishedAt: null,
+  scheduledMaintenanceId: null,
+  userId: 4,
+  statusId: 3,
+  createdAt: new Date(Date.now()),
+  updatedAt: new Date(Date.now()),
 }
 
 ]
@@ -467,7 +489,27 @@ export const DemoScheduledMaintenance: ScheduledMaintenance[] = [{
   periodId: 3,
   priorityId: 4
 },
+]
 
+export const DemoSpecialMaintenance: SpecialMaintenance[] = [
+{
+  id: 1,
+  name: 'Elem csere',
+  description: '...',
+  normaInMinutes: 5,
+  malfunctionDate: new Date(Date.now()),
+  deviceId: 3,
+  priorityId: 3
+},
+{
+  id: 2,
+  name: 'Készülék csere',
+  description: '...',
+  normaInMinutes: 15,
+  malfunctionDate: new Date(Date.now()),
+  deviceId: 1,
+  priorityId: 1
+}
 ]
 
 
@@ -548,6 +590,12 @@ async function main() {
     })
   }
 
+  for (const u of DemoSpecialMaintenance) {
+    const building = await prisma.specialMaintenance.create({
+      data: u
+    })
+  }
+
   for (const u of DemoInstruction) {
     const building = await prisma.instruction.create({
       data: u
@@ -560,7 +608,11 @@ async function main() {
     })
   }
 
-
+  for (const u of DemoSpecialMaintenanceQualification) {
+    const building = await prisma.specialMaintenanceQualification.create({
+      data: u
+    })
+  }
 
   for (const u of DemoTask) {
     const building = await prisma.task.create({
