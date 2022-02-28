@@ -1,8 +1,15 @@
 import {
   PrismaClient,
-  Category
+  Category,
+  Device,
+  Instruction,
+  Period,
+  ScheduledMaintenance,
+  ScheduledMaintenanceQualification,
+  Task
 } from '@prisma/client'
 import createHttpError from 'http-errors'
+import { getMaintanenceFromParents } from '../utils'
 
 const prisma = new PrismaClient()
 
@@ -38,7 +45,7 @@ export const getAllCategories = async () => {
 
 export const getAllCategoriesWithDetails = async () => {
   try {
-    const allCategories = await prisma.category.findMany({
+    let allCategories = await prisma.category.findMany({
       include: {
         children: true,
         parent: true,
@@ -54,7 +61,30 @@ export const getAllCategoriesWithDetails = async () => {
         }
       },
     })
-    return allCategories
+
+
+    Promise.all(allCategories.map((cat, idx, arr) =>
+      getMaintanenceFromParents(cat.id)
+        .then((data) => {
+          cat.Maintenance = data
+        })
+        .catch(reason => { })
+    ))
+      .then(() => console.log(allCategories))
+
+    async function editCategories(cats: any[]) {
+      const pArray = cats.map(async (cat: any) => {
+        const response = await getMaintanenceFromParents(cat.id)
+        cat.Maintenance = response
+        return cat
+      })
+      const users = await Promise.all(pArray)
+      return users
+    }
+
+    const result = await editCategories(allCategories)
+
+    return result
   } catch (error: any) {
     throw new Error(error)
   }
@@ -79,16 +109,33 @@ export const getCategoryById = async (id: number) => {
 
 export const getCategoryByIdWithDetails = async (id: number) => {
   try {
-    const Category = await prisma.category.findUnique({
+    let Category = await prisma.category.findUnique({
       where: {
         id: Number(id)
       },
       include: {
         children: true,
         parent: true,
-        Device: true
+        Device: true,
+        Maintenance: {
+          include: {
+            Instruction: true,
+            MaintenanceQualification: true,
+            Task: true,
+            category: true,
+            period: true
+          }
+        }
       },
     })
+
+    if (Category?.Maintenance) {
+      if (Category.Maintenance.length === 0) {
+
+        Category.Maintenance = await getMaintanenceFromParents(Category.id)
+      }
+    }
+
     return Category
   } catch (error: any) {
     throw new Error(error)
@@ -136,8 +183,8 @@ export const updateCategoryById = async (id: number, CategoryData: updateCategor
     let wantToBeCategoryData = CategoryData
 
     if (id === 1) return { status: 403, message: 'A kategória nem Módosítható!' }
-    
-    
+
+
     const validCategory = await prisma.category.findFirst({
       where: {
         id: id

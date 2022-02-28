@@ -336,11 +336,11 @@ export const DemoScheduledMaintenanceQualification: ScheduledMaintenanceQualific
 ]
 
 export const DemoSpecialMaintenanceQualification: SpecialMaintenanceQualification[] = [
-{
-  qualificationId: 4,
-  maintenanceId: 1
-}
-] 
+  {
+    qualificationId: 4,
+    maintenanceId: 1
+  }
+]
 
 export const DemoStatus: Status[] = [{
   id: 1,
@@ -489,27 +489,36 @@ export const DemoScheduledMaintenance: ScheduledMaintenance[] = [{
   periodId: 3,
   priorityId: 4
 },
+{
+  id: 5,
+  name: 'Olyan Maintenance ami a TŰZÉÉ',
+  categoryId: 2,
+  lastMaintenance: null,
+  normaInMinutes: 30,
+  periodId: 3,
+  priorityId: 4
+},
 ]
 
 export const DemoSpecialMaintenance: SpecialMaintenance[] = [
-{
-  id: 1,
-  name: 'Elem csere',
-  description: '...',
-  normaInMinutes: 5,
-  malfunctionDate: new Date(Date.now()),
-  deviceId: 3,
-  priorityId: 3
-},
-{
-  id: 2,
-  name: 'Készülék csere',
-  description: '...',
-  normaInMinutes: 15,
-  malfunctionDate: new Date(Date.now()),
-  deviceId: 1,
-  priorityId: 1
-}
+  {
+    id: 1,
+    name: 'Elem csere',
+    description: '...',
+    normaInMinutes: 5,
+    malfunctionDate: new Date(Date.now()),
+    deviceId: 3,
+    priorityId: 3
+  },
+  {
+    id: 2,
+    name: 'Készülék csere',
+    description: '...',
+    normaInMinutes: 15,
+    malfunctionDate: new Date(Date.now()),
+    deviceId: 1,
+    priorityId: 1
+  }
 ]
 
 
@@ -583,7 +592,7 @@ async function main() {
 
 
 
-  
+
   for (const u of DemoScheduledMaintenance) {
     const building = await prisma.scheduledMaintenance.create({
       data: u
@@ -601,7 +610,7 @@ async function main() {
       data: u
     })
   }
-  
+
   for (const u of DemoScheduledMaintenanceQualification) {
     const building = await prisma.scheduledMaintenanceQualification.create({
       data: u
