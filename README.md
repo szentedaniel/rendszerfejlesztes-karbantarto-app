@@ -3,7 +3,7 @@
 ## **🗿 Backend 🗿**
 
 <sup>szentedaniel</sup>
-[![szentedaniel](https://wakatime.com/badge/github/szentedaniel/rendszerfejlesztes-karbantarto-app.svg)](https://wakatime.com/badge/github/szentedaniel/rendszerfejlesztes-karbantarto-app)
+[![wakatime](https://wakatime.com/badge/user/67478775-c2fb-4fbd-ac73-a7b597e574ec/project/f1c5edec-f44c-4e19-b724-35d54c248a2e.svg)](https://wakatime.com/badge/user/67478775-c2fb-4fbd-ac73-a7b597e574ec/project/f1c5edec-f44c-4e19-b724-35d54c248a2e)
 
 ---
 
