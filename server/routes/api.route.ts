@@ -17,7 +17,7 @@ router.get('/', async (req: express.Request, res: express.Response, next: any) =
 })
 
 
-// Users ROUTES
+// Users ROUTES +
 router.get('/users', async (req: express.Request, res: express.Response, next: any) => {
   getAllUserApi(req, res, next)
 })
@@ -43,7 +43,7 @@ router.post('/login', async (req: express.Request, res: express.Response, next: 
 })
 
 
-// Category ROUTES
+// Category ROUTES +
 router.get('/categories', async (req: express.Request, res: express.Response, next: any) => {
   getAllCategoryApi(req, res, next)
 })
@@ -73,7 +73,7 @@ router.post('/category', async (req: express.Request, res: express.Response, nex
 })
 
 
-// Device ROUTES
+// Device ROUTES +
 router.get('/devices', async (req: express.Request, res: express.Response, next: any) => {
   getAllDeviceApi(req, res, next)
 })
@@ -95,7 +95,7 @@ router.post('/device', async (req: express.Request, res: express.Response, next:
 })
 
 
-// Qualification Routes
+// Qualification Routes +
 router.get('/qualifications', async (req: express.Request, res: express.Response, next: any) => {
   getAllQualificationsApi(req, res, next)
 })
@@ -117,7 +117,7 @@ router.patch('/qualification/:id', async (req: express.Request, res: express.Res
 })
 
 
-// ScheduledMaintenance ROUTES
+// ScheduledMaintenance ROUTES +
 router.get('/scheduledMaintenances', async (req: express.Request, res: express.Response, next: any) => {
   getAllScheduledMaintenanceApi(req, res, next)
 })
@@ -147,7 +147,7 @@ router.post('/scheduledMaintenance', async (req: express.Request, res: express.R
 })
 
 
-// SpecialMaintenance ROUTES
+// SpecialMaintenance ROUTES +
 router.get('/specialMaintenances', async (req: express.Request, res: express.Response, next: any) => {
   getAllSpecialMaintenanceApi(req, res, next)
 })
@@ -176,7 +176,7 @@ router.post('/specialMaintenance', async (req: express.Request, res: express.Res
   createSpecialMaintenanceApi(req, res, next)
 })
 
-// Scheduled/SpecialMaintenanceQualification ROUTES
+// Scheduled/SpecialMaintenanceQualification ROUTES -
 
 router.get('/scheduledMaintenanceQualifications', async (req: express.Request, res: express.Response, next: any) => {
   getAllScheduledMaintenanceQualificationsApi(req, res, next)
@@ -218,7 +218,7 @@ router.patch('/specialMaintenanceQualification/:id', async (req: express.Request
   updateSpecialMaintenanceQualificationApi(req, res, next)
 })
 
-// Instruction ROUTES
+// Instruction ROUTES ~
 router.get('/instructions', async (req: express.Request, res: express.Response, next: any) => {
   getAllInstructionsApi(req, res, next)
 })
@@ -239,7 +239,7 @@ router.patch('/instruction/:id', async (req: express.Request, res: express.Respo
   updateInstructionApi(req, res, next)
 })
 
-//UserQualification ROUTES
+//UserQualification ROUTES -
 router.get('/userQualifications', async (req: express.Request, res: express.Response, next: any) => {
   getAllUserQualificationsApi(req, res, next)
 })

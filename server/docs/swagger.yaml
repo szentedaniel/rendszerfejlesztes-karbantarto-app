@@ -1695,14 +1695,14 @@ paths:
                   description: null,
                   due: '2022-03-07T23:48:21.562Z'
                   scheduledMaintenanceId: 1
-                  createdByUserId": 3
+                  createdByUserId: 3
               Example2:   
                 value:
                   userId: 1,
                   description: null,
                   due: '2022-03-07T23:48:21.562Z'
                   specialMaintenanceId: 1
-                  createdByUserId": 3
+                  createdByUserId: 3
                   
       responses:
         200:

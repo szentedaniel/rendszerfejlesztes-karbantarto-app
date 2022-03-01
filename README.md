@@ -94,7 +94,7 @@ embereket)
 hiba leírása)
 - [ ] *f,(Szente)* Időszakos karbantartási feladatok automatikus generálása (utolsó
 karbantartás és karbantartási periódus alapján)
-- [x] *g,(Flórián)* Feladatok listázása, állapotok megjelenítése
+- [x] *g,(Szente, Flórián)* Feladatok listázása, állapotok megjelenítése
 
 &nbsp;
 
@@ -102,7 +102,14 @@ karbantartás és karbantartási periódus alapján)
 
 - [x] *a,(Szente)* Feladatok kiosztása karbantartók számára (manuális hozzárendelés a
 végzettség egyeztetésével, automatikus megvalósítás opcionális)
-- [ ] *b,(Flórián)* Az adott karbantartóhoz rendelt feladatok listázása
-- [ ] *c,(Flórián)* Állapotok beállításának lehetősége (Elfogadva, Elutasítva, Megkezdve,
+- [x] *b,(Szente)* Az adott karbantartóhoz rendelt feladatok listázása
+- [x] *c,(Szente)* Állapotok beállításának lehetősége (Elfogadva, Elutasítva, Megkezdve,
 Befejezve)
-- [ ] *d,(Backend szempontjából nem releváns)* ~Megkezdve állapotban az instrukciók megjelenítése~
+- [x] *d,(Backend szempontjából nem releváns)* ~Megkezdve állapotban az instrukciók megjelenítése~
+
+**TODOS**
+
+- [ ] *(Flórián)* Instructions swagger YAML
+- [ ] *(Flórián)* UserQualification swagger YAML
+- [ ] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
+- [ ] *(Flórián)* SpecialMaintenanceQualification swagger YAML

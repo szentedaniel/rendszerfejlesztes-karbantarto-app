@@ -7,7 +7,7 @@ import {
 import { getUserQualificationById } from "../controllers/userQualification.controller"
 import { getSpecialMaintenanceByIdWithDetails } from "../controllers/specialMaintenance.controller"
 import { getQualificationById } from "../controllers/qualification.controller"
-import { getAllTaskWithDetailsByUserId } from "../controllers/task.cotroller"
+import { getAllTaskWithDetailsByUserId } from "../controllers/task.controller"
 
 const prisma = new PrismaClient()
 
@@ -168,7 +168,7 @@ export const UserHasEnoughTime = async (userId: number, due: Date, scheduledMain
 
   let tasksOnDayDue = await Promise.all(tasksByUser.map(async (t): Promise<any> => {
     const q = sameDay(t.due, due)
-    if (q && (t.statusId === 1 || t.statusId === 2 || t.statusId === 4)) {
+    if (q && (t.statusId === 1 || t.statusId === 2 || t.statusId === 4 || t.statusId === 5)) { // 1-kiosztva,    2-elfogadva,    4-elkezdve,     5-befejezve
       const maintenance = await getScheduledMaintenanceByIdWithDetails(t.scheduledMaintenanceId) || await getSpecialMaintenanceByIdWithDetails(t.specialMaintenanceId)
       return maintenance?.normaInMinutes
     }

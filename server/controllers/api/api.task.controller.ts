@@ -1,5 +1,5 @@
 import express from 'express'
-import { acceptStartFinishTaskData, acceptTask, createTask, createTaskData, declineTask, declineTaskData, finishTask, getAllTask, getAllTaskByUserId, getAllTaskWithDetails, getAllTaskWithDetailsByUserId, getTaskById, getTaskWithDetailsById, startTask } from '../task.cotroller'
+import { acceptStartFinishTaskData, acceptTask, createTask, createTaskData, declineTask, declineTaskData, finishTask, getAllTask, getAllTaskByUserId, getAllTaskWithDetails, getAllTaskWithDetailsByUserId, getTaskById, getTaskWithDetailsById, startTask } from '../task.controller'
 import { getUserById } from '../user.controller'
 
 export const getAllTaskApi = async (req: express.Request, res: express.Response, next: any) => {
@@ -160,18 +160,18 @@ export const declineTaskApi = async (req: express.Request, res: express.Response
         if (!taskData.userId) {
             res.json({ status: 400, message: 'You need to give the user\'s id who wants to decline the task (userId)' })
             ok = false
-        } if (taskData.userId) {
+        } else if (taskData.userId) {
             const task = await getTaskById(taskData.userId)
             if (!task) {
                 res.json({ status: 400, message: 'Not valid task ID' })
                 ok = false
-            } if (task!.statusId !== 1) {
+            } else if (task!.statusId !== 1) {
                 res.json({ status: 400, message: 'Can\'t decline! A state nem \' Kiosztva \'' })
                 ok = false
-            } if (!taskData.description) {
+            } else if (!taskData.description) {
                 res.json({ status: 400, message: 'You need to give a reason why you want to decline (description)' })
                 ok = false
-            } if (task!.userId !== taskData.userId) {
+            } else if (task!.userId !== taskData.userId) {
                 res.json({ status: 400, message: 'Can\'t decline! It\'s not your task' })
                 ok = false
             }
