@@ -102,7 +102,8 @@ model User {
   roleId            Int
   active            Boolean
   UserQualification UserQualification[]
-  Task              Task[]
+  Task              Task[]              @relation("KarbantartoUser")
+  createdTask       Task[]              @relation("createdByUser")
 
 }
 
@@ -154,16 +155,19 @@ model Task {
   specialMaintenanceId   Int?
   specialMaintenance     SpecialMaintenance?   @relation(fields: [specialMaintenanceId], references: [id], onDelete: Cascade)
   userId                 Int
-  user                   User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                   User                  @relation(name: "KarbantartoUser", fields: [userId], references: [id], onDelete: Restrict)
   description            String?
   createdAt              DateTime              @default(now())
   updatedAt              DateTime              @updatedAt
+  due                    DateTime
   acceptedAt             DateTime?
   declinedAt             DateTime?
   startedAt              DateTime?
   finishedAt             DateTime?
-  statusId               Int                  @default(1)
+  statusId               Int                   @default(1)
   status                 Status                @relation(fields: [statusId], references: [id])
+  createdByUserId        Int
+  createdByUser          User                  @relation(name: "createdByUser", fields: [createdByUserId], references: [id])
 }
 
 model Priority {

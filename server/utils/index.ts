@@ -1,9 +1,13 @@
 import { Category, Device, Instruction, Period, Priority, ScheduledMaintenance, ScheduledMaintenanceQualification, Task, User } from "@prisma/client"
 import { getCategoryById, getCategoryByIdWithDetails } from "../controllers/category.controller"
-import { getScheduledMaintenanceById } from "../controllers/scheduledMaintenance.controller"
+import { getScheduledMaintenanceById, getScheduledMaintenanceByIdWithDetails } from "../controllers/scheduledMaintenance.controller"
 import {
   PrismaClient
 } from '@prisma/client'
+import { getUserQualificationById } from "../controllers/userQualification.controller"
+import { getSpecialMaintenanceByIdWithDetails } from "../controllers/specialMaintenance.controller"
+import { getQualificationById } from "../controllers/qualification.controller"
+import { getAllTaskWithDetailsByUserId } from "../controllers/task.cotroller"
 
 const prisma = new PrismaClient()
 
@@ -94,3 +98,103 @@ export const getMaintanenceFromParents = async (categoryId: number): Promise<Sch
     throw new Error(error)
   }
 }
+
+
+export const UserIsEligibleForTask = async (userId: number, scheduledMaintenanceId: number | null, specialMaintenanceId: number | null) => {
+  if ((!scheduledMaintenanceId && !specialMaintenanceId) || (scheduledMaintenanceId && specialMaintenanceId)) {
+    return false
+  }
+
+
+  const maintenance = await getScheduledMaintenanceByIdWithDetails(scheduledMaintenanceId) || await getSpecialMaintenanceByIdWithDetails(specialMaintenanceId)
+
+  const requirements = maintenance!.MaintenanceQualification.map(q => { return q.qualificationId })
+
+  console.log(requirements);
+
+  const valamik = await Promise.all(requirements.map(async (r): Promise<any> => {
+    const q = await getUserQualificationById(r, userId)
+    let result = false
+    if (q) result = true
+    return result
+  }));
+
+  let has = await Promise.all(requirements.map(async (r): Promise<any> => {
+    const q = await getUserQualificationById(r, userId)
+    let result = null
+    if (q) result = await getQualificationById(r)
+    return result
+  }))
+
+  let need = await Promise.all(requirements.map(async (r): Promise<any> => {
+    const q = await getUserQualificationById(r, userId)
+    let result = null
+    if (!q) result = await getQualificationById(r)
+    return result
+  }));
+
+  has = has.filter(h => { return h })
+  need = need.filter(l => { return l })
+
+
+
+  //requirements.map(async r => {
+  //  return await getUserQualificationById(r, userId)
+  //})
+  //console.log('vane', valamik);
+
+  //console.log({ has: has });
+  //console.log({ need: need });
+
+
+
+  return valamik.every(e => { return e === true })
+}
+const sameDay = (d1: Date, d2: Date) => {
+  return d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
+}
+
+export const UserHasEnoughTime = async (userId: number, due: Date, scheduledMaintenanceId: number | null, specialMaintenanceId: number | null, showErrorMessage: boolean = false, engedettElteres: number = 1.2) => {
+  if ((!scheduledMaintenanceId && !specialMaintenanceId) || (scheduledMaintenanceId && specialMaintenanceId)) {
+    return false
+  }
+
+
+  const maintenance = await getScheduledMaintenanceByIdWithDetails(scheduledMaintenanceId) || await getSpecialMaintenanceByIdWithDetails(specialMaintenanceId)
+
+  const tasksByUser = await getAllTaskWithDetailsByUserId(userId)
+
+  let tasksOnDayDue = await Promise.all(tasksByUser.map(async (t): Promise<any> => {
+    const q = sameDay(t.due, due)
+    if (q) {
+      const maintenance = await getScheduledMaintenanceByIdWithDetails(t.scheduledMaintenanceId) || await getSpecialMaintenanceByIdWithDetails(t.specialMaintenanceId)
+      return maintenance?.normaInMinutes
+    }
+  }));
+
+  const minutesOnDay = tasksOnDayDue.reduce((r, c) => r + c, 0)
+
+  const tasksOnDayDueWithWannaBeTasks = ((minutesOnDay) + maintenance!.normaInMinutes)
+
+  console.log(tasksOnDayDueWithWannaBeTasks)
+
+  if (tasksOnDayDueWithWannaBeTasks * engedettElteres > (60 * 8)) {
+    return (showErrorMessage ? {
+      status: 400, message: `${tasksOnDayDueWithWannaBeTasks * engedettElteres
+        } minutes is more than the working time (480)`
+    } : false)
+  } else return true
+
+}
+
+const test = async () => {
+  const oneWeekFromNow = new Date();
+  oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7 * 1);
+  const result = await UserHasEnoughTime(1, oneWeekFromNow, 1, null, true)
+  console.log(result);
+
+}
+
+test()

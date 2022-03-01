@@ -1,11 +1,11 @@
 import {
     PrismaClient,
     UserQualification
-  } from '@prisma/client'
+} from '@prisma/client'
 
-  const prisma = new PrismaClient()
+const prisma = new PrismaClient()
 
-  export interface userQualificationData{
+export interface userQualificationData {
     userId: number,
     qualificationId: number
 }
@@ -13,7 +13,7 @@ import {
 export const getAllUserQualifications = async () => {
     try {
         const allUsers = await prisma.userQualification.findMany({
-            include:{
+            include: {
                 qualification: true,
                 user: true
             }
@@ -28,13 +28,13 @@ export const getAllUserQualifications = async () => {
 export const getUserQualificationById = async (qualificationId: number, userId: number) => {
     try {
         const userQualification = await prisma.userQualification.findUnique({
-            where:{
-                qualificationId_userId:{
+            where: {
+                qualificationId_userId: {
                     userId: Number(userId),
                     qualificationId: Number(qualificationId),
                 }
             },
-            include:{
+            include: {
                 qualification: true,
                 user: true
             }

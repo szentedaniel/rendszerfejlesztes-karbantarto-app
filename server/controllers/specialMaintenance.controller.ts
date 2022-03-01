@@ -83,8 +83,9 @@ export const getSpecialMaintenanceById = async (id: number) => {
   }
 }
 
-export const getSpecialMaintenanceByIdWithDetails = async (id: number) => {
+export const getSpecialMaintenanceByIdWithDetails = async (id: number | null) => {
   try {
+    if (id === null) return null
     const Maintenance = await prisma.specialMaintenance.findUnique({
       where: {
         id: Number(id)

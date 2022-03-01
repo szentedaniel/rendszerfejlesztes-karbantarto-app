@@ -3,11 +3,12 @@ import { createCategoryApi, deleteCategoryByIdApi, getAllCategoryApi, getAllCate
 import { createDeviceApi, deleteDeviceByIdApi, getAllDeviceApi, getDeviceByIdApi, updateDeviceByIdApi } from '../controllers/api/api.device.controller'
 import { createUserApi, deleteUserByIdApi, getAllUserApi, getUserByIdApi, loginApi, updateUserByIdApi } from '../controllers/api/api.user.controller'
 import { createQualificationApi, deleteQualificationByIdApi, getAllQualificationsApi, getQualificationByIdApi, updateQualificationByIdApi } from '../controllers/api/api.qualification.controller'
-
 import { getAllScheduledMaintenanceQualificationsApi, getAllSpecialMaintenanceQualificationsApi, getScheduledMaintenanceQualificationByIdApi, getSpecialMaintenanceQualificationByIdApi, createScheduledMaintenanceQualificationApi, createSpecialMaintenanceQualificationApi, deleteScheduledMaintenanceQualificationApi, deleteSpecialMaintenanceQualificationApi, updateScheduledMaintenanceQualificationApi, updateSpecialMaintenanceQualificationApi } from '../controllers/api/api.maintenanceQualification.controller'
 import { getAllScheduledMaintenanceWithDetailsApi, getScheduledMaintenanceByIdApi, getScheduledMaintenanceByIdWithDetailsApi, deleteScheduledMaintenanceByIdApi, updateScheduledMaintenanceByIdApi, createScheduledMaintenanceApi, getAllScheduledMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
 import { getAllSpecialMaintenanceApi, getAllSpecialMaintenanceWithDetailsApi, getSpecialMaintenanceByIdApi, getSpecialMaintenanceByIdWithDetailsApi, deleteSpecialMaintenanceByIdApi, updateSpecialMaintenanceByIdApi, createSpecialMaintenanceApi } from '../controllers/api/api.specialMaintenance.controller'
 import { getAllInstructionsApi, getInstructionByIdApi, createInstructionApi, deleteInstructionApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
+import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi } from '../controllers/api/api.task.controller'
+import { createUserQualificationApi, deleteUserQualificationApi, getAllUserQualificationsApi, getUserQualificationByIdApi, updateUserQualificationApi } from '../controllers/api/api.userQualification.controller'
 const router = express.Router()
 
 
@@ -95,7 +96,6 @@ router.post('/device', async (req: express.Request, res: express.Response, next:
 
 
 // Qualification Routes
-
 router.get('/qualifications', async (req: express.Request, res: express.Response, next: any) => {
   getAllQualificationsApi(req, res, next)
 })
@@ -241,22 +241,70 @@ router.patch('/instruction/:id', async (req: express.Request, res: express.Respo
 
 //UserQualification ROUTES
 router.get('/userQualifications', async (req: express.Request, res: express.Response, next: any) => {
-  getAllInstructionsApi(req, res, next)
+  getAllUserQualificationsApi(req, res, next)
 })
 
-router.get('/userQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
-  getInstructionByIdApi(req, res, next)
+router.get('/userQualification/:userId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
+  getUserQualificationByIdApi(req, res, next)
 })
 
 router.post('/userQualification', async (req: express.Request, res: express.Response, next: any) => {
-  createInstructionApi(req, res, next)
+  createUserQualificationApi(req, res, next)
 })
 
-router.delete('/userQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
-  deleteInstructionApi(req, res, next)
+router.delete('/userQualification/:userId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
+  deleteUserQualificationApi(req, res, next)
 })
 
-router.patch('/userQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
-  updateInstructionApi(req, res, next)
+router.patch('/userQualification/:userId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
+  updateUserQualificationApi(req, res, next)
 })
+
+
+// Task ROUTES
+router.get('/tasks', async (req: express.Request, res: express.Response, next: any) => {
+  getAllTaskApi(req, res, next)
+})
+
+router.get('/tasks/details', async (req: express.Request, res: express.Response, next: any) => {
+  getAllTaskWithDetailsApi(req, res, next)
+})
+
+router.get('/tasks/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getAllTaskByUserIdApi(req, res, next)
+})
+
+router.get('/tasks/:id/details', async (req: express.Request, res: express.Response, next: any) => {
+  getAllTaskWithDetailsByUserIdApi(req, res, next)
+})
+
+router.post('/task', async (req: express.Request, res: express.Response, next: any) => {
+  createTaskApi(req, res, next)
+})
+
+router.get('/task/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getTaskWithDetailsByIdApi(req, res, next)
+})
+
+router.get('/task/:id/details', async (req: express.Request, res: express.Response, next: any) => {
+  getTaskWithDetailsByIdApi(req, res, next)
+})
+
+router.post('/task/:id/accept', async (req: express.Request, res: express.Response, next: any) => {
+  acceptTaskApi(req, res, next)
+})
+
+router.post('/task/:id/decline', async (req: express.Request, res: express.Response, next: any) => {
+  declineTaskApi(req, res, next)
+})
+
+router.post('/task/:id/start', async (req: express.Request, res: express.Response, next: any) => {
+  startTaskApi(req, res, next)
+})
+
+router.post('/task/:id/finish', async (req: express.Request, res: express.Response, next: any) => {
+  finishTaskApi(req, res, next)
+})
+
+
 module.exports = router

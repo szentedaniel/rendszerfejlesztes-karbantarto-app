@@ -20,6 +20,9 @@ import {
 } from '@prisma/client'
 const prisma = new PrismaClient()
 
+const oneWeekFromNow = new Date();
+oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7 * 1);
+
 interface TaskWithoutDefaults {
   id: number;
   scheduledMaintenanceId: number | null;
@@ -370,6 +373,7 @@ export const DemoTask: Task[] = [{
   specialMaintenanceId: null,
   userId: 1,
   description: null,
+  due: oneWeekFromNow,
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
@@ -377,13 +381,15 @@ export const DemoTask: Task[] = [{
   scheduledMaintenanceId: 1,
   statusId: 1,
   createdAt: new Date(Date.now()),
-  updatedAt: new Date(Date.now())
+  updatedAt: new Date(Date.now()),
+  createdByUserId: 3
 
 },
 {
   id: 2,
   specialMaintenanceId: null,
   description: null,
+  due: oneWeekFromNow,
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
@@ -392,26 +398,30 @@ export const DemoTask: Task[] = [{
   userId: 3,
   statusId: 3,
   createdAt: new Date(Date.now()),
-  updatedAt: new Date(Date.now())
+  updatedAt: new Date(Date.now()),
+  createdByUserId: 3
 },
 {
   id: 3,
   specialMaintenanceId: null,
   description: null,
+  due: oneWeekFromNow,
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
   finishedAt: null,
   scheduledMaintenanceId: 3,
   userId: 3,
-  statusId: 2,
+  statusId: 1,
   createdAt: new Date(Date.now()),
-  updatedAt: new Date(Date.now())
+  updatedAt: new Date(Date.now()),
+  createdByUserId: 3
 },
 {
   id: 4,
   specialMaintenanceId: null,
   description: null,
+  due: new Date(new Date().getDate() - 7 * 1),
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
@@ -420,12 +430,14 @@ export const DemoTask: Task[] = [{
   statusId: 5,
   finishedAt: new Date('2021-02-24T18:17:29.558Z'),
   createdAt: new Date(Date.now()),
-  updatedAt: new Date(Date.now())
+  updatedAt: new Date(Date.now()),
+  createdByUserId: 3
 },
 {
   id: 5,
   specialMaintenanceId: null,
   description: null,
+  due: oneWeekFromNow,
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
@@ -435,11 +447,13 @@ export const DemoTask: Task[] = [{
   statusId: 3,
   createdAt: new Date(Date.now()),
   updatedAt: new Date(Date.now()),
+  createdByUserId: 3
 },
 {
   id: 6,
   specialMaintenanceId: 1,
   description: null,
+  due: oneWeekFromNow,
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
@@ -449,6 +463,7 @@ export const DemoTask: Task[] = [{
   statusId: 3,
   createdAt: new Date(Date.now()),
   updatedAt: new Date(Date.now()),
+  createdByUserId: 3
 }
 
 ]
@@ -456,7 +471,7 @@ export const DemoTask: Task[] = [{
 export const DemoScheduledMaintenance: ScheduledMaintenance[] = [{
   id: 1,
   name: 'Kamerák ellenőrzése.',
-  normaInMinutes: 60,
+  normaInMinutes: 60 * 3,
   lastMaintenance: null,
   periodId: 2,
   categoryId: 9,

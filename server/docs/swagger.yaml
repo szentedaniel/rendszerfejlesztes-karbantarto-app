@@ -338,6 +338,10 @@ components:
           description:
             type: string
             nullable: false
+          due:
+            type: string
+            format: date-time
+            nullable: false
           createdAt:
             type: string
             format: date-time
@@ -370,6 +374,11 @@ components:
             default: 1
           status:
             $ref: '#/components/schemas/Status'
+          createdByUserId:
+            type: integer
+            nullable: false
+          createdByUser:
+            $ref: '#/components/schemas/User'
       # Priority schema
       Priority:
         type: object
@@ -1539,6 +1548,338 @@ paths:
                 $ref: '#/components/schemas/NotFound'
         500:
           description: The instruction could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+
+# CATEGORIES
+  /tasks:
+    get:
+      summary: Returns all tasks
+      tags: [Tasks]
+      responses:
+        200:
+          description: the list of the tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+  
+  /tasks/details:
+    get:
+      summary: Returns all tasks with details
+      tags: [Tasks]
+      responses:
+        200:
+          description: the list of the tasks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        
+  /tasks/{id}:
+    get:
+      summary: Returns a task by userId
+      tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a task
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+  /tasks/{id}/details:
+    get:
+      summary: Returns a task by userId
+      tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a task
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+  /task/{id}:
+    get:
+      summary: Returns a task by id
+      tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /task/{id}/details:
+    get:
+      summary: Returns a task by id
+      tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Details of a task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /task:
+    post:
+      summary: Adds a new task
+      tags: [Tasks]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              type: object
+              properties:
+                userId: 
+                  type: integer
+                  nullable: false
+                description:
+                  type: string
+                  nullable: true
+                due: 
+                  type: string
+                  format: date-time
+                  nullable: false
+                scheduledMaintenanceId:
+                  type: integer
+                  nullable: true
+                specialMaintenanceId:
+                  type: integer
+                  nullable: true
+                createdByUserId:
+                  type: integer
+                  nullable: false
+            examples:    
+              Example1:   
+                value:
+                  userId: 1,
+                  description: null,
+                  due: '2022-03-07T23:48:21.562Z'
+                  scheduledMaintenanceId: 1
+                  createdByUserId": 3
+              Example2:   
+                value:
+                  userId: 1,
+                  description: null,
+                  due: '2022-03-07T23:48:21.562Z'
+                  specialMaintenanceId: 1
+                  createdByUserId": 3
+                  
+      responses:
+        200:
+          description: The task was successfully created and the data of the created task is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        400:
+          description: The task could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+        500:
+          description: ServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+  /task/:id/accept:
+    post:
+      summary: Accept the task
+      tags: [Tasks]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              type: object
+              properties:
+                userId:
+                  type: integer   
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+                  
+      responses:
+        200:
+          description: The task was successfully accepted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+  /task/:id/decline:
+    post:
+      summary: Decline the task
+      tags: [Tasks]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              type: object
+              properties:
+                userId:
+                  type: integer  
+                description:
+                  type: string
+                  nullable: false
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+                  description: reason.........
+      responses:
+        200:
+          description: The task was successfully declined
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+  /task/:id/start:
+    post:
+      summary: Start the task
+      tags: [Tasks]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              type: object
+              properties:
+                userId:
+                  type: integer  
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+                  
+      responses:
+        200:
+          description: The task was successfully started
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+  /task/:id/finish:
+    post:
+      summary: Finish the task
+      tags: [Tasks]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              type: object
+              properties:
+                userId:
+                  type: integer
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+                  
+      responses:
+        200:
+          description: The task was successfully finished
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+        500:
+          description: Server Error
           content:
             application/json:
               schema:

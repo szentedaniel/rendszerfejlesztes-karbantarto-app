@@ -100,7 +100,7 @@ karbantartás és karbantartási periódus alapján)
 
 **3. Mérföldkő:**
 
-- [ ] *a,(Szente)* Feladatok kiosztása karbantartók számára (manuális hozzárendelés a
+- [x] *a,(Szente)* Feladatok kiosztása karbantartók számára (manuális hozzárendelés a
 végzettség egyeztetésével, automatikus megvalósítás opcionális)
 - [ ] *b,(Flórián)* Az adott karbantartóhoz rendelt feladatok listázása
 - [ ] *c,(Flórián)* Állapotok beállításának lehetősége (Elfogadva, Elutasítva, Megkezdve,

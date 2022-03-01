@@ -80,8 +80,9 @@ export const getScheduledMaintenanceById = async (id: number) => {
   }
 }
 
-export const getScheduledMaintenanceByIdWithDetails = async (id: number) => {
+export const getScheduledMaintenanceByIdWithDetails = async (id: number | null) => {
   try {
+    if (id === null) return null
     const Maintenance = await prisma.scheduledMaintenance.findUnique({
       where: {
         id: Number(id)
