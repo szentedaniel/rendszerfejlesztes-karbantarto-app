@@ -168,7 +168,7 @@ export const UserHasEnoughTime = async (userId: number, due: Date, scheduledMain
 
   let tasksOnDayDue = await Promise.all(tasksByUser.map(async (t): Promise<any> => {
     const q = sameDay(t.due, due)
-    if (q) {
+    if (q && (t.statusId === 1 || t.statusId === 2 || t.statusId === 4)) {
       const maintenance = await getScheduledMaintenanceByIdWithDetails(t.scheduledMaintenanceId) || await getSpecialMaintenanceByIdWithDetails(t.specialMaintenanceId)
       return maintenance?.normaInMinutes
     }
