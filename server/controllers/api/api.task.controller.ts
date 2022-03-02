@@ -1,5 +1,5 @@
 import express from 'express'
-import { acceptStartFinishTaskData, acceptTask, createTask, createTaskData, declineTask, declineTaskData, finishTask, getAllTask, getAllTaskByUserId, getAllTaskWithDetails, getAllTaskWithDetailsByUserId, getTaskById, getTaskWithDetailsById, startTask } from '../task.controller'
+import { acceptStartFinishTaskData, acceptTask, assignTask, assignTaskData, createTask, createTaskData, declineTask, declineTaskData, finishTask, getAllTask, getAllTaskByUserId, getAllTaskWithDetails, getAllTaskWithDetailsByUserId, getTaskById, getTaskWithDetailsById, startTask } from '../task.controller'
 import { getUserById } from '../user.controller'
 
 export const getAllTaskApi = async (req: express.Request, res: express.Response, next: any) => {
@@ -240,6 +240,47 @@ export const finishTaskApi = async (req: express.Request, res: express.Response,
         }
         if (ok) {
             const response = await finishTask(taskData, Number(id))
+            res.json(response)
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+export const assignTaskApi = async (req: express.Request, res: express.Response, next: any) => {
+    try {
+        const id = Number(req.params.id)
+        let ok = true
+        let taskData: assignTaskData = req.body
+
+        if (!taskData.operatorId) {
+            res.json({ status: 400, message: 'You need to give the operators\'s id who wants to give the task to a user (operatorId)' })
+            ok = false
+        } if (taskData.operatorId) {
+            const task = await getUserById(taskData.operatorId)
+            if (!task) {
+                res.json({ status: 400, message: 'Not valid User' })
+                ok = false
+            } if (task!.roleId !== 3) {
+                res.json({ status: 400, message: 'You are not operator' })
+                ok = false
+            }
+        } if (!taskData.userId) {
+            res.json({ status: 400, message: 'You need to give the user\'s id who wants to do the task (userId)' })
+            ok = false
+        } if (taskData.userId) {
+            const task = await getTaskById(id)
+            if (!task) {
+                res.json({ status: 400, message: 'Not valid task ID' })
+                ok = false
+            } if (task!.userId !== null) {
+                res.json({ status: 400, message: 'Valaki más mára van kiosztva' })
+                ok = false
+            }
+        }
+        if (ok) {
+            const response = await assignTask(taskData, Number(id))
             res.json(response)
         }
     } catch (error) {

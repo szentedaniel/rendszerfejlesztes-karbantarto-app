@@ -1,13 +1,13 @@
-import { Category, Device, Instruction, Period, Priority, ScheduledMaintenance, ScheduledMaintenanceQualification, Task, User } from "@prisma/client"
-import { getCategoryById, getCategoryByIdWithDetails } from "../controllers/category.controller"
-import { getScheduledMaintenanceById, getScheduledMaintenanceByIdWithDetails } from "../controllers/scheduledMaintenance.controller"
-import {
-  PrismaClient
-} from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+import { Category, Device, Instruction, Period, ScheduledMaintenanceQualification, Task, User } from "@prisma/client"
+import { getAllScheduledMaintenancesWithDetails, getScheduledMaintenanceByIdWithDetails } from "../controllers/scheduledMaintenance.controller"
 import { getUserQualificationById } from "../controllers/userQualification.controller"
 import { getSpecialMaintenanceByIdWithDetails } from "../controllers/specialMaintenance.controller"
 import { getQualificationById } from "../controllers/qualification.controller"
-import { getAllTaskWithDetailsByUserId } from "../controllers/task.controller"
+import { createTask, createTaskData, getAllTaskWithDetails, getAllTaskWithDetailsByUserId } from "../controllers/task.controller"
+import { LogToDb } from "../controllers/logger.controller"
+import { getAllUsers } from "../controllers/user.controller"
+const sh = require('shelljs')
 
 const prisma = new PrismaClient()
 
@@ -26,7 +26,7 @@ export const removePasswordFromUserArray = (array: Array<User>): Array<User> => 
     exclude(user, 'password')
     return user
   })
-  console.log(users);
+  //console.log(users)
 
   return users
 }
@@ -110,14 +110,14 @@ export const UserIsEligibleForTask = async (userId: number, scheduledMaintenance
 
   const requirements = maintenance!.MaintenanceQualification.map(q => { return q.qualificationId })
 
-  console.log(requirements);
+  //console.log(requirements)
 
   const valamik = await Promise.all(requirements.map(async (r): Promise<any> => {
     const q = await getUserQualificationById(r, userId)
     let result = false
     if (q) result = true
     return result
-  }));
+  }))
 
   let has = await Promise.all(requirements.map(async (r): Promise<any> => {
     const q = await getUserQualificationById(r, userId)
@@ -131,7 +131,7 @@ export const UserIsEligibleForTask = async (userId: number, scheduledMaintenance
     let result = null
     if (!q) result = await getQualificationById(r)
     return result
-  }));
+  }))
 
   has = has.filter(h => { return h })
   need = need.filter(l => { return l })
@@ -141,16 +141,16 @@ export const UserIsEligibleForTask = async (userId: number, scheduledMaintenance
   //requirements.map(async r => {
   //  return await getUserQualificationById(r, userId)
   //})
-  //console.log('vane', valamik);
+  //console.log('vane', valamik)
 
-  //console.log({ has: has });
-  //console.log({ need: need });
+  //console.log({ has: has })
+  //console.log({ need: need })
 
 
 
   return valamik.every(e => { return e === true })
 }
-const sameDay = (d1: Date, d2: Date) => {
+export const sameDay = (d1: Date, d2: Date) => {
   return d1.getFullYear() === d2.getFullYear() &&
     d1.getMonth() === d2.getMonth() &&
     d1.getDate() === d2.getDate()
@@ -172,13 +172,13 @@ export const UserHasEnoughTime = async (userId: number, due: Date, scheduledMain
       const maintenance = await getScheduledMaintenanceByIdWithDetails(t.scheduledMaintenanceId) || await getSpecialMaintenanceByIdWithDetails(t.specialMaintenanceId)
       return maintenance?.normaInMinutes
     }
-  }));
+  }))
 
   const minutesOnDay = tasksOnDayDue.reduce((r, c) => r + c, 0)
 
-  const tasksOnDayDueWithWannaBeTasks = ((minutesOnDay) + maintenance!.normaInMinutes)
+  const tasksOnDayDueWithWannaBeTasks = (0 + (minutesOnDay) + maintenance!.normaInMinutes)
 
-  console.log(tasksOnDayDueWithWannaBeTasks)
+  //console.log(tasksOnDayDueWithWannaBeTasks)
 
   if (tasksOnDayDueWithWannaBeTasks * engedettElteres > (60 * 8)) {
     return (showErrorMessage ? {
@@ -189,11 +189,163 @@ export const UserHasEnoughTime = async (userId: number, due: Date, scheduledMain
 
 }
 
+export const autoGenerateScheduledMaintenances = async () => {
+
+  const now = new Date()
+
+  console.log('Checking for new scheduled maintanences... (' + now.toLocaleString() + ')')
+
+  // Lekérni a karbantartásokat
+  const scheduleds = await getAllScheduledMaintenancesWithDetails()
+
+  // Lekérni a taskokat
+  const tasks = await getAllTaskWithDetails()
+
+  scheduleds.forEach(async maintenance => {
+    let lastTasksDate = await Promise.all(tasks.map(async t => {
+      if (maintenance.id === t.scheduledMaintenanceId && t.statusId !== 1 && t.statusId !== 2 && t.statusId !== 3 && t.statusId !== 4 && t.statusId !== 6 && t.statusId === 5) {
+        return t.finishedAt
+      }
+    }))
+    let newerTasks = await Promise.all(tasks.map(async t => {
+      if (maintenance.id === t.scheduledMaintenanceId && (t.due > now || sameDay(t.due, now))) {
+        return t.due
+      }
+    }))
+
+    if (maintenance.lastMaintenance) lastTasksDate.push(maintenance.lastMaintenance)
+    lastTasksDate = lastTasksDate.filter(t => t)
+    if (lastTasksDate.length > 1) {
+      lastTasksDate = lastTasksDate.sort((a, b) => b!.getTime() - a!.getTime())
+    }
+    lastTasksDate = lastTasksDate.slice(0, 1)
+    //console.log(maintenance.id, lastTasksDate)
+
+    newerTasks = newerTasks.filter(t => t)
+    if (newerTasks.length > 1) {
+      newerTasks = newerTasks.sort((a, b) => b!.getTime() - a!.getTime())
+    }
+    newerTasks = newerTasks.slice(0, 1)
+    //console.log(maintenance.id, newerTasks)
+
+    if (newerTasks.length > 0) {
+      //console.log(maintenance.id, 'Van már új scheduled task')
+
+    } else {
+
+
+
+
+      let plusOneDay = 0
+      if (now.getHours() > 17) {
+        plusOneDay = 1
+      }
+      const wannaBeTaskDate = new Date()
+      wannaBeTaskDate.setDate(wannaBeTaskDate.getDate() + plusOneDay)
+      wannaBeTaskDate.setHours(8)
+
+
+      if (lastTasksDate.length > 0) {
+        wannaBeTaskDate.setDate(lastTasksDate[0]!.getDate() + maintenance.period.periodInDays + plusOneDay)
+        if (wannaBeTaskDate.getDay() == 6) wannaBeTaskDate.setDate(wannaBeTaskDate.getDate() + 2)
+        if (wannaBeTaskDate.getDay() == 7) wannaBeTaskDate.setDate(wannaBeTaskDate.getDate() + 1)
+      }
+      //console.log('New maintenance is due on: ', wannaBeTaskDate)
+
+      const users = await getAllUsers()
+      let karbantartok = await Promise.all(users.map(async u => {
+        if (u.active && u.roleId === 4) return u
+      }))
+
+      karbantartok = karbantartok.filter(k => k)
+
+      if (karbantartok.length > 0) {
+        karbantartok = await Promise.all(karbantartok.map(async k => {
+          if (await UserIsEligibleForTask(k!.id, maintenance.id, null)) {
+            return k
+          }
+        }))
+        karbantartok = karbantartok.filter(k => k)
+
+        if (karbantartok.length > 0) {
+          karbantartok = await Promise.all(karbantartok.map(async k => {
+            if (await UserHasEnoughTime(k!.id, wannaBeTaskDate, maintenance.id, null)) {
+              const diffTime = Math.abs(now.getTime() - wannaBeTaskDate.getTime())
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+              if ((diffDays < 7) || (wannaBeTaskDate < now)) {
+                const taskData: createTaskData = {
+                  userId: k!.id,
+                  description: 'Scheduled task generated by system',
+                  due: wannaBeTaskDate,
+                  scheduledMaintenanceId: maintenance.id,
+                  createdByUserId: 5,
+                  acceptedAt: null,
+                  declinedAt: null,
+                  finishedAt: null,
+                  startedAt: null,
+                  specialMaintenanceId: null,
+                  statusId: 1
+                }
+                const createdTask = await createTask(taskData)
+                if (await createdTask) {
+                  console.log('Task created for ' + maintenance.name + ' and scheduled for ' + k?.name + ' and due on ' + wannaBeTaskDate.toDateString())
+                  await LogToDb('Task created for ' + maintenance.name + ' and scheduled for ' + k?.name + ' and due on ' + wannaBeTaskDate.toDateString())
+                }
+              }
+              return k
+            }
+          }))
+        }
+        karbantartok = karbantartok.filter(k => k)
+      }
+
+      if (karbantartok.length === 0) {
+        const taskData = {
+          userId: null,
+          description: 'Scheduled task generated by system',
+          due: wannaBeTaskDate,
+          scheduledMaintenanceId: maintenance.id,
+          createdByUserId: 5,
+          acceptedAt: null,
+          declinedAt: null,
+          finishedAt: null,
+          startedAt: null,
+          specialMaintenanceId: null,
+          statusId: 6
+        }
+        const createdTask = await createTask(taskData, true)
+        if (await createdTask) {
+          console.log('Task created for ' + maintenance.name + ' but scheduled for no one and due on ' + wannaBeTaskDate.toDateString())
+          await LogToDb('Task created for ' + maintenance.name + ' and scheduled for no one and due on ' + wannaBeTaskDate.toDateString())
+        }
+      }
+
+
+
+      //console.log(karbantartok)
+    }
+
+
+  })
+
+  // Ha nincs Task egy karbantartásanak akkor
+  // lekérni a periódust és az utolsó dátumot
+  // lekérni a szükséges végzettséget
+  // lekérni a userek végzettségét
+  // ha van megfelelő akkor
+  // ellenőrizni a normaidőt, ha belefér akkor létrehozni a taskot
+  // ha nincs akkor visszaadni, hogy nincs megfelelő
+
+  // Ha van leendő Task akkor semmit nem csinál
+  console.log('Check finished (' + new Date().toLocaleString() + ')')
+}
+
 const test = async () => {
-  const oneWeekFromNow = new Date();
-  oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7 * 1);
+  const oneWeekFromNow = new Date()
+  oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7 * 1)
   const result = await UserHasEnoughTime(1, oneWeekFromNow, 1, null, true)
-  console.log(result);
+  console.log(result)
 
 }
 

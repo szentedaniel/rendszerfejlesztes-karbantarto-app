@@ -4,8 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
+    "server": "ts-node ./src/index.ts",
     "cron": "ts-node ./jobs/cron.ts",
-    "start": "npx concurrently \"npm:dev\" \"npm:cron\"",
+    "start": "npx concurrently \"npm:server\" \"npm:cron\"",
     "setup": "ts-node ./jobs/db_init.ts",
     "db_init": "ts-node ./jobs/db_init.ts",
     "db_demo_seed": "ts-node ./prisma/demo.seed.ts"

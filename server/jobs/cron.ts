@@ -1,18 +1,12 @@
 import cron from 'node-cron'
+import { autoGenerateScheduledMaintenances } from '../utils'
 
-cron.schedule('*/10 * * * * *', function () {
-  // Lekérni a karbantartásokat
+const EveryHour = '0 * * * *'
+const EveryDayAt2AM = '0 2 * * *'
+const Every10Sec = '*/10 * * * * *'
+const RunWithServerStart = true
 
-  // Lekérni a taskokat
-
-  // Ha nincs Task egy karbantartásanak akkor
-    // lekérni a periódust és az utolsó dátumot
-    // lekérni a szükséges végzettséget
-    // lekérni a userek végzettségét
-    // ha van megfelelő akkor
-      // ellenőrizni a normaidőt, ha belefér akkor létrehozni a taskot
-    // ha nincs akkor visszaadni, hogy nincs megfelelő
-
-  // Ha van leendő Task akkor semmit nem csinál
-  
-});
+cron.schedule(EveryHour, function () {
+  autoGenerateScheduledMaintenances()
+})
+if (RunWithServerStart) autoGenerateScheduledMaintenances() // to run when start the server

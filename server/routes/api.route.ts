@@ -9,6 +9,7 @@ import { getAllSpecialMaintenanceApi, getAllSpecialMaintenanceWithDetailsApi, ge
 import { getAllInstructionsApi, getInstructionByIdApi, createInstructionApi, deleteInstructionApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
 import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi } from '../controllers/api/api.task.controller'
 import { createUserQualificationApi, deleteUserQualificationApi, getAllUserQualificationsApi, getUserQualificationByIdApi, updateUserQualificationApi } from '../controllers/api/api.userQualification.controller'
+import { getAllLogsApi } from '../controllers/api/api.logger.controller'
 const router = express.Router()
 
 
@@ -306,5 +307,13 @@ router.post('/task/:id/finish', async (req: express.Request, res: express.Respon
   finishTaskApi(req, res, next)
 })
 
+router.post('/task/:id/assignToUser', async (req: express.Request, res: express.Response, next: any) => {
+  finishTaskApi(req, res, next)
+})
+
+// Logger ROUTES
+router.get('/logs', async (req: express.Request, res: express.Response, next: any) => {
+  getAllLogsApi(req, res, next)
+})
 
 module.exports = router

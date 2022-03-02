@@ -439,6 +439,16 @@ components:
           message:
             type: string
             default: Error message
+      Logger:
+        type: object
+        properties:
+          id:
+            type: integer
+          message:
+            type: string
+          time:
+            type: string
+            format: date-time
 
 #      Post:
 #        type: object
@@ -1884,3 +1894,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerError'
+
+  /task/:id/assignToUser:
+    post:
+      summary: Assign a task to a user
+      tags: [Tasks]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              type: object
+              properties:
+                operatorId:
+                  type: integer
+                userId:
+                  type: integer
+            examples:    
+              Example1:   
+                value:
+                  operatorId: 3
+                  userId: 1
+                  
+      responses:
+        200:
+          description: The task was successfully assigned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+# LOGGER
+  /logs:
+    get:
+      summary: Returns all logs
+      tags: [Logger]
+      responses:
+        200:
+          description: the list of the logs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Logger'

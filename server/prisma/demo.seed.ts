@@ -23,6 +23,12 @@ const prisma = new PrismaClient()
 const oneWeekFromNow = new Date();
 oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7 * 1);
 
+const oneWeekBackFromNow = new Date();
+oneWeekBackFromNow.setDate(oneWeekBackFromNow.getDate() - 7 * 1);
+
+const back37FromNow = new Date();
+back37FromNow.setDate(back37FromNow.getDate() - 37 * 1);
+
 interface TaskWithoutDefaults {
   id: number;
   scheduledMaintenanceId: number | null;
@@ -364,6 +370,10 @@ export const DemoStatus: Status[] = [{
 {
   id: 5,
   name: 'Befejezve'
+},
+{
+  id: 6,
+  name: 'Kiosztatlan'
 }
 
 ]
@@ -421,7 +431,7 @@ export const DemoTask: Task[] = [{
   id: 4,
   specialMaintenanceId: null,
   description: null,
-  due: new Date(new Date().getDate() - 7 * 1),
+  due: oneWeekBackFromNow,
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
@@ -437,7 +447,7 @@ export const DemoTask: Task[] = [{
   id: 5,
   specialMaintenanceId: null,
   description: null,
-  due: oneWeekFromNow,
+  due: new Date(Date.now()),
   acceptedAt: null,
   declinedAt: null,
   startedAt: null,
@@ -461,6 +471,22 @@ export const DemoTask: Task[] = [{
   scheduledMaintenanceId: null,
   userId: 4,
   statusId: 3,
+  createdAt: new Date(Date.now()),
+  updatedAt: new Date(Date.now()),
+  createdByUserId: 3
+},
+{
+  id: 7,
+  specialMaintenanceId: null,
+  description: null,
+  due: back37FromNow,
+  acceptedAt: null,
+  declinedAt: null,
+  startedAt: null,
+  scheduledMaintenanceId: 4,
+  userId: 2,
+  statusId: 5,
+  finishedAt: new Date('2021-02-24T18:17:29.558Z'),
   createdAt: new Date(Date.now()),
   updatedAt: new Date(Date.now()),
   createdByUserId: 3

@@ -47,7 +47,18 @@ const userData = [
         name: 'Karbantartó'
       }
     }
-  }
+  },
+  {
+    name: 'System',
+    username: 'root',
+    password: 'password',
+    active: true,
+    Role: {
+      connect: {
+        id: 1
+      }
+    }
+  },
 ]
 
 async function main() {
@@ -58,7 +69,7 @@ async function main() {
 
     u.password = hash
     const user = await prisma.user.create({
-      data: u,
+      data: u
     })
     console.log(`👨  Created user with id: ${user.id}`)
 

@@ -37,6 +37,7 @@ export const getAllScheduledMaintenancesWithDetails = async () => {
   try {
     const allScheduledMaintenances = await prisma.scheduledMaintenance.findMany({
       include: {
+        period: true,
         Instruction: true,
         MaintenanceQualification: {
           select: {
@@ -56,7 +57,8 @@ export const getAllScheduledMaintenancesWithDetails = async () => {
                 }
               }
             },
-            status: true
+            status: true,
+            createdByUser: true
           }
         },
       },

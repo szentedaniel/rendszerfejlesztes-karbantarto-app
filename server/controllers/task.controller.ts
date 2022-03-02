@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 export interface createTaskData {
   scheduledMaintenanceId: number | null
   specialMaintenanceId: number | null
-  userId: number
+  userId: number | null
   due: Date
   description: string | null
   acceptedAt: Date | null
@@ -223,12 +223,15 @@ export const getTaskWithDetailsById = async (id: number) => {
   }
 }
 
-export const createTask = async (TaskData: createTaskData) => {
+export const createTask = async (TaskData: createTaskData, userForceNull: boolean = false) => {
   try {
-    const hasQualification = await UserIsEligibleForTask(TaskData.userId, TaskData.scheduledMaintenanceId, TaskData.specialMaintenanceId)
-    if (!hasQualification) return { status: 400, message: 'The user does not have all the qualifications for maintenance.' }
-    const hasEnoughTime = await UserHasEnoughTime(TaskData.userId, TaskData.due, TaskData.scheduledMaintenanceId, TaskData.specialMaintenanceId)
-    if (!hasEnoughTime) return await UserHasEnoughTime(TaskData.userId, TaskData.due, TaskData.scheduledMaintenanceId, TaskData.specialMaintenanceId, true)
+    if (TaskData.userId && !userForceNull) {
+      const hasQualification = await UserIsEligibleForTask(TaskData.userId, TaskData.scheduledMaintenanceId, TaskData.specialMaintenanceId)
+      if (!hasQualification) return { status: 400, message: 'The user does not have all the qualifications for maintenance.' }
+      const hasEnoughTime = await UserHasEnoughTime(TaskData.userId, TaskData.due, TaskData.scheduledMaintenanceId, TaskData.specialMaintenanceId)
+      if (!hasEnoughTime) return await UserHasEnoughTime(TaskData.userId, TaskData.due, TaskData.scheduledMaintenanceId, TaskData.specialMaintenanceId, true)
+
+    }
     const allTask = await prisma.task.create({
       data: TaskData
     })
@@ -301,6 +304,46 @@ export const finishTask = async (TaskData: acceptStartFinishTaskData, id: number
         id: id
       }
     })
+    if (allTask) updateLastMaintenance(allTask.scheduledMaintenanceId!, allTask.finishedAt!)
+    return allTask
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+const updateLastMaintenance = async (id: number, last: Date) => {
+  try {
+    const allTask = await prisma.scheduledMaintenance.update({
+      data: {
+        lastMaintenance: last
+      },
+      where: {
+        id: id
+      }
+    })
+    return allTask
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+export interface assignTaskData {
+  operatorId: number
+  userId: number
+}
+
+export const assignTask = async (taskData: assignTaskData, id: number) => {
+  try {
+    const allTask = await prisma.task.update({
+      data: {
+        userId: taskData.userId,
+        statusId: 1
+      },
+      where: {
+        id: id
+      }
+    })
+    if (allTask) updateLastMaintenance(allTask.scheduledMaintenanceId!, allTask.finishedAt!)
     return allTask
   } catch (error: any) {
     throw new Error(error)

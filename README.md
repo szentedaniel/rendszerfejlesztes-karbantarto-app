@@ -92,7 +92,7 @@ embereket)
 - [x] *d,(Flórián)* Végzettségek karbantartóhoz rendelése
 - [x] *e,(Flórián)* Rendkívüli karbantartási feladatok rögzítése a rendszerbe (eszköz, időpont,
 hiba leírása)
-- [ ] *f,(Szente)* Időszakos karbantartási feladatok automatikus generálása (utolsó
+- [x] *f,(Szente)* Időszakos karbantartási feladatok automatikus generálása (utolsó
 karbantartás és karbantartási periódus alapján)
 - [x] *g,(Szente, Flórián)* Feladatok listázása, állapotok megjelenítése
 
@@ -113,3 +113,4 @@ Befejezve)
 - [ ] *(Flórián)* UserQualification swagger YAML
 - [ ] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
 - [ ] *(Flórián)* SpecialMaintenanceQualification swagger YAML
+- [ ] *(Flórián)* Test ASSIGN TO USER API

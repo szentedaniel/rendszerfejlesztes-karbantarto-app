@@ -154,8 +154,8 @@ model Task {
   scheduledMaintenance   ScheduledMaintenance? @relation(fields: [scheduledMaintenanceId], references: [id], onDelete: Cascade)
   specialMaintenanceId   Int?
   specialMaintenance     SpecialMaintenance?   @relation(fields: [specialMaintenanceId], references: [id], onDelete: Cascade)
-  userId                 Int
-  user                   User                  @relation(name: "KarbantartoUser", fields: [userId], references: [id], onDelete: Restrict)
+  userId                 Int?
+  user                   User?                 @relation(name: "KarbantartoUser", fields: [userId], references: [id], onDelete: Restrict)
   description            String?
   createdAt              DateTime              @default(now())
   updatedAt              DateTime              @updatedAt
@@ -182,4 +182,10 @@ model Status {
   id   Int    @id @default(autoincrement())
   name String
   Task Task[]
+}
+
+model Logger {
+  id Int @id @default(autoincrement())
+  message String
+  time DateTime @default(now())
 }
