@@ -420,6 +420,16 @@ components:
           password:
             type: string
             nullable: false
+      Logger:
+        type: object
+        properties:
+          id:
+            type: integer
+          message:
+            type: string
+          time:
+            type: string
+            format: date-time
       # Error schema
       NotFound:
         type: object
@@ -439,16 +449,6 @@ components:
           message:
             type: string
             default: Error message
-      Logger:
-        type: object
-        properties:
-          id:
-            type: integer
-          message:
-            type: string
-          time:
-            type: string
-            format: date-time
 
 #      Post:
 #        type: object
@@ -1532,6 +1532,22 @@ paths:
                   $ref: '#/components/schemas/Instruction'
   
   /instruction/{id}:
+    get:
+      summary: Returns an instruction by id
+      tags: [Instructions]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of an Instruction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instruction'
     delete:
       summary: Delete an instruction by id
       tags: [Instructions]
@@ -1562,8 +1578,98 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerError'
-
-
+    patch:
+      summary: Update an Instruction by id
+      tags: [Instructions]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Instruction'
+            examples:    
+              Example1:   
+                value:
+                  title: New title
+              Example2:   
+                value:
+                  title: New title
+                  body: New Body
+              Example3:   
+                value:
+                  title: New title
+                  body: null
+                  scheduledMaintenanceId: 1
+                  specialMaintenanceId: null
+              Example4:   
+                value:
+                  title: New title
+                  body: New body
+                  scheduledMaintenanceId: null
+                  specialMaintenanceId: 1
+      responses:
+        200:
+          description: The instruction was successfully updated and the data of the updated instruction is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instruction'
+        404:
+          description: The instruction was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The instruction could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /instruction:
+    post:
+      summary: Adds a new instruction
+      tags: [Instructions]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Instruction'   
+            examples:    
+              Example1:   
+                value:
+                  title: New title
+                  body: New body
+                  scheduledMaintenanceId: null
+                  specialMaintenanceId: 1
+              Example2:   
+                value:
+                  title: New title
+                  body: null
+                  scheduledMaintenanceId: 1
+                  specialMaintenanceId: null
+      responses:
+        200:
+          description: The instruction was successfully created and the data of the created instruction is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instruction'
+        500:
+          description: The instruction could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
 # TASKS
   /tasks:
     get:

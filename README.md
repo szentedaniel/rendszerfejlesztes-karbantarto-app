@@ -109,7 +109,7 @@ Befejezve)
 
 **TODOS**
 
-- [ ] *(Flórián)* Instructions swagger YAML
+- [x] *(Flórián)* Instructions swagger YAML
 - [ ] *(Flórián)* UserQualification swagger YAML
 - [ ] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
 - [ ] *(Flórián)* SpecialMaintenanceQualification swagger YAML
