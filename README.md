@@ -110,7 +110,7 @@ Befejezve)
 **TODOS**
 
 - [x] *(Flórián)* Instructions swagger YAML
-- [ ] *(Flórián)* UserQualification swagger YAML
+- [x] *(Flórián)* UserQualification swagger YAML
 - [ ] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
 - [ ] *(Flórián)* SpecialMaintenanceQualification swagger YAML
 - [ ] *(Flórián)* Test ASSIGN TO USER API

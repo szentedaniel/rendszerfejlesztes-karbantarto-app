@@ -1670,6 +1670,158 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerError'
+# USERQUALIFICATIONS
+  /userQualifications:
+    get:
+      summary: Returns all UserQualifications
+      tags: [UserQualifications]
+      responses:
+        200:
+          description: the list of the UserQualifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+  
+  /userQualification/{userId}/{qualificationId}:
+    get:
+      summary: Returns a UserQualification by id
+      tags: [UserQualifications]
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a UserQualification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserQualification'
+    delete:
+      summary: Delete a UserQualification by id
+      tags: [UserQualifications]
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The UserQualification was successfully deleted and the data of the deleted UserQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+        404:
+          description: The UserQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The UserQualification could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a UserQualification by id
+      tags: [UserQualifications]
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/UserQualification'
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+              Example2:   
+                value:
+                  qualificationId: 1
+              Example3:   
+                value:
+                  userId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The UserQualification was successfully updated and the data of the updated UserQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+        404:
+          description: The UserQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The UserQualification could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /UserQualification:
+    post:
+      summary: Adds a new UserQualification
+      tags: [UserQualifications]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/UserQualification'   
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The UserQualification was successfully created and the data of the created UserQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+        500:
+          description: The UserQualification could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
 # TASKS
   /tasks:
     get:
