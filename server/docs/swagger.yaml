@@ -1515,6 +1515,158 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
+# SCHEDULEDMAINTENANCEQUALIFICATIONS
+  /scheduledMaintenanceQualifications:
+    get:
+      summary: Returns all ScheduledMaintenanceQualifications
+      tags: [ScheduledMaintenanceQualifications]
+      responses:
+        200:
+          description: the list of the ScheduledMaintenanceQualifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+  
+  /scheduledMaintenanceQualification/{maintenanceId}/{qualificationId}:
+    get:
+      summary: Returns a ScheduledMaintenanceQualification by id
+      tags: [ScheduledMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a ScheduledMaintenanceQualification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+    delete:
+      summary: Delete a ScheduledMaintenanceQualification by id
+      tags: [ScheduledMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The ScheduledMaintenanceQualification was successfully deleted and the data of the deleted ScheduledMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+        404:
+          description: The ScheduledMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The ScheduledMaintenanceQualification could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a ScheduledMaintenanceQualification by id
+      tags: [ScheduledMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+              Example2:   
+                value:
+                  qualificationId: 1
+              Example3:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The ScheduledMaintenanceQualification was successfully updated and the data of the updated ScheduledMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+        404:
+          description: The ScheduledMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The ScheduledMaintenanceQualification could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /scheduledMaintenanceQualification:
+    post:
+      summary: Adds a new ScheduledMaintenanceQualification
+      tags: [ScheduledMaintenanceQualifications]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/ScheduledMaintenanceQualification'   
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The ScheduledMaintenanceQualification was successfully created and the data of the created ScheduledMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+        500:
+          description: The ScheduledMaintenanceQualification could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
 
 # SPECIALMAINTENANCEQUALIFICATIONS
   /specialMaintenanceQualifications:

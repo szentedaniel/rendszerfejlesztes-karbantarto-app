@@ -111,6 +111,6 @@ Befejezve)
 
 - [x] *(Flórián)* Instructions swagger YAML
 - [x] *(Flórián)* UserQualification swagger YAML
-- [ ] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
+- [x] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
 - [x] *(Flórián)* SpecialMaintenanceQualification swagger YAML
 - [ ] *(Flórián)* Test ASSIGN TO USER API
