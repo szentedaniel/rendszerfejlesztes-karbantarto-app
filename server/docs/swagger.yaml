@@ -1516,6 +1516,160 @@ paths:
                 $ref: '#/components/schemas/ServerError'
 
 
+# SPECIALMAINTENANCEQUALIFICATIONS
+  /specialMaintenanceQualifications:
+    get:
+      summary: Returns all SpecialMaintenanceQualifications
+      tags: [SpecialMaintenanceQualifications]
+      responses:
+        200:
+          description: the list of the SpecialMaintenanceQualifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+  
+  /specialMaintenanceQualification/{maintenanceId}/{qualificationId}:
+    get:
+      summary: Returns a SpecialMaintenanceQualification by id
+      tags: [SpecialMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a SpecialMaintenanceQualification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecialMaintenanceQualification'
+    delete:
+      summary: Delete a SpecialMaintenanceQualification by id
+      tags: [SpecialMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The SpecialMaintenanceQualification was successfully deleted and the data of the deleted SpecialMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+        404:
+          description: The SpecialMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The SpecialMaintenanceQualification could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a SpecialMaintenanceQualification by id
+      tags: [SpecialMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/SpecialMaintenanceQualification'
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+              Example2:   
+                value:
+                  qualificationId: 1
+              Example3:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The SpecialMaintenanceQualification was successfully updated and the data of the updated SpecialMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+        404:
+          description: The SpecialMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The SpecialMaintenanceQualification could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /specialMaintenanceQualification:
+    post:
+      summary: Adds a new SpecialMaintenanceQualification
+      tags: [SpecialMaintenanceQualifications]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/SpecialMaintenanceQualification'   
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The SpecialMaintenanceQualification was successfully created and the data of the created SpecialMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+        500:
+          description: The SpecialMaintenanceQualification could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+
 # INSTRUCTIONS
   /instructions:
     get:

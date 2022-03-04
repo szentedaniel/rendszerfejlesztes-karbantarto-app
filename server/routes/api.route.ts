@@ -187,11 +187,11 @@ router.get('/specialMaintenanceQualifications', async (req: express.Request, res
   getAllSpecialMaintenanceQualificationsApi(req, res, next)
 })
 
-router.get('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   getScheduledMaintenanceQualificationByIdApi(req, res, next)
 })
 
-router.get('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/specialMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   getSpecialMaintenanceQualificationByIdApi(req, res, next)
 })
 
@@ -203,19 +203,19 @@ router.post('/specialMaintenanceQualification', async (req: express.Request, res
   createSpecialMaintenanceQualificationApi(req, res, next)
 })
 
-router.delete('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/scheduledMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   deleteScheduledMaintenanceQualificationApi(req, res, next)
 })
 
-router.delete('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/specialMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   deleteSpecialMaintenanceQualificationApi(req, res, next)
 })
 
-router.patch('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/scheduledMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   updateScheduledMaintenanceQualificationApi(req, res, next)
 })
 
-router.patch('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/specialMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   updateSpecialMaintenanceQualificationApi(req, res, next)
 })
 
