@@ -115,17 +115,17 @@ Befejezve)
 - [x] *(Flórián)* SpecialMaintenanceQualification swagger YAML
 - [ ] *(Flórián)* Test ASSIGN TO USER API
   Works as intended:
-    [x] /tasks
-    [x] /tasks/details
-    [x] /tasks/id - ~returns multiple~
-    [x] /tasks/id/details - ~returns multiple~
-    [X] /task/id
-    [x] /task/id/details
-    [x] /task - ~wrong user added task~
-    [x] /task/id/accept - ~does not specify task~
-    [x] /task/id/decline - ~does not specify task~
-    [x] /task/id/start - ~does not specify task~
-    [x] /task/id/finish - ~does not specify task~
-    [ ] /task/id/assignToUser - ~does not specify task~
+    - [x] /tasks
+    - [x] /tasks/details
+    - [x] /tasks/id - ~returns multiple~
+    - [x] /tasks/id/details - ~returns multiple~
+    - [X] /task/id
+    - [x] /task/id/details
+    - [x] /task - ~wrong user added task~
+    - [x] /task/id/accept - ~does not specify task~
+    - [x] /task/id/decline - ~does not specify task~
+    - [x] /task/id/start - ~does not specify task~
+    - [x] /task/id/finish - ~does not specify task~
+    - [x] /task/id/assignToUser - ~does not specify task~
                               - ~checks wrong requirement~
                               - ~does not check qualification~
