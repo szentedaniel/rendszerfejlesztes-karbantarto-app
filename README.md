@@ -113,7 +113,7 @@ Befejezve)
 - [x] *(Flórián)* UserQualification swagger YAML
 - [x] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
 - [x] *(Flórián)* SpecialMaintenanceQualification swagger YAML
-- [ ] *(Flórián)* Test ASSIGN TO USER API
+- [x] *(Flórián)* Test ASSIGN TO USER API
   Works as intended:
     - [x] /tasks
     - [x] /tasks/details
