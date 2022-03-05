@@ -114,3 +114,16 @@ Befejezve)
 - [x] *(Flórián)* ScheduledMaintenanceQualification swagger YAML
 - [x] *(Flórián)* SpecialMaintenanceQualification swagger YAML
 - [ ] *(Flórián)* Test ASSIGN TO USER API
+  Works as intended:
+    [x] /tasks
+    [x] /tasks/details
+    [ ] /tasks/id - returns multiple
+    [ ] /tasks/id/details - returns multiple
+    [X] /task/id
+    [x] /task/id/details
+    [ ] /task - wrong user added task
+    [ ] /task/id/accept - does not specify task
+    [ ] /task/id/decline - does not specify task
+    [ ] /task/id/start - does not specify task
+    [ ] /task/id/finish - does not specify task
+    [ ] /task/id/assignToUser - does not specify task
