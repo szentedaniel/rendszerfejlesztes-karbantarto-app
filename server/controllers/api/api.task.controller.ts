@@ -130,7 +130,7 @@ export const acceptTaskApi = async (req: express.Request, res: express.Response,
             res.json({ status: 400, message: 'You need to give the user\'s id who wants to accept the task (userId)' })
             ok = false
         } if (taskData.userId) {
-            const task = await getTaskById(taskData.userId)
+            const task = await getTaskById(Number(id))
             if (!task) {
                 res.json({ status: 400, message: 'Not valid task ID' })
                 ok = false
@@ -161,7 +161,7 @@ export const declineTaskApi = async (req: express.Request, res: express.Response
             res.json({ status: 400, message: 'You need to give the user\'s id who wants to decline the task (userId)' })
             ok = false
         } else if (taskData.userId) {
-            const task = await getTaskById(taskData.userId)
+            const task = await getTaskById(Number(id))
             if (!task) {
                 res.json({ status: 400, message: 'Not valid task ID' })
                 ok = false
@@ -195,7 +195,7 @@ export const startTaskApi = async (req: express.Request, res: express.Response, 
             res.json({ status: 400, message: 'You need to give the user\'s id who wants to start the task (userId)' })
             ok = false
         } if (taskData.userId) {
-            const task = await getTaskById(taskData.userId)
+            const task = await getTaskById(Number(id))
             if (!task) {
                 res.json({ status: 400, message: 'Not valid task ID' })
                 ok = false
@@ -226,7 +226,7 @@ export const finishTaskApi = async (req: express.Request, res: express.Response,
             res.json({ status: 400, message: 'You need to give the user\'s id who wants to finish the task (userId)' })
             ok = false
         } if (taskData.userId) {
-            const task = await getTaskById(taskData.userId)
+            const task = await getTaskById(Number(id))
             if (!task) {
                 res.json({ status: 400, message: 'Not valid task ID' })
                 ok = false
@@ -274,8 +274,8 @@ export const assignTaskApi = async (req: express.Request, res: express.Response,
             if (!task) {
                 res.json({ status: 400, message: 'Not valid task ID' })
                 ok = false
-            } if (task!.userId !== null) {
-                res.json({ status: 400, message: 'Valaki más mára van kiosztva' })
+            } if (task!.statusId !== 3 && task!.statusId !== 6){
+                res.json({ status: 400, message: 'The task has not been declined and isn\'t pending assignation' })
                 ok = false
             }
         }

@@ -334,6 +334,12 @@ export interface assignTaskData {
 
 export const assignTask = async (taskData: assignTaskData, id: number) => {
   try {
+    const TaskData = await getTaskById(id)
+    const hasQualification = await UserIsEligibleForTask(TaskData!.userId!, TaskData!.scheduledMaintenanceId, TaskData!.specialMaintenanceId)
+    if (!hasQualification) return { status: 400, message: 'The user does not have all the qualifications for maintenance.' }
+    const hasEnoughTime = await UserHasEnoughTime(TaskData!.userId!, TaskData!.due, TaskData!.scheduledMaintenanceId, TaskData!.specialMaintenanceId)
+    if (!hasEnoughTime) return await UserHasEnoughTime(TaskData!.userId!, TaskData!.due, TaskData!.scheduledMaintenanceId, TaskData!.specialMaintenanceId, true)
+    
     const allTask = await prisma.task.update({
       data: {
         userId: taskData.userId,

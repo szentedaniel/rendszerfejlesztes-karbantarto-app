@@ -7,7 +7,7 @@ import { getAllScheduledMaintenanceQualificationsApi, getAllSpecialMaintenanceQu
 import { getAllScheduledMaintenanceWithDetailsApi, getScheduledMaintenanceByIdApi, getScheduledMaintenanceByIdWithDetailsApi, deleteScheduledMaintenanceByIdApi, updateScheduledMaintenanceByIdApi, createScheduledMaintenanceApi, getAllScheduledMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
 import { getAllSpecialMaintenanceApi, getAllSpecialMaintenanceWithDetailsApi, getSpecialMaintenanceByIdApi, getSpecialMaintenanceByIdWithDetailsApi, deleteSpecialMaintenanceByIdApi, updateSpecialMaintenanceByIdApi, createSpecialMaintenanceApi } from '../controllers/api/api.specialMaintenance.controller'
 import { getAllInstructionsApi, getInstructionByIdApi, createInstructionApi, deleteInstructionApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
-import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi } from '../controllers/api/api.task.controller'
+import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getTaskByIdApi , getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi, assignTaskApi } from '../controllers/api/api.task.controller'
 import { createUserQualificationApi, deleteUserQualificationApi, getAllUserQualificationsApi, getUserQualificationByIdApi, updateUserQualificationApi } from '../controllers/api/api.userQualification.controller'
 import { getAllLogsApi } from '../controllers/api/api.logger.controller'
 const router = express.Router()
@@ -284,7 +284,7 @@ router.post('/task', async (req: express.Request, res: express.Response, next: a
 })
 
 router.get('/task/:id', async (req: express.Request, res: express.Response, next: any) => {
-  getTaskWithDetailsByIdApi(req, res, next)
+  getTaskByIdApi(req, res, next)
 })
 
 router.get('/task/:id/details', async (req: express.Request, res: express.Response, next: any) => {
@@ -308,7 +308,7 @@ router.post('/task/:id/finish', async (req: express.Request, res: express.Respon
 })
 
 router.post('/task/:id/assignToUser', async (req: express.Request, res: express.Response, next: any) => {
-  finishTaskApi(req, res, next)
+  assignTaskApi(req, res, next)
 })
 
 // Logger ROUTES

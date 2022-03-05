@@ -117,13 +117,15 @@ Befejezve)
   Works as intended:
     [x] /tasks
     [x] /tasks/details
-    [ ] /tasks/id - returns multiple
-    [ ] /tasks/id/details - returns multiple
+    [x] /tasks/id - ~returns multiple~
+    [x] /tasks/id/details - ~returns multiple~
     [X] /task/id
     [x] /task/id/details
-    [ ] /task - wrong user added task
-    [ ] /task/id/accept - does not specify task
-    [ ] /task/id/decline - does not specify task
-    [ ] /task/id/start - does not specify task
-    [ ] /task/id/finish - does not specify task
-    [ ] /task/id/assignToUser - does not specify task
+    [x] /task - ~wrong user added task~
+    [x] /task/id/accept - ~does not specify task~
+    [x] /task/id/decline - ~does not specify task~
+    [x] /task/id/start - ~does not specify task~
+    [x] /task/id/finish - ~does not specify task~
+    [ ] /task/id/assignToUser - ~does not specify task~
+                              - ~checks wrong requirement~
+                              - ~does not check qualification~

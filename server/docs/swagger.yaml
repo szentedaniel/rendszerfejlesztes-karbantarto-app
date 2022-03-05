@@ -2159,7 +2159,7 @@ paths:
         
   /tasks/{id}:
     get:
-      summary: Returns a task by userId
+      summary: Returns all tasks belonging to the user with the UserId
       tags: [Tasks]
       parameters:
         - in: path
@@ -2179,7 +2179,7 @@ paths:
 
   /tasks/{id}/details:
     get:
-      summary: Returns a task by userId
+      summary: Returns all tasks belonging to the user with the UserId, with details
       tags: [Tasks]
       parameters:
         - in: path
@@ -2300,10 +2300,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/accept:
+  /task/{id}/accept:
     post:
       summary: Accept the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -2339,10 +2345,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/decline:
+  /task/{id}/decline:
     post:
       summary: Decline the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -2381,10 +2393,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/start:
+  /task/{id}/start:
     post:
       summary: Start the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -2420,10 +2438,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/finish:
+  /task/{id}/finish:
     post:
       summary: Finish the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -2459,10 +2483,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/assignToUser:
+  /task/{id}/assignToUser:
     post:
       summary: Assign a task to a user
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
