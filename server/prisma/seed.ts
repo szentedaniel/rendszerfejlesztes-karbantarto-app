@@ -28,7 +28,7 @@ const userData = [
   },
   {
     name: 'Operátor',
-    username: 'oprator',
+    username: 'operator',
     password: 'jelszo',
     active: true,
     Role: {
