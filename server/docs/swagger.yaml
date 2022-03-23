@@ -420,6 +420,16 @@ components:
           password:
             type: string
             nullable: false
+      Logger:
+        type: object
+        properties:
+          id:
+            type: integer
+          message:
+            type: string
+          time:
+            type: string
+            format: date-time
       # Error schema
       NotFound:
         type: object
@@ -439,16 +449,6 @@ components:
           message:
             type: string
             default: Error message
-      Logger:
-        type: object
-        properties:
-          id:
-            type: integer
-          message:
-            type: string
-          time:
-            type: string
-            format: date-time
 
 #      Post:
 #        type: object
@@ -1515,6 +1515,312 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
+# SCHEDULEDMAINTENANCEQUALIFICATIONS
+  /scheduledMaintenanceQualifications:
+    get:
+      summary: Returns all ScheduledMaintenanceQualifications
+      tags: [ScheduledMaintenanceQualifications]
+      responses:
+        200:
+          description: the list of the ScheduledMaintenanceQualifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+  
+  /scheduledMaintenanceQualification/{maintenanceId}/{qualificationId}:
+    get:
+      summary: Returns a ScheduledMaintenanceQualification by id
+      tags: [ScheduledMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a ScheduledMaintenanceQualification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+    delete:
+      summary: Delete a ScheduledMaintenanceQualification by id
+      tags: [ScheduledMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The ScheduledMaintenanceQualification was successfully deleted and the data of the deleted ScheduledMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+        404:
+          description: The ScheduledMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The ScheduledMaintenanceQualification could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a ScheduledMaintenanceQualification by id
+      tags: [ScheduledMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+              Example2:   
+                value:
+                  qualificationId: 1
+              Example3:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The ScheduledMaintenanceQualification was successfully updated and the data of the updated ScheduledMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+        404:
+          description: The ScheduledMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The ScheduledMaintenanceQualification could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /scheduledMaintenanceQualification:
+    post:
+      summary: Adds a new ScheduledMaintenanceQualification
+      tags: [ScheduledMaintenanceQualifications]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/ScheduledMaintenanceQualification'   
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The ScheduledMaintenanceQualification was successfully created and the data of the created ScheduledMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScheduledMaintenanceQualification'
+        500:
+          description: The ScheduledMaintenanceQualification could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
+# SPECIALMAINTENANCEQUALIFICATIONS
+  /specialMaintenanceQualifications:
+    get:
+      summary: Returns all SpecialMaintenanceQualifications
+      tags: [SpecialMaintenanceQualifications]
+      responses:
+        200:
+          description: the list of the SpecialMaintenanceQualifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+  
+  /specialMaintenanceQualification/{maintenanceId}/{qualificationId}:
+    get:
+      summary: Returns a SpecialMaintenanceQualification by id
+      tags: [SpecialMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a SpecialMaintenanceQualification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecialMaintenanceQualification'
+    delete:
+      summary: Delete a SpecialMaintenanceQualification by id
+      tags: [SpecialMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The SpecialMaintenanceQualification was successfully deleted and the data of the deleted SpecialMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+        404:
+          description: The SpecialMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The SpecialMaintenanceQualification could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a SpecialMaintenanceQualification by id
+      tags: [SpecialMaintenanceQualifications]
+      parameters:
+        - in: path
+          name: maintenanceId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/SpecialMaintenanceQualification'
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+              Example2:   
+                value:
+                  qualificationId: 1
+              Example3:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The SpecialMaintenanceQualification was successfully updated and the data of the updated SpecialMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+        404:
+          description: The SpecialMaintenanceQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The SpecialMaintenanceQualification could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /specialMaintenanceQualification:
+    post:
+      summary: Adds a new SpecialMaintenanceQualification
+      tags: [SpecialMaintenanceQualifications]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/SpecialMaintenanceQualification'   
+            examples:    
+              Example1:   
+                value:
+                  maintenanceId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The SpecialMaintenanceQualification was successfully created and the data of the created SpecialMaintenanceQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpecialMaintenanceQualification'
+        500:
+          description: The SpecialMaintenanceQualification could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+
 
 # INSTRUCTIONS
   /instructions:
@@ -1532,6 +1838,22 @@ paths:
                   $ref: '#/components/schemas/Instruction'
   
   /instruction/{id}:
+    get:
+      summary: Returns an instruction by id
+      tags: [Instructions]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of an Instruction
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Instruction'
     delete:
       summary: Delete an instruction by id
       tags: [Instructions]
@@ -1562,8 +1884,250 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerError'
-
-
+    patch:
+      summary: Update an Instruction by id
+      tags: [Instructions]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Instruction'
+            examples:    
+              Example1:   
+                value:
+                  title: New title
+              Example2:   
+                value:
+                  title: New title
+                  body: New Body
+              Example3:   
+                value:
+                  title: New title
+                  body: null
+                  scheduledMaintenanceId: 1
+                  specialMaintenanceId: null
+              Example4:   
+                value:
+                  title: New title
+                  body: New body
+                  scheduledMaintenanceId: null
+                  specialMaintenanceId: 1
+      responses:
+        200:
+          description: The instruction was successfully updated and the data of the updated instruction is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instruction'
+        404:
+          description: The instruction was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The instruction could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /instruction:
+    post:
+      summary: Adds a new instruction
+      tags: [Instructions]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Instruction'   
+            examples:    
+              Example1:   
+                value:
+                  title: New title
+                  body: New body
+                  scheduledMaintenanceId: null
+                  specialMaintenanceId: 1
+              Example2:   
+                value:
+                  title: New title
+                  body: null
+                  scheduledMaintenanceId: 1
+                  specialMaintenanceId: null
+      responses:
+        200:
+          description: The instruction was successfully created and the data of the created instruction is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Instruction'
+        500:
+          description: The instruction could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+# USERQUALIFICATIONS
+  /userQualifications:
+    get:
+      summary: Returns all UserQualifications
+      tags: [UserQualifications]
+      responses:
+        200:
+          description: the list of the UserQualifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+  
+  /userQualification/{userId}/{qualificationId}:
+    get:
+      summary: Returns a UserQualification by id
+      tags: [UserQualifications]
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a UserQualification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserQualification'
+    delete:
+      summary: Delete a UserQualification by id
+      tags: [UserQualifications]
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The UserQualification was successfully deleted and the data of the deleted UserQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+        404:
+          description: The UserQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The UserQualification could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a UserQualification by id
+      tags: [UserQualifications]
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+        - in: path
+          name: qualificationId
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/UserQualification'
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+              Example2:   
+                value:
+                  qualificationId: 1
+              Example3:   
+                value:
+                  userId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The UserQualification was successfully updated and the data of the updated UserQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+        404:
+          description: The UserQualification was not found with these ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The UserQualification could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /UserQualification:
+    post:
+      summary: Adds a new UserQualification
+      tags: [UserQualifications]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/UserQualification'   
+            examples:    
+              Example1:   
+                value:
+                  userId: 1
+                  qualificationId: 1
+      responses:
+        200:
+          description: The UserQualification was successfully created and the data of the created UserQualification is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserQualification'
+        500:
+          description: The UserQualification could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
 # TASKS
   /tasks:
     get:
@@ -1595,7 +2159,7 @@ paths:
         
   /tasks/{id}:
     get:
-      summary: Returns a task by userId
+      summary: Returns all tasks belonging to the user with the UserId
       tags: [Tasks]
       parameters:
         - in: path
@@ -1615,7 +2179,7 @@ paths:
 
   /tasks/{id}/details:
     get:
-      summary: Returns a task by userId
+      summary: Returns all tasks belonging to the user with the UserId, with details
       tags: [Tasks]
       parameters:
         - in: path
@@ -1736,10 +2300,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/accept:
+  /task/{id}/accept:
     post:
       summary: Accept the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -1775,10 +2345,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/decline:
+  /task/{id}/decline:
     post:
       summary: Decline the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -1817,10 +2393,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/start:
+  /task/{id}/start:
     post:
       summary: Start the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -1856,10 +2438,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/finish:
+  /task/{id}/finish:
     post:
       summary: Finish the task
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     
@@ -1895,10 +2483,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ServerError'
 
-  /task/:id/assignToUser:
+  /task/{id}/assignToUser:
     post:
       summary: Assign a task to a user
       tags: [Tasks]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         content:
           application/json:     

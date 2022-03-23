@@ -7,7 +7,7 @@ import { getAllScheduledMaintenanceQualificationsApi, getAllSpecialMaintenanceQu
 import { getAllScheduledMaintenanceWithDetailsApi, getScheduledMaintenanceByIdApi, getScheduledMaintenanceByIdWithDetailsApi, deleteScheduledMaintenanceByIdApi, updateScheduledMaintenanceByIdApi, createScheduledMaintenanceApi, getAllScheduledMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
 import { getAllSpecialMaintenanceApi, getAllSpecialMaintenanceWithDetailsApi, getSpecialMaintenanceByIdApi, getSpecialMaintenanceByIdWithDetailsApi, deleteSpecialMaintenanceByIdApi, updateSpecialMaintenanceByIdApi, createSpecialMaintenanceApi } from '../controllers/api/api.specialMaintenance.controller'
 import { getAllInstructionsApi, getInstructionByIdApi, createInstructionApi, deleteInstructionApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
-import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi } from '../controllers/api/api.task.controller'
+import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getTaskByIdApi , getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi, assignTaskApi } from '../controllers/api/api.task.controller'
 import { createUserQualificationApi, deleteUserQualificationApi, getAllUserQualificationsApi, getUserQualificationByIdApi, updateUserQualificationApi } from '../controllers/api/api.userQualification.controller'
 import { getAllLogsApi } from '../controllers/api/api.logger.controller'
 const router = express.Router()
@@ -187,11 +187,11 @@ router.get('/specialMaintenanceQualifications', async (req: express.Request, res
   getAllSpecialMaintenanceQualificationsApi(req, res, next)
 })
 
-router.get('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/scheduledMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   getScheduledMaintenanceQualificationByIdApi(req, res, next)
 })
 
-router.get('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.get('/specialMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   getSpecialMaintenanceQualificationByIdApi(req, res, next)
 })
 
@@ -203,19 +203,19 @@ router.post('/specialMaintenanceQualification', async (req: express.Request, res
   createSpecialMaintenanceQualificationApi(req, res, next)
 })
 
-router.delete('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/scheduledMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   deleteScheduledMaintenanceQualificationApi(req, res, next)
 })
 
-router.delete('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.delete('/specialMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   deleteSpecialMaintenanceQualificationApi(req, res, next)
 })
 
-router.patch('/scheduledMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/scheduledMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   updateScheduledMaintenanceQualificationApi(req, res, next)
 })
 
-router.patch('/specialMaintenanceQualification/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/specialMaintenanceQualification/:maintenanceId/:qualificationId', async (req: express.Request, res: express.Response, next: any) => {
   updateSpecialMaintenanceQualificationApi(req, res, next)
 })
 
@@ -284,7 +284,7 @@ router.post('/task', async (req: express.Request, res: express.Response, next: a
 })
 
 router.get('/task/:id', async (req: express.Request, res: express.Response, next: any) => {
-  getTaskWithDetailsByIdApi(req, res, next)
+  getTaskByIdApi(req, res, next)
 })
 
 router.get('/task/:id/details', async (req: express.Request, res: express.Response, next: any) => {
@@ -308,7 +308,7 @@ router.post('/task/:id/finish', async (req: express.Request, res: express.Respon
 })
 
 router.post('/task/:id/assignToUser', async (req: express.Request, res: express.Response, next: any) => {
-  finishTaskApi(req, res, next)
+  assignTaskApi(req, res, next)
 })
 
 // Logger ROUTES
