@@ -18,6 +18,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../Store/store';
 import { useLocalStorage } from '@mantine/hooks';
+import { UserState } from '../types';
 
 export const initialState: UserState = {
   id: null,

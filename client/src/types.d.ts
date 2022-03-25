@@ -1,3 +1,6 @@
+import { RouteObject } from "react-router-dom"
+import { Icon } from "tabler-icons-react"
+
 interface RoleData {
     id: number
     name: string
@@ -12,4 +15,15 @@ interface UserState {
     roleId: number | null
     active: boolean | null
     Role: RoleData | null
+}
+
+interface RoutesType {
+    caseSensitive?: boolean;
+    children?: RouteObject[];
+    element?: React.ReactNode;
+    index?: boolean;
+    path?: string;
+    label: string
+    icon: Icon
+    hide?: boolean
 }

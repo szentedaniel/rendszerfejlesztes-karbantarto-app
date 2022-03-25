@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
 import { createStyles, Navbar, Group, Code } from '@mantine/core';
-import {
-    BellRinging,
-    Fingerprint,
-    Key,
-    Settings,
-    TwoFA,
-    DatabaseImport,
-    Receipt2,
-    SwitchHorizontal,
-    Logout,
-} from 'tabler-icons-react';
+
 import { useLocalStorage } from '@mantine/hooks';
 import { initialState } from './LoginPanel';
 import { useNavigate } from 'react-router-dom';
+import { SwitchHorizontal, Logout, Tool } from 'tabler-icons-react';
+import { UserState } from '../types';
+import routerConfig from '../Config/routerConfig'
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const icon = getRef('icon');
@@ -74,19 +67,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
     };
 });
 
-const data = [
-    { link: '', label: 'Notifications', icon: BellRinging },
-    { link: '', label: 'Billing', icon: Receipt2 },
-    { link: '', label: 'Security', icon: Fingerprint },
-    { link: '', label: 'SSH Keys', icon: Key },
-    { link: '', label: 'Databases', icon: DatabaseImport },
-    { link: '', label: 'Authentication', icon: TwoFA },
-    { link: '', label: 'Other Settings', icon: Settings },
-];
+
 
 export function NavbarSimpleColored() {
     const { classes, cx } = useStyles();
-    const [active, setActive] = useState('Billing');
+    const [active, setActive] = useState('Dashboard');
     const navigate = useNavigate()
     const [user, setUser] = useLocalStorage<UserState>({ key: 'user' });
 
@@ -96,26 +81,30 @@ export function NavbarSimpleColored() {
         // navigate(`/`)
     }
 
-    const links = data.map((item) => (
-        <a
-            className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-            href={item.link}
-            key={item.label}
-            onClick={(event) => {
-                event.preventDefault();
-                setActive(item.label);
-            }}
-        >
-            <item.icon className={classes.linkIcon} />
-            <span>{item.label}</span>
-        </a>
+    const links = routerConfig.map((item, index) => (
+        (!(item.hide) &&
+            <a
+                className={cx(classes.link, { [classes.linkActive]: item.label === active })}
+                href={item.path}
+                key={index}
+                onClick={(event) => {
+                    event.preventDefault();
+                    setActive(item.label);
+                }}
+            >
+                <item.icon className={classes.linkIcon} />
+                <span>{item.label}</span>
+            </a>
+        )
+
     ));
 
     return (
-        <Navbar height={700} width={{ sm: 300 }} p="md" className={classes.navbar}>
+        <Navbar height={'100%'} width={{ sm: 300 }} p="md" className={classes.navbar}>
             <Navbar.Section grow>
                 <Group className={classes.header} position="apart">
-                    <Code className={classes.version}>v3.1.2</Code>
+                    <h4 style={{ color: 'white', display: 'flex', alignItems: 'center' }}><Tool style={{ padding: '4px' }} /> Karbantartó applikáció</h4>
+                    <Code className={classes.version}>v0.1.0</Code>
                 </Group>
                 {links}
             </Navbar.Section>
@@ -123,12 +112,12 @@ export function NavbarSimpleColored() {
             <Navbar.Section className={classes.footer}>
                 <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                     <SwitchHorizontal className={classes.linkIcon} />
-                    <span>Change account</span>
+                    <span>Felhasználó váltás</span>
                 </a>
 
                 <a href="#" className={classes.link} onClick={(event) => { event.preventDefault(); logoutHandler() }}>
                     <Logout className={classes.linkIcon} />
-                    <span>Logout</span>
+                    <span>Kilépés</span>
                 </a>
             </Navbar.Section>
         </Navbar>
