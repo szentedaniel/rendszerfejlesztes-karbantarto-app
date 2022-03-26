@@ -9,6 +9,8 @@ import { getAllSpecialMaintenanceApi, getAllSpecialMaintenanceWithDetailsApi, ge
 import { getAllInstructionsApi, getInstructionByIdApi, createInstructionApi, deleteInstructionApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
 import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getTaskByIdApi , getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi, assignTaskApi } from '../controllers/api/api.task.controller'
 import { createUserQualificationApi, deleteUserQualificationApi, getAllUserQualificationsApi, getUserQualificationByIdApi, updateUserQualificationApi } from '../controllers/api/api.userQualification.controller'
+import { createBuildingApi, deleteBuildingByIdApi, getAllBuildingsApi, getAllBuildingsWithDetailsApi, getBuildingByIdApi, getBuildingByIdWithDetailsApi, updateBuildingByIdApi } from '../controllers/api/api.building.controller'
+import { createLocationApi, deleteLocationByIdApi, getAllLocationsApi, getAllLocationsWithDetailsApi, getLocationByIdApi, getLocationByIdWithDetailsApi, updateLocationByIdApi } from '../controllers/api/api.location.controller'
 import { getAllLogsApi } from '../controllers/api/api.logger.controller'
 const router = express.Router()
 
@@ -309,6 +311,64 @@ router.post('/task/:id/finish', async (req: express.Request, res: express.Respon
 
 router.post('/task/:id/assignToUser', async (req: express.Request, res: express.Response, next: any) => {
   assignTaskApi(req, res, next)
+})
+
+// Building ROUTES +
+router.get('/buildings', async (req: express.Request, res: express.Response, next: any) => {
+  getAllBuildingsApi(req, res, next)
+})
+
+router.get('/buildings/details', async (req: express.Request, res: express.Response, next: any) => {
+  getAllBuildingsWithDetailsApi(req, res, next)
+})
+
+router.get('/building/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getBuildingByIdApi(req, res, next)
+})
+
+router.get('/building/:id/details', async (req: express.Request, res: express.Response, next: any) => {
+  getBuildingByIdWithDetailsApi(req, res, next)
+})
+
+router.delete('/building/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteBuildingByIdApi(req, res, next)
+})
+
+router.patch('/building/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateBuildingByIdApi(req, res, next)
+})
+
+router.post('/building', async (req: express.Request, res: express.Response, next: any) => {
+  createBuildingApi(req, res, next)
+})
+
+// Location ROUTES +
+router.get('/locations', async (req: express.Request, res: express.Response, next: any) => {
+  getAllLocationsApi(req, res, next)
+})
+
+router.get('/locations/details', async (req: express.Request, res: express.Response, next: any) => {
+  getAllLocationsWithDetailsApi(req, res, next)
+})
+
+router.get('/location/:id', async (req: express.Request, res: express.Response, next: any) => {
+  getLocationByIdApi(req, res, next)
+})
+
+router.get('/location/:id/details', async (req: express.Request, res: express.Response, next: any) => {
+  getLocationByIdWithDetailsApi(req, res, next)
+})
+
+router.delete('/location/:id', async (req: express.Request, res: express.Response, next: any) => {
+  deleteLocationByIdApi(req, res, next)
+})
+
+router.patch('/location/:id', async (req: express.Request, res: express.Response, next: any) => {
+  updateLocationByIdApi(req, res, next)
+})
+
+router.post('/location', async (req: express.Request, res: express.Response, next: any) => {
+  createLocationApi(req, res, next)
 })
 
 // Logger ROUTES

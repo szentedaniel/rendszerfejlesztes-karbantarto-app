@@ -129,3 +129,5 @@ Befejezve)
     - [x] /task/id/assignToUser - ~does not specify task~
                               - ~checks wrong requirement~
                               - ~does not check qualification~
+    - [x] /locations
+    - [x] /buildings
