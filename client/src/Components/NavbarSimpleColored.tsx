@@ -73,14 +73,18 @@ export function NavbarSimpleColored() {
     const { classes, cx } = useStyles();
     const [active, setActive] = useState('Dashboard');
     const navigate = useNavigate()
-    const [user, setUser] = useLocalStorage<UserState>({ key: 'user' });
-
+    const [user, setUser] = useLocalStorage<UserState>({ key: 'user' });    
 
     const logoutHandler = () => {
         setUser(initialState)
-        // navigate(`/`)
+        navigate(`/login`)
     }
-
+    const toolsHandler = () => {
+        navigate(`/tools`)
+    }
+    const categoryHandler = () => {
+        navigate(`/category`)
+    }
     const links = routerConfig.map((item, index) => (
         (!(item.hide) &&
             <a
@@ -106,16 +110,23 @@ export function NavbarSimpleColored() {
                     <h4 style={{ color: 'white', display: 'flex', alignItems: 'center' }}><Tool style={{ padding: '4px' }} /> Karbantartó applikáció</h4>
                     <Code className={classes.version}>v0.1.0</Code>
                 </Group>
-                {links}
+                <a href="#" className={classes.link} onClick={toolsHandler}>
+                    <SwitchHorizontal className={classes.linkIcon} />
+                    <span>Eszközök</span>
+                </a>
+                <a href="#" className={classes.link} onClick={categoryHandler}>
+                    <SwitchHorizontal className={classes.linkIcon} />
+                    <span>Kategóriák hozzáadása</span>
+                </a>
             </Navbar.Section>
-
+            
             <Navbar.Section className={classes.footer}>
                 <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                     <SwitchHorizontal className={classes.linkIcon} />
                     <span>Felhasználó váltás</span>
                 </a>
 
-                <a href="#" className={classes.link} onClick={(event) => { event.preventDefault(); logoutHandler() }}>
+                <a href="#" className={classes.link} onClick={logoutHandler}>
                     <Logout className={classes.linkIcon} />
                     <span>Kilépés</span>
                 </a>

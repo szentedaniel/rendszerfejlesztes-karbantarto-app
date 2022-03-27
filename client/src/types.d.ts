@@ -5,6 +5,21 @@ interface RoleData {
     id: number
     name: string
 }
+interface CategoryData {
+    id: number,
+    name: string,
+    parentId: number
+}
+ interface BuildingData {
+    id:number,
+    name: string
+} 
+interface LocationData {
+        id: number,
+        name: string,
+        buildingId: number,
+        building: BuildingData
+}
 
 interface UserState {
     id: number | null
@@ -17,6 +32,16 @@ interface UserState {
     Role: RoleData | null
 }
 
+interface DeviceState {
+    id: number | null
+    name: string | null
+    description: string | null
+    identifier: string | null
+    locationId: number | null
+    categoryId: number | null
+    category: CategoryData | null
+    location: LocationData | null
+}
 interface RoutesType {
     caseSensitive?: boolean;
     children?: RouteObject[];

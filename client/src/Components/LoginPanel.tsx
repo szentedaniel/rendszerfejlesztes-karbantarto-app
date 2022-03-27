@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../Store/store';
 import { useLocalStorage } from '@mantine/hooks';
 import { UserState } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 export const initialState: UserState = {
   id: null,
@@ -32,24 +33,20 @@ export const initialState: UserState = {
 }
 
 export function LoginPanel() {
-
-  const dispatch: AppDispatch = useDispatch()
-
-  const [user, setUser] = useLocalStorage<UserState>({ key: 'user', defaultValue: initialState });
+  const [user, setUser] = useLocalStorage<UserState>({ key: 'user', defaultValue: initialState });  
   const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
+  const [password, setPassword] = useState('')  
+  const nav = useNavigate();
   const loginHandler = () => {
     axios.post('/login', { username: username, password: password })
       .then(res => {
         console.log(res.data);
-        setUser(res.data);
-
         console.log(user);
-
-
+        setUser(res.data);
+        console.log(user);
+        nav(`/dashboard`)
       })
-
+      
   }
 
 

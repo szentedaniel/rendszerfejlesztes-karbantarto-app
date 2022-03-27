@@ -3,8 +3,10 @@ import {
 } from 'tabler-icons-react';
 import NotFoundTitle from '../Components/NotFoundTitle'
 import Dashboard from '../Pages/Dashboard'
+import Tools from '../Pages/Tools'
 import Login from '../Pages/Login'
 import { RoutesType } from '../types'
+import Category from '../Pages/Category';
 
 
 const routes: RoutesType[] = [
@@ -30,14 +32,16 @@ const routes: RoutesType[] = [
         element: <Dashboard />,
     },
     {
-        path: '',
-        label: 'Notifications',
-        icon: BellRinging
+        path: "/tools",
+        label: 'Devices',
+        icon: HeartRateMonitor,
+        element: <Tools />,
     },
     {
-        path: '',
-        label: 'Billing',
-        icon: Receipt2
+        path: '/category',
+        label: 'Kategóriákg',
+        icon: Receipt2,
+        element: <Category />,
     },
     {
         path: '',
