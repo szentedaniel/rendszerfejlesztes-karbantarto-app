@@ -3,7 +3,7 @@ import { createStyles, Navbar, Group, Code } from '@mantine/core';
 
 import { useLocalStorage } from '@mantine/hooks';
 import { initialState } from './LoginPanel';
-import { useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { SwitchHorizontal, Logout, Tool } from 'tabler-icons-react';
 import { UserState } from '../types';
 import routerConfig from '../Config/routerConfig'
@@ -73,32 +73,33 @@ export function NavbarSimpleColored() {
     const { classes, cx } = useStyles();
     const [active, setActive] = useState('Dashboard');
     const navigate = useNavigate()
-    const [user, setUser] = useLocalStorage<UserState>({ key: 'user' });    
+    const [user, setUser] = useLocalStorage<UserState>({ key: 'user' });
+
 
     const logoutHandler = () => {
         setUser(initialState)
-        navigate(`/login`)
+        // navigate(`/`)
     }
-    const toolsHandler = () => {
-        navigate(`/tools`)
-    }
-    const categoryHandler = () => {
-        navigate(`/category`)
-    }
+
     const links = routerConfig.map((item, index) => (
         (!(item.hide) &&
-            <a
+            <Link
+            to={item.path!}
+            
                 className={cx(classes.link, { [classes.linkActive]: item.label === active })}
-                href={item.path}
                 key={index}
                 onClick={(event) => {
                     event.preventDefault();
                     setActive(item.label);
+                    navigate(`${item.path}`)
                 }}
             >
+                <div>
                 <item.icon className={classes.linkIcon} />
                 <span>{item.label}</span>
-            </a>
+
+                </div>
+            </Link>
         )
 
     ));
@@ -110,23 +111,16 @@ export function NavbarSimpleColored() {
                     <h4 style={{ color: 'white', display: 'flex', alignItems: 'center' }}><Tool style={{ padding: '4px' }} /> Karbantartó applikáció</h4>
                     <Code className={classes.version}>v0.1.0</Code>
                 </Group>
-                <a href="#" className={classes.link} onClick={toolsHandler}>
-                    <SwitchHorizontal className={classes.linkIcon} />
-                    <span>Eszközök</span>
-                </a>
-                <a href="#" className={classes.link} onClick={categoryHandler}>
-                    <SwitchHorizontal className={classes.linkIcon} />
-                    <span>Kategóriák hozzáadása</span>
-                </a>
+                {links}
             </Navbar.Section>
-            
+
             <Navbar.Section className={classes.footer}>
                 <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
                     <SwitchHorizontal className={classes.linkIcon} />
                     <span>Felhasználó váltás</span>
                 </a>
 
-                <a href="#" className={classes.link} onClick={logoutHandler}>
+                <a href="#" className={classes.link} onClick={(event) => { event.preventDefault(); logoutHandler() }}>
                     <Logout className={classes.linkIcon} />
                     <span>Kilépés</span>
                 </a>

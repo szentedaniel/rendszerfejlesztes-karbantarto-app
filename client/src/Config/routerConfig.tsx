@@ -30,44 +30,21 @@ const routes: RoutesType[] = [
         label: 'Dashboard',
         icon: HeartRateMonitor,
         element: <Dashboard />,
+        hide: true
     },
     {
         path: "/tools",
-        label: 'Devices',
+        label: 'Eszközök',
         icon: HeartRateMonitor,
         element: <Tools />,
     },
     {
         path: '/category',
-        label: 'Kategóriákg',
+        label: 'Kategóriák',
         icon: Receipt2,
         element: <Category />,
     },
-    {
-        path: '',
-        label: 'Security',
-        icon: Fingerprint
-    },
-    {
-        path: '',
-        label: 'SSH Keys',
-        icon: Key
-    },
-    {
-        path: '',
-        label: 'Databases',
-        icon: DatabaseImport
-    },
-    {
-        path: '',
-        label: 'Authentication',
-        icon: TwoFA
-    },
-    {
-        path: '',
-        label: 'Other Settings',
-        icon: Settings
-    },
+    
     {
         path: "*",
         label: 'NotFound',

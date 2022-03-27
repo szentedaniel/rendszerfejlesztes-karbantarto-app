@@ -1,1 +1,22 @@
 .rowC{display:flex; flex-direction:row;height: 100%;}
+.center{  
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+}
+.select{
+    position: center;
+    font-family: Arial;
+    background-color: DodgerBlue; 
+  top: 14px;
+  right: 10px;   
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+.gp{
+    padding-top: 15px;
+}
