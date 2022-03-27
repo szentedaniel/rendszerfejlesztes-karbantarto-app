@@ -2530,7 +2530,330 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerError'
-
+# BUILDINGS
+  /buildings:
+    get:
+      summary: Returns all buildings
+      tags: [Buildings]
+      responses:
+        200:
+          description: the list of the buildings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Building'
+  /buildings/details:
+    get:
+      summary: Returns all buildings with details
+      tags: [Buildings]
+      responses:
+        200:
+          description: the list of the buildings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Building'
+  /building/{id}:
+    get:
+      summary: Returns a building by id
+      tags: [Buildings]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a Building
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Building'
+    delete:
+      summary: Delete a building by id
+      tags: [Buildings]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The building was successfully deleted and the data of the deleted building is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Building'
+        404:
+          description: The building was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The building could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a Building by id
+      tags: [Buildings]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Building'
+            examples:    
+              Example1:   
+                value:
+                  name: New name
+      responses:
+        200:
+          description: The building was successfully updated and the data of the updated building is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Building'
+        404:
+          description: The building was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The building could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /building/{id}/details:
+    get:
+      summary: Returns a building by id with details
+      tags: [Buildings]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a Building
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Building'
+  /building:
+    post:
+      summary: Adds a new building
+      tags: [Buildings]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Building'
+            examples:    
+              Example1:   
+                value:
+                  name: New name
+      responses:
+        200:
+          description: The building was successfully created and the data of the created building is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Building'
+        500:
+          description: The building could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+# LOCATIONS
+  /locations:
+    get:
+      summary: Returns all locations
+      tags: [Locations]
+      responses:
+        200:
+          description: the list of the locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+  /locations/details:
+    get:
+      summary: Returns all locations with details
+      tags: [Locations]
+      responses:
+        200:
+          description: the list of the locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+  /location/{id}:
+    get:
+      summary: Returns a location by id
+      tags: [Locations]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+    delete:
+      summary: Delete a location by id
+      tags: [Locations]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: The location was successfully deleted and the data of the deleted location is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+        404:
+          description: The location was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The location could not be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+    patch:
+      summary: Update a location by id
+      tags: [Locations]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Location'
+            examples:    
+              Example1:   
+                value:
+                  name: New name
+              Example2:   
+                value:
+                  buildingId: 1
+              Example3:   
+                value:
+                  name: New name
+                  buildingId: 1
+      responses:
+        200:
+          description: The location was successfully updated and the data of the updated location is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+        404:
+          description: The location was not found with this id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500:
+          description: The location could not be updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
+  /location/{id}/details:
+    get:
+      summary: Returns a location by id with details
+      tags: [Locations]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: Contents of a location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+  /location:
+    post:
+      summary: Adds a new location
+      tags: [Locations]
+      requestBody:
+        content:
+          application/json:     
+            schema:             
+              $ref: '#/components/schemas/Location'
+            examples:    
+              Example1:   
+                value:
+                  name: New name
+                  buildingId: 1
+      responses:
+        200:
+          description: The location was successfully created and the data of the created location is returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'
+        500:
+          description: The location could not be created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerError'
 # LOGGER
   /logs:
     get:
