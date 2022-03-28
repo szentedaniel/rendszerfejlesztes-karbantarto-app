@@ -56,7 +56,7 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
   <img src="https://c.tenor.com/mUXqG0h_G70AAAAC/spongebob-patrick-star.gif" width="700">
 </p> -->
 
-![img](/server/docs/Images/architektura.drawio.png)
+![img](/server/docs/Images/architektura_transparent.drawio.png)
 
 ### 💿 Használt technológiák 💿
 
