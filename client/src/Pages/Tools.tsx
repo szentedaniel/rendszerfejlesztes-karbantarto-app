@@ -16,9 +16,6 @@ export default function tools({ }: Props) {
                 <ToolsTable id={null} name={null} description={null} identifier={null} locationId={null} categoryId={null} category={null} location={null} />
             </div>
 
-            <div className='center'>
-                <ToolModal />
-            </div>
         </>
 
 

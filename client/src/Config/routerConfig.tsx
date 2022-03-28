@@ -7,6 +7,8 @@ import Tools from '../Pages/Tools'
 import Login from '../Pages/Login'
 import { RoutesType } from '../types'
 import Category from '../Pages/Category';
+import qualifications from '../Pages/Qualifications'
+import Qualifications from '../Pages/Qualifications';
 
 
 const routes: RoutesType[] = [
@@ -43,6 +45,12 @@ const routes: RoutesType[] = [
         label: 'Kategóriák',
         icon: Receipt2,
         element: <Category />,
+    },
+    {
+        path: '/qualifications',
+        label: 'Végzettségek',
+        icon: Receipt2,
+        element: <Qualifications />,
     },
     
     {

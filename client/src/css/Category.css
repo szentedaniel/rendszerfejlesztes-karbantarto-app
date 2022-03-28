@@ -1,0 +1,36 @@
+.buttons{
+    text-align: center;
+    margin:auto;    
+    position:top;   
+    background-color: DodgerBlue; 
+}
+.add{
+    padding-top: 15px;
+    text-align: center;
+    margin:auto;        
+}
+.table{ 
+        width: 100vw;
+        height: 100vh;      
+}
+.select{
+    
+    position: center;
+    font-family: Arial;
+    background-color: DodgerBlue; 
+  top: 14px;
+  right: 10px;   
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+.gp{
+    padding-top: 15px;
+}
+.text{
+    padding-top: 15px;
+    width: 300px;
+    text-align: center;
+    
+}

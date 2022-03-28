@@ -4,15 +4,16 @@ import { NavbarSimpleColored } from '../Components/NavbarSimpleColored'
 import { CategoryPanel } from '../Components/CategoryPanel';
 import Login from './Login';
 import '../css/Tools.css' ;
+import { QualificationsPanel } from '../Components/QualificationsPanel';
 
 type Props = {}
 
-export default function category({ }: Props) {    
+export default function qualifications({ }: Props) {    
     return(     
         <>
             <div className='rowC'>
                 <NavbarSimpleColored />
-                <CategoryPanel/>
+                <QualificationsPanel/>
             </div>
         </>
               
