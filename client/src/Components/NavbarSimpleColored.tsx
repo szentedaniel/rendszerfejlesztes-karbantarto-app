@@ -78,7 +78,7 @@ export function NavbarSimpleColored() {
 
     const logoutHandler = () => {
         setUser(initialState)
-        // navigate(`/`)
+        navigate(`/`)
     }
 
     const links = routerConfig.map((item, index) => (

@@ -9,14 +9,15 @@ import { RoutesType } from '../types'
 import Category from '../Pages/Category';
 import qualifications from '../Pages/Qualifications'
 import Qualifications from '../Pages/Qualifications';
-
+import admin from '../Pages/Admin';
+import Admin from '../Pages/Admin';
 
 const routes: RoutesType[] = [
     {
         path: "/",
-        label: '',
+        label: 'Login',
         icon: HeartRateMonitor,
-        element: <Dashboard />,
+        element: <Login />,
         hide: true
 
     },
@@ -51,6 +52,12 @@ const routes: RoutesType[] = [
         label: 'Végzettségek',
         icon: Receipt2,
         element: <Qualifications />,
+    },
+    {
+        path: '/admin',
+        label: 'Adminpanel',
+        icon: Receipt2,
+        element: <Admin />,
     },
     
     {

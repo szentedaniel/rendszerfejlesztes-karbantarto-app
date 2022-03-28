@@ -21,6 +21,7 @@ import "../css/Category.css"
 export function CategoryPanel() {
     const [category, setCategory] = useState<any[]>([]);
     const [category_selected, setCategory_selected] = useState('')
+    const [category__selected, setCategory__selected] = useState('')
     const [name, setName] = useState('')
     useEffect(() => {
         axios.get('/categories')
@@ -45,6 +46,19 @@ export function CategoryPanel() {
         axios.post('/category',
             {
                 name: name,
+                parentId: Number(category_selected),
+
+            }).then(res => {
+                console.log(res)
+            }).catch(error => {
+                console.log(error);
+
+            })
+
+    }
+    const updateCategoryHandler = () => {
+        axios.patch('/categories/'+Number(category__selected),
+            {                
                 parentId: Number(category_selected),
 
             }).then(res => {
@@ -117,7 +131,7 @@ export function CategoryPanel() {
                                     <tr>
                                         <td>Alkategória:	&nbsp;	&nbsp;</td>
                                         <td>
-                                            <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
+                                            <select className="select" onChange={(e) => setCategory__selected(e.target.value)}>
                                                 { }
                                                 {category.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
                                             </select>
@@ -127,7 +141,7 @@ export function CategoryPanel() {
 
                             </div>
                             <Group className="gp" position="center">
-                                <Button onClick={addCategoryHandler}>Hozzáadás</Button>
+                                <Button onClick={updateCategoryHandler}>Szülő beállítása</Button>
                             </Group>
                         </div>
                     </div>
