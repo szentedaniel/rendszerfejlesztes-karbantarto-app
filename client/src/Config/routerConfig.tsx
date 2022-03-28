@@ -14,9 +14,9 @@ import Qualifications from '../Pages/Qualifications';
 const routes: RoutesType[] = [
     {
         path: "/",
-        label: '',
+        label: 'Login',
         icon: HeartRateMonitor,
-        element: <Dashboard />,
+        element: <Login />,
         hide: true
 
     },

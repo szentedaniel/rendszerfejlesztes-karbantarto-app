@@ -19,7 +19,8 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../Store/store';
 import { useLocalStorage } from '@mantine/hooks';
 import { UserState } from '../types';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import routerConfig from '../Config/routerConfig';
 
 export const initialState: UserState = {
   id: null,
@@ -39,17 +40,28 @@ export function LoginPanel() {
   const nav = useNavigate();
 
   const loginHandler = () => {
+    let auth = false;
     axios.post('/login', { username: username, password: password })
       .then(res => {
         console.log(res.data);
         console.log(user);
         setUser(res.data);
-        console.log(user);
-        nav(`/dashboard`)
-      })
-      
-  }
-
+        console.log(user);  
+        auth = true;
+      }).catch(error => {
+        setHidden(false);  
+        auth=false;
+    }      
+    ).then(res => {
+      if(auth)
+      {
+        auth = false;  
+        nav('/dashboard');
+      }
+    })
+   
+  } 
+  const [hidden, setHidden] = useState(true)
 
   return (
     <Container size={420} my={40}>
@@ -68,6 +80,7 @@ export function LoginPanel() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <div hidden={hidden}>Rossz adatokat adott meg</div>
         <TextInput label="Email" placeholder="you@mantine.dev" required onChange={(e) => setUsername(e.target.value)} />
         <PasswordInput label="Password" placeholder="Your password" required mt="md" onChange={(e) => setPassword(e.target.value)} />
         <Group position="apart" mt="md">
@@ -82,4 +95,8 @@ export function LoginPanel() {
       </Paper>
     </Container>
   );
+}
+
+function useStyles(): { classes: any; cx: any; } {
+  throw new Error('Function not implemented.');
 }
