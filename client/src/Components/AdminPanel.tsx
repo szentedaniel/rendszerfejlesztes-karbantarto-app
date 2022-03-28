@@ -37,7 +37,8 @@ export function AdminPanel() {
                 name:name,
                 username:name,
                 password:password,
-                roleId: Number(id)
+                roleId: Number(id),
+                active: true
 
             }).then(res => {
                 console.log(res)
