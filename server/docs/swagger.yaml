@@ -607,12 +607,14 @@ paths:
                   username: jessica_s
                   password: passw1234
                   roleId: 1
+                  active: true
               Ron:       
                 value:
                   name: Ron Stewart
                   username: ron_s
                   password: secret987
                   roleId: 1
+                  active: true
       responses:
         200:
           description: The user was successfully created and the data of the created user is returned
