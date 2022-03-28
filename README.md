@@ -52,9 +52,11 @@ API dokumentációt pedig a `http://localhost:3000/api-docs` oldalon láthatjuk.
 
 ### 🪑 Architektúra 🪑
 
-<p align="center">
+<!-- <p align="center">
   <img src="https://c.tenor.com/mUXqG0h_G70AAAAC/spongebob-patrick-star.gif" width="700">
-</p>
+</p> -->
+
+![img](/server/docs/Images/architektura.drawio.png)
 
 ### 💿 Használt technológiák 💿
 
