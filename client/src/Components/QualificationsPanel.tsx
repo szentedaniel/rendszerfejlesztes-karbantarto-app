@@ -14,23 +14,21 @@ import {
     ScrollArea,
     Table,
 } from '@mantine/core';
-import { useAppSelector, useAppDispatch } from '../Store/hooks'
 import axios from 'axios';
 import "../css/Category.css"
 
 export function QualificationsPanel() {
     
-    const [category, setCategory] =  useState<any[]>([]);   
+    const [maintenance, setMaintenance] =  useState<any[]>([]);   
     useEffect(() => {
-        axios.get('/categories')
+        axios.get('/scheduledMaintenances')
             .then(res => {
                 console.log(res.data)
-                setCategory(res.data)               
+                setMaintenance(res.data)               
             })
     }, [])
-    const [qualifications, setQualifications] = useState<any[]>([]);
-    const [maintenance, setMaintenance] = useState<any[]>([]);
-    const [category_selected, setCategory_selected] = useState('')
+    const [qualifications, setQualifications] = useState<any[]>([]);    
+    const [maintenance_selected, setMaintenance_selected] = useState('')
     const [Qualif_selected, setQualif_selected] = useState('')
     const [name, setName] = useState('')
     useEffect(() => {
@@ -63,6 +61,18 @@ export function QualificationsPanel() {
             })
 
     }
+    const addQualifHandler_ = () => {        
+        axios.post('/qualification',
+            {
+                name: name,   
+            }).then(res => {
+                console.log(res)
+            }).catch(error => {
+                console.log(error);
+
+            })
+
+    }
     useEffect(() => {
         axios.get('/scheduledMaintenances',
             ).then(res => {
@@ -75,9 +85,10 @@ export function QualificationsPanel() {
     }, [])
     
     const upmainhandler = () => {        
-        axios.patch('/scheduledMaintenances/'+Qualif_selected,
+        axios.post('/scheduledMaintenanceQualification',
             {
-                categoryId: Number(category_selected),   
+                qualificationId: Number(Qualif_selected),
+                maintenanceId: Number(maintenance_selected)
             }).then(res => {
                 console.log(res)
             }).catch(error => {
@@ -139,18 +150,18 @@ export function QualificationsPanel() {
                             <div className="gp">
                                 <table>
                                     <tr>
-                                        <td>Feladat:	&nbsp;	&nbsp;</td>
+                                        <td>Végzettség:	&nbsp;	&nbsp;</td>
                                         <td><select className="select" onChange={(e) => setQualif_selected(e.target.value)}>
                                             { }
-                                            {maintenance.map((item) =><option value={item.id}>{item.id + ": " + item.name}</option>)}
+                                            {qualifications.map((item) =><option value={item.id}>{item.id + ": " + item.name}</option>)}
                                         </select></td>
                                     </tr>
                                     <tr>
-                                        <td>Kategória:	&nbsp;	&nbsp;</td>
+                                        <td>feladat:	&nbsp;	&nbsp;</td>
                                         <td>
-                                            <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
+                                            <select className="select" onChange={(e) => setMaintenance_selected(e.target.value)}>
                                                 { }
-                                                {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                                {maintenance.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                             </select>
                                         </td>
                                     </tr>
