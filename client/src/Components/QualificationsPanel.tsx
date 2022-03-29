@@ -55,6 +55,7 @@ export function QualificationsPanel() {
                 name: name,   
             }).then(res => {
                 console.log(res)
+                window.location.reload()
             }).catch(error => {
                 console.log(error);
 
@@ -67,6 +68,7 @@ export function QualificationsPanel() {
                 name: name,   
             }).then(res => {
                 console.log(res)
+                window.location.reload()
             }).catch(error => {
                 console.log(error);
 
@@ -91,6 +93,7 @@ export function QualificationsPanel() {
                 maintenanceId: Number(maintenance_selected)
             }).then(res => {
                 console.log(res)
+                window.location.reload()
             }).catch(error => {
                 console.log(error);
 
