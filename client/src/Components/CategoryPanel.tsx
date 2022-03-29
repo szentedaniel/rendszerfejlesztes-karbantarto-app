@@ -127,7 +127,7 @@ export function CategoryPanel() {
                                         <td>Szülőkategória:	&nbsp;	&nbsp;</td>
                                         <td><select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
                                             { }
-                                            {category.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                            {category.map((item) => (item.id == 1 ? <option selected>Válassz egyet</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
                                         </select></td>
                                     </tr>
                                     <tr>
@@ -135,7 +135,7 @@ export function CategoryPanel() {
                                         <td>
                                             <select className="select" onChange={(e) => setCategory__selected(e.target.value)}>
                                                 { }
-                                                {category.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                                {category.map((item) => (item.id == 1 ? <option selected>Válassz egyet</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
                                             </select>
                                         </td>
                                     </tr>
