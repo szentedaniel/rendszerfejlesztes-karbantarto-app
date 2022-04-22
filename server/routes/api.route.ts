@@ -7,7 +7,7 @@ import { getAllScheduledMaintenanceQualificationsApi, getAllSpecialMaintenanceQu
 import { getAllScheduledMaintenanceWithDetailsApi, getScheduledMaintenanceByIdApi, getScheduledMaintenanceByIdWithDetailsApi, deleteScheduledMaintenanceByIdApi, updateScheduledMaintenanceByIdApi, createScheduledMaintenanceApi, getAllScheduledMaintenanceApi } from '../controllers/api/api.scheduledMaintenance.controller'
 import { getAllSpecialMaintenanceApi, getAllSpecialMaintenanceWithDetailsApi, getSpecialMaintenanceByIdApi, getSpecialMaintenanceByIdWithDetailsApi, deleteSpecialMaintenanceByIdApi, updateSpecialMaintenanceByIdApi, createSpecialMaintenanceApi } from '../controllers/api/api.specialMaintenance.controller'
 import { getAllInstructionsApi, getInstructionByIdApi, createInstructionApi, deleteInstructionApi, updateInstructionApi } from '../controllers/api/api.instruction.controller'
-import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getTaskByIdApi , getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi, assignTaskApi } from '../controllers/api/api.task.controller'
+import { acceptTaskApi, createTaskApi, declineTaskApi, finishTaskApi, getAllTaskApi, getAllTaskByUserIdApi, getTaskByIdApi, getAllTaskWithDetailsApi, getAllTaskWithDetailsByUserIdApi, getTaskWithDetailsByIdApi, startTaskApi, assignTaskApi } from '../controllers/api/api.task.controller'
 import { createUserQualificationApi, deleteUserQualificationApi, getAllUserQualificationsApi, getUserQualificationByIdApi, updateUserQualificationApi } from '../controllers/api/api.userQualification.controller'
 import { createBuildingApi, deleteBuildingByIdApi, getAllBuildingsApi, getAllBuildingsWithDetailsApi, getBuildingByIdApi, getBuildingByIdWithDetailsApi, updateBuildingByIdApi } from '../controllers/api/api.building.controller'
 import { createLocationApi, deleteLocationByIdApi, getAllLocationsApi, getAllLocationsWithDetailsApi, getLocationByIdApi, getLocationByIdWithDetailsApi, updateLocationByIdApi } from '../controllers/api/api.location.controller'
@@ -143,7 +143,7 @@ router.delete('/scheduledMaintenances/:id', async (req: express.Request, res: ex
   deleteScheduledMaintenanceByIdApi(req, res, next)
 })
 
-router.patch('/scheduledMaintenances/:id', async (req: express.Request, res: express.Response, next: any) => {
+router.patch('/scheduledMaintenance/:id', async (req: express.Request, res: express.Response, next: any) => {
   updateScheduledMaintenanceByIdApi(req, res, next)
 })
 
