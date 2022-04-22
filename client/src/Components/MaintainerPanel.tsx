@@ -129,12 +129,12 @@ export function MaintainerPanel() {
                                 Karbantartó:	&nbsp;	&nbsp;
                                 <select className="select" onChange={(e) => setUser_selected(e.target.value)}>
                                     { }
-                                    {user.filter(user => user.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{user.filter(user => user.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 Végzettség:	&nbsp;	&nbsp;
                                 <select className="select" onChange={(e) => setQualification_selected(e.target.value)}>
                                     { }
-                                    {qualifications.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{qualifications.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 <Group className="gp" position="center">
                                     <Button onClick={() => setQualificationHandler()}>Hozzárendelés</Button>

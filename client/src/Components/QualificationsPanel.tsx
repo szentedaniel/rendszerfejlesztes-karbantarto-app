@@ -39,7 +39,7 @@ export function QualificationsPanel() {
             })
     }, [])
     const [addcat, setAddcat] = useState(true);
-    const [pcat, setPcat] = useState(false);
+    const [pcat, setPcat] = useState(true);
     const addcatHandler = () => (
         setPcat(true),
         setAddcat(false)
@@ -156,7 +156,7 @@ export function QualificationsPanel() {
                                         <td>Végzettség:	&nbsp;	&nbsp;</td>
                                         <td><select className="select" onChange={(e) => setQualif_selected(e.target.value)}>
                                             { }
-                                            {qualifications.map((item) =><option value={item.id}>{item.id + ": " + item.name}</option>)}
+                                            <option>Válassz egyet</option>{qualifications.map((item) =><option value={item.id}>{item.id + ": " + item.name}</option>)}
                                         </select></td>
                                     </tr>
                                     <tr>
@@ -164,7 +164,7 @@ export function QualificationsPanel() {
                                         <td>
                                             <select className="select" onChange={(e) => setMaintenance_selected(e.target.value)}>
                                                 { }
-                                                {maintenance.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                                <option>Válassz egyet</option>{maintenance.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                             </select>
                                         </td>
                                     </tr>

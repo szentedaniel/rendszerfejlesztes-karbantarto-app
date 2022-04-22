@@ -31,9 +31,18 @@ export function CategoryPanel() {
                 category.map((item) => (console.log(item.children.length != 0 ? item.children : null)))
             })
     }, [])
+    const [period, setPeriod] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/period')
+            .then(res => {
+                console.log(res.data)
+                setPeriod(res.data)
+            })
+    }, [])
     const [normTime, setNormTime] = useState('')
-    const [priod_selected, setPeriod_selected]  = useState('')
+    const [period_selected, setPeriod_selected]  = useState('')
     const [description, setDescription] = useState('')
+    const [maintenance_selected, setMaintenance_selected] = useState('')
     
     const [addcat_, setAddcat_] = useState(true);
     const [pcat_, setPcat_] = useState(true);
@@ -106,10 +115,30 @@ export function CategoryPanel() {
             })
     }
     const normTimeHandler = () => {
-        console.log(normTime)
+        axios.patch('/scheduledMaintenance/'+Number(maintenance_selected),
+            {                
+                normaInMinutes: Number(normTime),
+
+            }).then(res => {
+                console.log(res)
+                window.location.reload()
+            }).catch(error => {
+                console.log(error);
+
+            })
     }
     const PeriodHandler = () => {
-        console.log(priod_selected)
+        axios.patch('/scheduledMaintenance/'+Number(maintenance_selected),
+            {                
+                periodId: Number(period_selected)
+
+            }).then(res => {
+                console.log(res)
+                window.location.reload()
+            }).catch(error => {
+                console.log(error);
+
+            })
     }
     const DescriptionHandler = () => {
         console.log(description)
@@ -171,7 +200,7 @@ export function CategoryPanel() {
                             Szülőkategória:	&nbsp;	&nbsp;
                             <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
                                 { }
-                                {category.map((item) => (item.id == 1 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                <option>Válassz egyet</option>{category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                             </select>
                             <TextInput className="text" placeholder="Új kategória" required onChange={(e) => setName(e.target.value)} />
                             <Group className="gp" position="center">
@@ -187,7 +216,7 @@ export function CategoryPanel() {
                                         <td>Szülőkategória:	&nbsp;	&nbsp;</td>
                                         <td><select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
                                             { }
-                                            {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                            <option>Válassz egyet</option>{category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                         </select></td>
                                     </tr>
                                     <tr>
@@ -195,7 +224,7 @@ export function CategoryPanel() {
                                         <td>
                                             <select className="select" onChange={(e) => setCategory__selected(e.target.value)}>
                                                 { }
-                                                {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                                <option>Válassz egyet</option>{category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                             </select>
                                         </td>
                                     </tr>
@@ -211,9 +240,9 @@ export function CategoryPanel() {
                         <div >
                             <div className="gp">
                                 Kategória:	&nbsp;	&nbsp;
-                                <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
+                                <select className="select" onChange={(e) => setMaintenance_selected(e.target.value)}>
                                     { }
-                                    {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{category.map((item) => (<option value={item.Maintenance.map((mt) => (mt.id))}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 <TextInput className="text" placeholder="Normaidő (perc)" required onChange={(e) => setNormTime(e.target.value)}/>
                                 <Group className="gp" position="center">
@@ -226,14 +255,14 @@ export function CategoryPanel() {
                         <div >
                         <div className="gp">
                                 Kategória:	&nbsp;	&nbsp;
-                                <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
+                                <select className="select" onChange={(e) => setMaintenance_selected(e.target.value)}>
                                     { }
-                                    {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{category.map((item) => (<option value={item.Maintenance.map((mt) => (mt.id))}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 Periódus:	&nbsp;	&nbsp;
                                 <select className="select" onChange={(e) => setPeriod_selected(e.target.value)}>
                                     { }
-                                    {}
+                                    <option>Válassz egyet</option>{period.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 <Group className="gp" position="center">
                                     <Button onClick={PeriodHandler}>Beállítás</Button>
@@ -247,7 +276,7 @@ export function CategoryPanel() {
                                 Kategória:	&nbsp;	&nbsp;
                                 <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
                                     { }
-                                    {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 <TextInput className="text" placeholder="Leírás" required onChange={(e) => setDescription(e.target.value)}/>
                                 <Group className="gp" position="center">

@@ -81,7 +81,7 @@ export function AdminPanel() {
                     Role: 
                             <select className="select" onChange={(e) => setId(e.target.value)}>
                                 { }
-                                {user.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                <option>Válassz egyet</option>{user.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
                             </select>
                     </div>
                             
