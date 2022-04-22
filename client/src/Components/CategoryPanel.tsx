@@ -39,6 +39,14 @@ export function CategoryPanel() {
                 setPeriod(res.data)
             })
     }, [])
+    const [maintenance, setMaintenance] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/scheduledMaintenances')
+            .then(res => {
+                console.log(res.data)
+                setMaintenance(res.data)
+            })
+    }, [])
     const [normTime, setNormTime] = useState('')
     const [period_selected, setPeriod_selected]  = useState('')
     const [description, setDescription] = useState('')
@@ -278,7 +286,11 @@ export function CategoryPanel() {
                                     { }
                                     <option>Válassz egyet</option>{category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select>
-                                <TextInput className="text" placeholder="Leírás" required onChange={(e) => setDescription(e.target.value)}/>
+                                Kategória:	&nbsp;	&nbsp;
+                                <select className="select" onChange={(e) => setDescription(e.target.value)}>
+                                    { }
+                                    <option>Válassz egyet</option>{maintenance.filter(maintenance => maintenance.categoryId == category_selected).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                </select>
                                 <Group className="gp" position="center">
                                     <Button onClick={DescriptionHandler}>Beállítás</Button>
                                 </Group>
