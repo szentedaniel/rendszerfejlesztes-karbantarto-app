@@ -15,6 +15,11 @@ import {
     Table,
 } from '@mantine/core';
 import { useAppSelector, useAppDispatch } from '../Store/hooks'
+import '../css/Tools.css' ;
+import { useLocalStorage } from '@mantine/hooks';
+import { UserState } from '../types';
+import { useNavigate } from 'react-router-dom';
+import { initialState } from '../Components/LoginPanel';
 import axios from 'axios';
 import "../css/Category.css"
 
@@ -36,9 +41,28 @@ export function TaskPanel() {
                 setDevices(res.data)                
             })
     }, [])
+    const [category, setCategory] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/categories')
+            .then(res => {
+                console.log(res.data)
+                setCategory(res.data)
+                category.map((item) => (console.log(item.children.length != 0 ? item.children : null)))
+            })
+    }, [])
+    const [specMaintenance, setSpecMaintenance] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/specialMaintenances')
+            .then(res => {
+                console.log(res.data)
+                setSpecMaintenance(res.data)
+            })
+    }, [])
+
+    const [user, setUser] = useLocalStorage<UserState>({ key: 'user', defaultValue: initialState });
     const [device_selected, setDevice_selected] = useState('')
+    const [maintenance_selected, setMaintenance_selected] = useState('')
     const [due, setDue] = useState('')
-    const [description, setDescription] = useState('')
 
     const [addTask, setAddTask] = useState(true);
 
@@ -47,9 +71,24 @@ export function TaskPanel() {
     );
 
     const addSpecialTaskHandler = () => (
-        console.log(device_selected),
+        console.log(user.id),
         console.log(due),
-        console.log(description)
+        console.log(maintenance_selected),
+        device_selected != null ?
+        axios.post('/task',
+            {                
+                specialMaintenanceId:Number(maintenance_selected),
+                due:due,
+                createdByUserId: user.id
+
+            }).then(res => {
+                console.log(res)
+                window.location.reload()
+            }).catch(error => {
+                console.log(error);
+
+            })
+        : console.log("Error")
     )
 
 
@@ -73,7 +112,7 @@ export function TaskPanel() {
                             task.map((item) => (
                                 <tr key={item.id}>
                                     <th>{item.id}</th>
-                                    <th>{item.device != undefined ? item.device.name : "nincs"}</th>
+                                    <th>{item.scheduledMaintenance != null ? category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) : devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))}</th>
                                     <th>{item.due}</th>
                                     <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : " "}</th>
                                     <th>{item.specialMaintenance != null ? item.specialMaintenance.name : " "}</th>
@@ -92,14 +131,18 @@ export function TaskPanel() {
                 <Group>
                     <div className="add" hidden={addTask}>
                         <div >
-                        <div className="gp">
+                            <div className="gp">
                                 Eszköz:	&nbsp;	&nbsp;
-                                <select className="select"  onChange={(e) => setDevice_selected(e.target.value)}>
+                                <select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setDevice_selected(e.target.value)}>
                                     { }
-                                    {devices.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{devices.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                </select>
+                                Feladat:	&nbsp;	&nbsp;
+                                <select className="select"  onChange={(e) => setMaintenance_selected(e.target.value)}>
+                                    { }
+                                    <option>Válassz egyet</option>{specMaintenance.filter(specMaintenance => specMaintenance.deviceId == device_selected).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 <TextInput className="text" placeholder="Határidő"  required onChange={(e) => setDue(e.target.value)}/>
-                                <TextInput className="text" placeholder="Leírás"  required onChange={(e) => setDescription(e.target.value)}/>
                                 <Group className="gp" position="center">
                                     <Button onClick={addSpecialTaskHandler}>Beállítás</Button>
                                 </Group>
