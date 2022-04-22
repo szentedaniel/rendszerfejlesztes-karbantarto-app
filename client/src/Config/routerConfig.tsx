@@ -7,10 +7,10 @@ import Tools from '../Pages/Tools'
 import Login from '../Pages/Login'
 import { RoutesType } from '../types'
 import Category from '../Pages/Category';
-import qualifications from '../Pages/Qualifications'
 import Qualifications from '../Pages/Qualifications';
-import admin from '../Pages/Admin';
 import Admin from '../Pages/Admin';
+import Maintainers from '../Pages/Maintainers';
+import Tasks from '../Pages/Tasks';
 
 const routes: RoutesType[] = [
     {
@@ -52,6 +52,18 @@ const routes: RoutesType[] = [
         label: 'Végzettségek',
         icon: Receipt2,
         element: <Qualifications />,
+    },
+    {
+        path: '/maintainers',
+        label: 'Karbantarók',
+        icon: Receipt2,
+        element: <Maintainers />,
+    },
+    {
+        path: '/tasks',
+        label: 'Feladatok',
+        icon: Receipt2,
+        element: <Tasks />,
     },
     {
         path: '/admin',
