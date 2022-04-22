@@ -24,24 +24,59 @@ export function CategoryPanel() {
     const [category__selected, setCategory__selected] = useState('')
     const [name, setName] = useState('')
     useEffect(() => {
-        axios.get('/categories')
+        axios.get('/categories/details')
             .then(res => {
                 console.log(res.data)
                 setCategory(res.data)
                 category.map((item) => (console.log(item.children.length != 0 ? item.children : null)))
             })
     }, [])
-    const [addcat, setAddcat] = useState(true);
-    const [pcat, setPcat] = useState(false);
-    const addcatHandler = () => (
-        setPcat(true),
-        setAddcat(false)
-    );
-    const PcatHandler = () => (
-        setAddcat(true),
-        setPcat(false)
+    const [normTime, setNormTime] = useState('')
+    const [priod_selected, setPeriod_selected]  = useState('')
+    const [description, setDescription] = useState('')
+    
+    const [addcat_, setAddcat_] = useState(true);
+    const [pcat_, setPcat_] = useState(true);
+    const [norm_, setNorm_] = useState(true);
+    const [period_, setPeriod_] = useState(true);
+    const [instr_, setInstr_] = useState(true);
 
+    const PcatHandler = () => (
+        setPcat_(false),
+        setAddcat_(true),
+        setNorm_(true),
+        setPeriod_(true),
+        setInstr_(true)
     );
+    const addcatHandler = () => (
+        setPcat_(true),
+        setAddcat_(false),
+        setNorm_(true),
+        setPeriod_(true),
+        setInstr_(true)
+    );
+    const normHandler = () => (
+        setPcat_(true),
+        setAddcat_(true),
+        setNorm_(false),
+        setPeriod_(true),
+        setInstr_(true)
+    );
+    const periodHandler = () => (
+        setPcat_(true),
+        setAddcat_(true),
+        setNorm_(true),
+        setPeriod_(false),
+        setInstr_(true)
+    );
+    const instrHandler = () => (
+        setPcat_(true),
+        setAddcat_(true),
+        setNorm_(true),
+        setPeriod_(true),
+        setInstr_(false)
+    );
+
     const addCategoryHandler = () => {
         axios.post('/category',
             {
@@ -69,7 +104,15 @@ export function CategoryPanel() {
                 console.log(error);
 
             })
-
+    }
+    const normTimeHandler = () => {
+        console.log(normTime)
+    }
+    const PeriodHandler = () => {
+        console.log(priod_selected)
+    }
+    const DescriptionHandler = () => {
+        console.log(description)
     }
     return (
         <>
@@ -82,6 +125,9 @@ export function CategoryPanel() {
                             <th>Szülő ID</th>
                             <th>Al kategória</th>
                             <th>Szülő</th>
+                            <th>Normaidő (perc)</th>
+                            <th>Periódus</th>
+                            <th>Instrukciók</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,8 +139,13 @@ export function CategoryPanel() {
                                     <th>{item.parentId}</th>
                                     <th>{item.children.map((ch) => (item.children.length != 0 ? ch.name + ", " : "Nincs"))}</th>
                                     <th>{item.parent != null ? item.parent.name : "Nincs"}</th>
+                                    <th>{item.Maintenance.map((ch) => (item.Maintenance.length != 0 ? ch.normaInMinutes : ""))}</th>
+                                    <th>{item.Maintenance.map((ch) => (item.Maintenance.length != 0 ? ch.period.name : ""))}</th>
+                                    <th>{item.Maintenance.map((ch) => (item.Maintenance.length != 0 ? ch.name : ""))}</th>
                                 </tr>
-                            ))}
+                            ))
+                        }
+                                                   
                     </tbody>
                 </Table>
                 <Group className="gp" grow spacing={0}>
@@ -104,14 +155,23 @@ export function CategoryPanel() {
                     <Button className="buttons" variant="default" onClick={() => PcatHandler()}>
                         Szülő kategória beállítása
                     </Button>
+                    <Button className="buttons" variant="default" onClick={() => normHandler()}>
+                        Normaidő beállítása
+                    </Button>
+                    <Button className="buttons" variant="default" onClick={() => periodHandler()}>
+                        Karbantartási periódus beállítása
+                    </Button>
+                    <Button className="buttons" variant="default" onClick={() => instrHandler()}>
+                        Karbantartási instukciók beállítása
+                    </Button>
                 </Group>
                 < Group>
-                    <div className="add" hidden={addcat}>
+                    <div className="add" hidden={addcat_}>
                         <div className="gp">
                             Szülőkategória:	&nbsp;	&nbsp;
                             <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
                                 { }
-                                {category.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                {category.map((item) => (item.id == 1 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
                             </select>
                             <TextInput className="text" placeholder="Új kategória" required onChange={(e) => setName(e.target.value)} />
                             <Group className="gp" position="center">
@@ -119,7 +179,7 @@ export function CategoryPanel() {
                             </Group>
                         </div>
                     </div>
-                    <div className="add" hidden={pcat}>
+                    <div className="add" hidden={pcat_}>
                         <div >
                             <div className="gp">
                                 <table>
@@ -127,7 +187,7 @@ export function CategoryPanel() {
                                         <td>Szülőkategória:	&nbsp;	&nbsp;</td>
                                         <td><select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
                                             { }
-                                            {category.map((item) => (item.id == 1 ? <option selected>Válassz egyet</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                            {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                         </select></td>
                                     </tr>
                                     <tr>
@@ -135,7 +195,7 @@ export function CategoryPanel() {
                                         <td>
                                             <select className="select" onChange={(e) => setCategory__selected(e.target.value)}>
                                                 { }
-                                                {category.map((item) => (item.id == 1 ? <option selected>Válassz egyet</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                                {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                             </select>
                                         </td>
                                     </tr>
@@ -145,6 +205,55 @@ export function CategoryPanel() {
                             <Group className="gp" position="center">
                                 <Button onClick={updateCategoryHandler}>Szülő beállítása</Button>
                             </Group>
+                        </div>
+                    </div>
+                    <div className="add" hidden={norm_}>
+                        <div >
+                            <div className="gp">
+                                Kategória:	&nbsp;	&nbsp;
+                                <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
+                                    { }
+                                    {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                </select>
+                                <TextInput className="text" placeholder="Normaidő (perc)" required onChange={(e) => setNormTime(e.target.value)}/>
+                                <Group className="gp" position="center">
+                                    <Button onClick={normTimeHandler}>Beállítás</Button>
+                                </Group>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="add" hidden={period_}>
+                        <div >
+                        <div className="gp">
+                                Kategória:	&nbsp;	&nbsp;
+                                <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
+                                    { }
+                                    {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                </select>
+                                Periódus:	&nbsp;	&nbsp;
+                                <select className="select" onChange={(e) => setPeriod_selected(e.target.value)}>
+                                    { }
+                                    {}
+                                </select>
+                                <Group className="gp" position="center">
+                                    <Button onClick={PeriodHandler}>Beállítás</Button>
+                                </Group>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="add" hidden={instr_}>
+                        <div >
+                        <div className="gp">
+                                Kategória:	&nbsp;	&nbsp;
+                                <select className="select" onChange={(e) => setCategory_selected(e.target.value)}>
+                                    { }
+                                    {category.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                </select>
+                                <TextInput className="text" placeholder="Leírás" required onChange={(e) => setDescription(e.target.value)}/>
+                                <Group className="gp" position="center">
+                                    <Button onClick={DescriptionHandler}>Beállítás</Button>
+                                </Group>
+                            </div>
                         </div>
                     </div>
                 </Group>
