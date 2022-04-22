@@ -8,7 +8,6 @@ import {
   ScheduledMaintenanceQualification,
   Task
 } from '@prisma/client'
-import createHttpError from 'http-errors'
 import { getMaintanenceFromParents } from '../utils'
 
 const prisma = new PrismaClient()

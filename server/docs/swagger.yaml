@@ -2870,3 +2870,61 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Logger'
+
+# STATUS
+  /status:
+    get:
+      summary: Returns all status
+      tags: [Status]
+      responses:
+        200:
+          description: the list of the status
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+
+  /status/details:
+    get:
+      summary: Returns all status with details
+      tags: [Status]
+      responses:
+        200:
+          description: the list of the status with details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Status'
+
+# PERIOD
+  /period:
+    get:
+      summary: Returns all period
+      tags: [Period]
+      responses:
+        200:
+          description: the list of the period
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Period'
+
+  /period/details:
+    get:
+      summary: Returns all period with details
+      tags: [Period]
+      responses:
+        200:
+          description: the list of the period with details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Period'
