@@ -20,7 +20,7 @@ import "../css/Category.css"
 
 export function MaintainerPanel() {
 
-    const [user, setUser] = useState<any[]>([]); 
+    const [user, setUser] = useState<any[]>([]);
     useEffect(() => {
         axios.get('/users')
             .then(res => {
@@ -34,6 +34,14 @@ export function MaintainerPanel() {
             .then(res => {
                 console.log(res.data)
                 setQualifications(res.data)                
+            })
+    }, [])
+    const [userQualif, setUserQualif] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/userQualifications')
+            .then(res => {
+                console.log(res.data)
+                setUserQualif(res.data)                
             })
     }, [])
     const [password, setPassword] = useState('')  
@@ -69,12 +77,21 @@ export function MaintainerPanel() {
             }).catch(error => {
                 console.log(error);
 
-            })
-
+            })    
     }
     const setQualificationHandler = () => {
-        console.log(user_selected)
-        console.log(qualification_selected)
+        axios.post('/userQualification',
+            {
+                userId: Number(user_selected),                
+                qualificationId: Number(qualification_selected),
+
+            }).then(res => {
+                console.log(res)
+                window.location.reload()
+            }).catch(error => {
+                console.log(error);
+
+            })
     }
 
     return (
@@ -90,15 +107,14 @@ export function MaintainerPanel() {
                     </thead>
                     <tbody>
                         {
-                            user.filter(user => user.roleId == 4).map((item) => (
+                           user.filter(user => user.roleId == 4, user => userQualif.map((item) => (item.user.id)).includes(user.id)).map((item)=>(
                                 <tr key={item.id}>
                                     <th>{item.id}</th>
                                     <th>{item.name}</th>
-                                    <th>{item.UserQualification != undefined ? "van" : "nincs"}</th>
+                                    <th>{userQualif.filter(userQualif => userQualif.user.id == item.id).map((item) => (item.qualification.name + ", "))}</th>
                                 </tr>
-                            ))
-                        }
-                                                   
+                            ))   
+                        }             
                     </tbody>
                 </Table>
                 <Group className="gp" grow spacing={0}>
@@ -129,7 +145,7 @@ export function MaintainerPanel() {
                                 Karbantartó:	&nbsp;	&nbsp;
                                 <select className="select" onChange={(e) => setUser_selected(e.target.value)}>
                                     { }
-                                    <option>Válassz egyet</option>{user.filter(user => user.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{user.filter(user => user.roleId== 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select>
                                 Végzettség:	&nbsp;	&nbsp;
                                 <select className="select" onChange={(e) => setQualification_selected(e.target.value)}>
