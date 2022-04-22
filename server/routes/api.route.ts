@@ -12,6 +12,8 @@ import { createUserQualificationApi, deleteUserQualificationApi, getAllUserQuali
 import { createBuildingApi, deleteBuildingByIdApi, getAllBuildingsApi, getAllBuildingsWithDetailsApi, getBuildingByIdApi, getBuildingByIdWithDetailsApi, updateBuildingByIdApi } from '../controllers/api/api.building.controller'
 import { createLocationApi, deleteLocationByIdApi, getAllLocationsApi, getAllLocationsWithDetailsApi, getLocationByIdApi, getLocationByIdWithDetailsApi, updateLocationByIdApi } from '../controllers/api/api.location.controller'
 import { getAllLogsApi } from '../controllers/api/api.logger.controller'
+import { getAllStatusApi, getAllStatusWithDetailsApi } from '../controllers/api/api.status.controller'
+import { getAllPeriodApi, getAllPeriodWithDetailsApi } from '../controllers/api/api.period.controller'
 const router = express.Router()
 
 
@@ -374,6 +376,24 @@ router.post('/location', async (req: express.Request, res: express.Response, nex
 // Logger ROUTES
 router.get('/logs', async (req: express.Request, res: express.Response, next: any) => {
   getAllLogsApi(req, res, next)
+})
+
+// Status
+router.get('/status', async (req: express.Request, res: express.Response, next: any) => {
+  getAllStatusApi(req, res, next)
+})
+
+router.get('/status/details', async (req: express.Request, res: express.Response, next: any) => {
+  getAllStatusWithDetailsApi(req, res, next)
+})
+
+// Period
+router.get('/period', async (req: express.Request, res: express.Response, next: any) => {
+  getAllPeriodApi(req, res, next)
+})
+
+router.get('/period/details', async (req: express.Request, res: express.Response, next: any) => {
+  getAllPeriodWithDetailsApi(req, res, next)
 })
 
 module.exports = router
