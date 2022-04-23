@@ -38,18 +38,11 @@ export function CategoryPanel() {
                 setPeriod(res.data)
             })
     }, [])
-    const [maintenance, setMaintenance] = useState<any[]>([]);
-    useEffect(() => {
-        axios.get('/scheduledMaintenances')
-            .then(res => {
-                console.log(res.data)
-                setMaintenance(res.data)
-            })
-    }, [])
     const [normTime, setNormTime] = useState('')
     const [period_selected, setPeriod_selected]  = useState('')
     const [description, setDescription] = useState('')
     const [maintenance_selected, setMaintenance_selected] = useState('')
+    const [modMaintenance, setModMaintenance] = useState(false)
     
     const [addcat_, setAddcat_] = useState(true);
     const [pcat_, setPcat_] = useState(true);
@@ -111,19 +104,48 @@ export function CategoryPanel() {
     }
 
     const setMaintenanceHandler = () => {
+        Number(normTime) > 0 ?
         axios.patch('/scheduledMaintenance/'+Number(maintenance_selected),
         {   
-            normaInMinutes: Number(normTime),           
-            periodId: Number(period_selected),
-            name: description
+            normaInMinutes: Number(normTime)
 
         }).then(res => {
             console.log(res)
-            window.location.reload()
+            setModMaintenance(true)
         }).catch(error => {
             console.log(error);
 
         })
+        : null
+
+        Number(period_selected) > 0 ?
+        axios.patch('/scheduledMaintenance/'+Number(maintenance_selected),
+        {            
+            periodId: Number(period_selected)
+
+        }).then(res => {
+            console.log(res)
+            setModMaintenance(true)
+        }).catch(error => {
+            console.log(error);
+
+        })
+        : null
+
+        description != "" ?
+        axios.patch('/scheduledMaintenance/'+Number(maintenance_selected),
+        {   
+            name: description
+
+        }).then(res => {
+            console.log(res)
+            setModMaintenance(true)
+        }).catch(error => {
+            console.log(error);
+
+        })
+        :null
+        modMaintenance ? window.location.reload() : null
     }
     const addMaintenanceHandler = () => {
         axios.post('/scheduledMaintenance',
@@ -258,7 +280,10 @@ export function CategoryPanel() {
                                     <td>Karbantartási feladat:	&nbsp;	&nbsp;</td>
                                     <td><TextInput className="text" placeholder="Karbantartási feladat" required onChange={(e) => setDescription(e.target.value)}/></td>
                                 </tr>
-                                <TextInput className="text" placeholder="Normaidő (perc)" required onChange={(e) => setNormTime(e.target.value)}/>
+                                <tr>
+                                    <td>Normaidő:	&nbsp;	&nbsp;</td>
+                                    <td><TextInput className="text" placeholder="Normaidő (s)" required onChange={(e) => setNormTime(e.target.value)}/></td>
+                                </tr>
                             </div>
                             
                             <Group className="gp" position="center">
@@ -292,7 +317,10 @@ export function CategoryPanel() {
                                     <td>Karbantartási feladat:	&nbsp;	&nbsp;</td>
                                     <td><TextInput className="text" placeholder="Karbantartási feladat" required onChange={(e) => setDescription(e.target.value)}/></td>
                                 </tr>
-                                <TextInput className="text" placeholder="Normaidő (perc)" required onChange={(e) => setNormTime(e.target.value)}/>
+                                <tr>
+                                    <td>Normaidő:	&nbsp;	&nbsp;</td>
+                                    <td><TextInput className="text" placeholder="Normaidő (s)" required onChange={(e) => setNormTime(e.target.value)}/></td>
+                                </tr>
                             </div>
                             
                             <Group className="gp" position="center">
