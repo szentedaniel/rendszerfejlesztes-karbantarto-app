@@ -52,15 +52,23 @@ export function MaintainerPanel() {
 
     const [addMaintainer, setAddMaintainer] = useState(true);
     const [qualification, setQualification] = useState(true);
+    const [deleteQualification, setDeletequalification] = useState(true);
 
     const addMaintainerHandler = () => (
         setAddMaintainer(false),
-        setQualification(true)
+        setQualification(true),
+        setDeletequalification(true)
     );
     const qualificationHandler = () => (
         setAddMaintainer(true),
-        setQualification(false)
+        setQualification(false),
+        setDeletequalification(true)
     );
+    const delQualificationHandler = () => (
+        setAddMaintainer(true),
+        setQualification(true),
+        setDeletequalification(false)
+    )
 
     const addUserHandler = () => {
         axios.post('/user',
@@ -94,6 +102,19 @@ export function MaintainerPanel() {
             })
     }
 
+    const deleteQualificationHandler = () => {
+        axios.delete('/userQualification/' + Number(user_selected) + '/' + Number(qualification_selected),
+        {
+
+        }).then(res => {
+            console.log(res)
+            window.location.reload()
+        }).catch(error => {
+            console.log(error);
+
+        })
+    }
+
     return (
         <>
             <ScrollArea className="table">
@@ -124,7 +145,9 @@ export function MaintainerPanel() {
                     <Button className="buttons" variant="default" onClick={() => qualificationHandler()}>
                         Végzettség beállítása
                     </Button>
-                    
+                    <Button className="buttons" variant="default" onClick={() => delQualificationHandler()}>
+                        Végzettség eltávolítása
+                    </Button>                    
                 </Group>
                 <Group>
                     <div className="add" hidden={addMaintainer}>
@@ -142,18 +165,45 @@ export function MaintainerPanel() {
                     <div className="add" hidden={qualification}>
                         <div >
                             <div className="gp">
-                                Karbantartó:	&nbsp;	&nbsp;
-                                <select className="select" onChange={(e) => setUser_selected(e.target.value)}>
-                                    { }
-                                    <option>Válassz egyet</option>{user.filter(user => user.roleId== 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
-                                </select>
-                                Végzettség:	&nbsp;	&nbsp;
-                                <select className="select" onChange={(e) => setQualification_selected(e.target.value)}>
-                                    { }
-                                    <option>Válassz egyet</option>{qualifications.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
-                                </select>
+                                <tr>
+                                    <td>Karbantartó:	&nbsp;	&nbsp;</td>
+                                    <td><select className="select" onChange={(e) => setUser_selected(e.target.value)}>
+                                        { }
+                                        <option>Válassz egyet</option>{user.filter(user => user.roleId== 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td>Végzettség:	&nbsp;	&nbsp;</td>
+                                    <td><select className="select" onChange={(e) => setQualification_selected(e.target.value)}>
+                                        { }
+                                        <option>Válassz egyet</option>{qualifications.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    </select></td>
+                                </tr>
                                 <Group className="gp" position="center">
                                     <Button onClick={() => setQualificationHandler()}>Hozzárendelés</Button>
+                                </Group>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="add" hidden={deleteQualification}>
+                        <div >
+                            <div className="gp">
+                                <tr>
+                                    <td>Karbantartó:	&nbsp;	&nbsp;</td>
+                                    <td><select className="select" onChange={(e) => setUser_selected(e.target.value)}>
+                                        { }
+                                        <option>Válassz egyet</option>{user.filter(user => user.roleId== 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                    <td>Végzettség:	&nbsp;	&nbsp;</td>
+                                    <td><select className="select" onChange={(e) => setQualification_selected(e.target.value)}>
+                                        { }
+                                        <option>Válassz egyet</option>{userQualif.filter(userQualif => userQualif.userId == Number(user_selected)).map((item) => (<option value={item.qualification.id}>{item.qualification.id + ": " + item.qualification.name}</option>))}
+                                    </select></td>
+                                </tr>
+                                <Group className="gp" position="center">
+                                    <Button onClick={() => deleteQualificationHandler()}>Eltávolítás</Button>
                                 </Group>
                             </div>
                         </div>

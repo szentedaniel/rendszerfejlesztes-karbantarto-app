@@ -15,6 +15,7 @@ import { getAllLogsApi } from '../controllers/api/api.logger.controller'
 import { getAllStatusApi, getAllStatusWithDetailsApi } from '../controllers/api/api.status.controller'
 import { getAllPeriodApi, getAllPeriodWithDetailsApi } from '../controllers/api/api.period.controller'
 import { getAllPriorityApi } from '../controllers/api/api.priority.controller'
+import { getAllRoleApi } from '../controllers/api/api.role.controller'
 const router = express.Router()
 
 
@@ -400,6 +401,11 @@ router.get('/period/details', async (req: express.Request, res: express.Response
 // Priority
 router.get('/priority', async (req: express.Request, res: express.Response, next: any) => {
   getAllPriorityApi(req, res, next)
+})
+
+// Role
+router.get('/roles', async (req: express.Request, res: express.Response, next: any) => {
+  getAllRoleApi(req, res, next)
 })
 
 module.exports = router

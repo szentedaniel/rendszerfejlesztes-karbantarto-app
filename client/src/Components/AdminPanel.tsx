@@ -29,7 +29,21 @@ export function AdminPanel() {
                 console.log(res.data)
                 setUser(res.data)               
             })
-    }, [])  
+    }, [])
+    const [roles, setRoles] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/roles')
+            .then(res => {
+                console.log(res.data)
+                setRoles(res.data)
+                roles.map((item) => (console.log(item.children.length != 0 ? item.children : null)))
+            })
+    }, [])
+
+    const [newUser, setNewUser] = useState(true)
+    const newUserHandler = () => {
+        setNewUser(false)
+    }
           
     const addUserHandler = () => {
         axios.post('/user',
@@ -75,21 +89,35 @@ export function AdminPanel() {
                                 </tr>
                             ))}
                     </tbody>
-                </Table>     
+                </Table>   
+                <Group className="gp" grow spacing={0}>
+                        <Button className="buttons" variant="default" onClick={() => newUserHandler()}>
+                            Új felhasználó felvétele
+                        </Button>          
+                    </Group>  
                 <Group>
-                    <div>
-                    Role: 
-                            <select className="select" onChange={(e) => setId(e.target.value)}>
-                                { }
-                                <option>Válassz egyet</option>{user.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
-                            </select>
-                    </div>
-                            
-                            <TextInput className="text" placeholder="Új kategória" required onChange={(e) => setName(e.target.value)} />
-                            <PasswordInput label="Password" placeholder="Your password" required mt="md" onChange={(e) => setPassword(e.target.value)} />
+                <div className="add" hidden={newUser}>
+                        <div className="gp">
+                            <tr>
+                                <td>Szerepkör: 	&nbsp;	&nbsp;</td>
+                                <td><select className="select" onChange={(e) => setId(e.target.value)}>
+                                    { }
+                                    <option>Válassz egyet</option>{roles.map((item) => (item.id == 0 ? <option selected value={item.id}>{item.id + ": " + item.name}</option> : <option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td>Név: 	&nbsp;	&nbsp;</td>
+                                <td><TextInput className="text" placeholder="Név" required onChange={(e) => setName(e.target.value)} /></td>
+                            </tr>
+                            <tr>
+                                <td>Jelszó:	&nbsp;	&nbsp;</td>
+                                <td><PasswordInput label="Password" placeholder="Your password" required mt="md" onChange={(e) => setPassword(e.target.value)} /></td>
+                            </tr>
                             <Group className="gp" position="center">
                                 <Button onClick={addUserHandler}>Hozzáadás</Button>
                             </Group>
+                        </div>
+                    </div>
                 </Group>          
             </ScrollArea>
         </>
