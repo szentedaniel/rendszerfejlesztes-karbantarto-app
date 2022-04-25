@@ -14,6 +14,7 @@ import { createLocationApi, deleteLocationByIdApi, getAllLocationsApi, getAllLoc
 import { getAllLogsApi } from '../controllers/api/api.logger.controller'
 import { getAllStatusApi, getAllStatusWithDetailsApi } from '../controllers/api/api.status.controller'
 import { getAllPeriodApi, getAllPeriodWithDetailsApi } from '../controllers/api/api.period.controller'
+import { getAllPriorityApi } from '../controllers/api/api.priority.controller'
 const router = express.Router()
 
 
@@ -394,6 +395,11 @@ router.get('/period', async (req: express.Request, res: express.Response, next: 
 
 router.get('/period/details', async (req: express.Request, res: express.Response, next: any) => {
   getAllPeriodWithDetailsApi(req, res, next)
+})
+
+// Priority
+router.get('/priority', async (req: express.Request, res: express.Response, next: any) => {
+  getAllPriorityApi(req, res, next)
 })
 
 module.exports = router
