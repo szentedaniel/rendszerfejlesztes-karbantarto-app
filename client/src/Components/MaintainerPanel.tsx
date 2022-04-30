@@ -44,6 +44,30 @@ export function MaintainerPanel() {
                 setUserQualif(res.data)                
             })
     }, [])
+    const [task, setTask] = useState<any[]>([]); 
+    useEffect(() => {
+        axios.get('/tasks/details')
+            .then(res => {
+                console.log(res.data)
+                setTask(res.data)                
+            })
+    }, [])
+    const [category, setCategory] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/categories')
+            .then(res => {
+                // console.log(res.data)
+                setCategory(res.data)
+            })
+    }, [])
+    const [devices, setDevices] = useState<any[]>([]); 
+    useEffect(() => {
+        axios.get('/devices')
+            .then(res => {
+                // console.log(res.data)
+                setDevices(res.data)                
+            })
+    }, [])
     const [password, setPassword] = useState('')  
     const [name, setName] = useState('')
     const [userName, setUserName] = useState('')
@@ -53,22 +77,33 @@ export function MaintainerPanel() {
     const [addMaintainer, setAddMaintainer] = useState(true);
     const [qualification, setQualification] = useState(true);
     const [deleteQualification, setDeletequalification] = useState(true);
+    const [assignedTasks, setAssignedTasks] = useState(true);
 
     const addMaintainerHandler = () => (
         setAddMaintainer(false),
         setQualification(true),
-        setDeletequalification(true)
+        setDeletequalification(true),
+        setAssignedTasks(true)
     );
     const qualificationHandler = () => (
         setAddMaintainer(true),
         setQualification(false),
-        setDeletequalification(true)
+        setDeletequalification(true),
+        setAssignedTasks(true)
     );
     const delQualificationHandler = () => (
         setAddMaintainer(true),
         setQualification(true),
-        setDeletequalification(false)
-    )
+        setDeletequalification(false),
+        setAssignedTasks(true)
+    );
+    const tasksHandler = () => (
+        setAddMaintainer(true),
+        setQualification(true),
+        setDeletequalification(true),
+        setAssignedTasks(false)
+    )   
+    
 
     const addUserHandler = () => {
         axios.post('/user',
@@ -128,7 +163,7 @@ export function MaintainerPanel() {
                     </thead>
                     <tbody>
                         {
-                           user.filter(user => user.roleId == 4, user => userQualif.map((item) => (item.user.id)).includes(user.id)).map((item)=>(
+                           user.filter(user => user.roleId == 4).map((item)=>(
                                 <tr key={item.id}>
                                     <th>{item.id}</th>
                                     <th>{item.name}</th>
@@ -147,6 +182,9 @@ export function MaintainerPanel() {
                     </Button>
                     <Button className="buttons" variant="default" onClick={() => delQualificationHandler()}>
                         Végzettség eltávolítása
+                    </Button>
+                    <Button className="buttons" variant="default" onClick={() => tasksHandler()}>
+                        Feladatok listázása
                     </Button>                    
                 </Group>
                 <Group>
@@ -207,6 +245,45 @@ export function MaintainerPanel() {
                                 </Group>
                             </div>
                         </div>
+                    </div>
+                    <div className="add" hidden={assignedTasks}>
+                        <div >
+                            <div className="gp">
+                                <tr>
+                                    <td>Karbantartó:	&nbsp;	&nbsp;</td>
+                                    <td><select className="select" onChange={(e) => setUser_selected(e.target.value)}>
+                                        { }
+                                        <option>Válassz egyet</option>{user.filter(user => user.roleId== 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    </select></td>
+                                </tr>
+                            </div>
+                        </div>
+                        <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Eszköz</th>
+                                    <th>Határidő</th>
+                                    <th>Rendszeres karbantartási instrukciók</th>
+                                    <th>Rendkívüli karbantartási instrukciók</th>
+                                    <th>Állapot</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                task.filter(task => task.userId == Number(user_selected)).map((item) => (
+                                    <tr key={item.id}>
+                                        <th>{item.id}</th>
+                                        <th>{item.scheduledMaintenance != null ? category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) : devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))}</th>
+                                        <th>{item.due}</th>
+                                        <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : " "}</th>
+                                        <th>{item.specialMaintenance != null ? item.specialMaintenance.name : " "}</th>
+                                        <th>{item.status.name}</th>
+                                    </tr>
+                                ))   
+                                }             
+                            </tbody>
+                        </Table>
                     </div>
                 </Group>
             </ScrollArea>
