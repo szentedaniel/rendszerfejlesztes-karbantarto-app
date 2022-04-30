@@ -37,7 +37,7 @@ export function TaskPanel() {
     useEffect(() => {
         axios.get('/devices')
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 setDevices(res.data)                
             })
     }, [])
@@ -45,46 +45,62 @@ export function TaskPanel() {
     useEffect(() => {
         axios.get('/categories')
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 setCategory(res.data)
-                category.map((item) => (console.log(item.children.length != 0 ? item.children : null)))
             })
     }, [])
     const [priority, setPriority] = useState<any[]>([]);
     useEffect(() => {
         axios.get('/priority')
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 setPriority(res.data)
-                category.map((item) => (console.log(item.children.length != 0 ? item.children : null)))
             })
     }, [])
     const [specMaintenance, setSpecMaintenance] = useState<any[]>([]);
     useEffect(() => {
         axios.get('/specialMaintenances')
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 setSpecMaintenance(res.data)
             })
     }, [])
+    const [user, setUser] = useState<any[]>([]);
+    useEffect(() => {
+        axios.get('/users')
+            .then(res => {
+                console.log(res.data)
+                setUser(res.data)                
+            })
+    }, [])
 
-    const [user, setUser] = useLocalStorage<UserState>({ key: 'user', defaultValue: initialState });
+    const [activeUser, setActiveUser] = useLocalStorage<UserState>({ key: 'user', defaultValue: initialState });
     const [device_selected, setDevice_selected] = useState('')
     const [maintenance_selected, setMaintenance_selected] = useState('')
     const [priority_selected, setPriority_selected] = useState('')
     const [due, setDue] = useState('')
     const [norm, setNorm] = useState('')
+    const [maintainer_selected, setMaintainer_selected] = useState('')
 
     const [addMaintenance, setAddMaintenance] = useState(true);
     const [addTask, setAddTask] = useState(true);
+    const [giveTask, setGiveTask] = useState(true);
 
     const addMaintenanceHandler = () => (
         setAddTask(false),
-        setAddMaintenance(true)
+        setAddMaintenance(true),
+        setGiveTask(true)
     );
     const addTaskHandler = () => (
         setAddTask(true),
-        setAddMaintenance(false)
+        setAddMaintenance(false),
+        setGiveTask(true)
+    )
+
+    const giveTaskHandler = () =>(
+        setAddTask(true),
+        setAddMaintenance(true),
+        setGiveTask(false)
     )
 
     const addSpecTaskHandler = () => (
@@ -93,7 +109,8 @@ export function TaskPanel() {
             {                
                 specialMaintenanceId:Number(maintenance_selected),
                 due:due,
-                createdByUserId: user.id
+                createdByUserId: activeUser.id,
+                statusId: 6
 
             }).then(res => {
                 console.log(res)
@@ -106,17 +123,13 @@ export function TaskPanel() {
     )
 
     const addSpecMaintenanceHandler = () => (
-        console.log(maintenance_selected),
-        console.log(norm),
-        console.log(device_selected),
-        console.log(priority_selected),
         device_selected != null ?
         axios.post('/specialMaintenance',
             {                
                 name: maintenance_selected,
                 normaInMinutes: Number(norm),
                 deviceId: Number(device_selected),
-                priorityId: Number(priority_selected) 
+                priorityId: Number(priority_selected)
 
             }).then(res => {
                 console.log(res)
@@ -126,6 +139,20 @@ export function TaskPanel() {
 
             })
         : null
+    )
+    const giveMaintenanceHandler = () => (
+        axios.post('/task/' + Number(maintenance_selected) + '/assignToUser',
+            {                
+                userId: Number(maintainer_selected),
+                operatorId: 3 //activeUser.id
+
+            }).then(res => {
+                console.log(res)
+                // window.location.reload()
+            }).catch(error => {
+                console.log(error);
+
+            })
     )
 
 
@@ -165,7 +192,10 @@ export function TaskPanel() {
                     </Button>   
                     <Button className="buttons" variant="default" onClick={() => addMaintenanceHandler()}>
                         Rendkívüli feladat hozzárendelése
-                    </Button>           
+                    </Button>
+                    <Button className="buttons" variant="default" onClick={() => giveTaskHandler()}>
+                        Feladat kiosztása
+                    </Button>        
                 </Group>
                 <Group>
                     <div className="add" hidden={addTask}>
@@ -219,6 +249,30 @@ export function TaskPanel() {
                             </tr>
                             <Group className="gp" position="center">
                                 <Button onClick={addSpecMaintenanceHandler}>Hozzáadás</Button>
+                            </Group>
+                        </div>
+                    </div>
+                    <div className="add" hidden={giveTask}>
+                        <div className="gp">
+                            <tr>
+                                <td>Karbantartó:	&nbsp;	&nbsp;</td>
+                                <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintainer_selected(e.target.value)}>
+                                    { }
+                                    <option>Válassz egyet</option>{user.filter(user => user.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td>Feladat:	&nbsp;	&nbsp;</td>
+                                <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintenance_selected(e.target.value)}>
+                                    { }
+                                    <option>Válassz egyet</option>{task.filter(task => task.statusId == 6).map((item) =>
+                                     (<option value={item.id}>{item.id + ": " + (item.scheduledMaintenance != null ?
+                                      category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) :
+                                      devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))) + " - " + (item.scheduledMaintenance != null ? item.scheduledMaintenance.name : item.specialMaintenance.name)}</option>))}
+                                </select></td>
+                            </tr>
+                            <Group className="gp" position="center">
+                                <Button onClick={giveMaintenanceHandler}>Kiosztás</Button>
                             </Group>
                         </div>
                     </div>
