@@ -113,11 +113,18 @@ export const UserIsEligibleForTask = async (userId: number, scheduledMaintenance
   //console.log(requirements)
 
   const valamik = await Promise.all(requirements.map(async (r): Promise<any> => {
+    //console.log(r);
+    //console.log(userId);
+
     const q = await getUserQualificationById(r, userId)
+    //console.log(q);
+
     let result = false
     if (q) result = true
     return result
   }))
+  //console.log(valamik);
+
 
   let has = await Promise.all(requirements.map(async (r): Promise<any> => {
     const q = await getUserQualificationById(r, userId)
@@ -147,6 +154,7 @@ export const UserIsEligibleForTask = async (userId: number, scheduledMaintenance
   //console.log({ need: need })
 
 
+  //console.log('user megfelelő?: ', valamik);
 
   return valamik.every(e => { return e === true })
 }
