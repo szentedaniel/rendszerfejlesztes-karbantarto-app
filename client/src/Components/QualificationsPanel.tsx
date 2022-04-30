@@ -27,8 +27,17 @@ export function QualificationsPanel() {
                 setMaintenance(res.data)               
             })
     }, [])
+    const [specMaintenance, setSpecMaintenance] =  useState<any[]>([]);   
+    useEffect(() => {
+        axios.get('/specialMaintenances')
+            .then(res => {
+                console.log(res.data)
+                setSpecMaintenance(res.data)               
+            })
+    }, [])
     const [qualifications, setQualifications] = useState<any[]>([]);    
     const [maintenance_selected, setMaintenance_selected] = useState('')
+    const [specMaintenance_selected, setSpecMaintenance_selected] = useState('')
     const [Qualif_selected, setQualif_selected] = useState('')
     const [name, setName] = useState('')
     useEffect(() => {
@@ -62,19 +71,7 @@ export function QualificationsPanel() {
             })
 
     }
-    const addQualifHandler_ = () => {        
-        axios.post('/qualification',
-            {
-                name: name,   
-            }).then(res => {
-                console.log(res)
-                window.location.reload()
-            }).catch(error => {
-                console.log(error);
 
-            })
-
-    }
     useEffect(() => {
         axios.get('/scheduledMaintenances',
             ).then(res => {
@@ -87,17 +84,31 @@ export function QualificationsPanel() {
     }, [])
     
     const upmainhandler = () => {        
+        maintenance_selected != "" ?
         axios.post('/scheduledMaintenanceQualification',
             {
                 qualificationId: Number(Qualif_selected),
                 maintenanceId: Number(maintenance_selected)
             }).then(res => {
                 console.log(res)
-                window.location.reload()
             }).catch(error => {
                 console.log(error);
 
             })
+        : null, 
+        specMaintenance_selected != "" ?
+        axios.post('/specialMaintenanceQualification',
+            {
+                qualificationId: Number(Qualif_selected),
+                maintenanceId: Number(specMaintenance_selected)
+            }).then(res => {
+                console.log(res)
+            }).catch(error => {
+                console.log(error);
+
+            })
+        : null
+        window.location.reload()
 
     }
     //<th>{item.children.map((ch) => (item.children.length != 0 ? ch.name + ", " : "Nincs"))}</th>
@@ -124,7 +135,7 @@ export function QualificationsPanel() {
                                     <th>{item.ScheduledMaintenanceQualification.map((ch) =>
                                      item.ScheduledMaintenanceQualification.length != 0 ? ch.maintenance.name + " " : "Nincs")}</th>
                                      <th>{item.SpecialMaintenanceQualification.map((ch) =>
-                                     item.SpecialMaintenanceQualification.length != 0 ? ch.maintenance.name + " " : "Nincs")}</th>
+                                     item.SpecialMaintenanceQualification.length != 0 ? ch.maintenance.name + ". " : "Nincs")}</th>
                                      <th>{item.UserQualification.map((ch) =>
                                      item.UserQualification.length != 0 ? ch.user.name + " " : "Nincs")}</th>                                                                    
                                 </tr>
@@ -160,11 +171,20 @@ export function QualificationsPanel() {
                                         </select></td>
                                     </tr>
                                     <tr>
-                                        <td>feladat:	&nbsp;	&nbsp;</td>
+                                        <td>Időzített feladat:	&nbsp;	&nbsp;</td>
                                         <td>
                                             <select className="select" onChange={(e) => setMaintenance_selected(e.target.value)}>
                                                 { }
-                                                <option>Válassz egyet</option>{maintenance.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                                <option>Válassz egyet</option>{maintenance.map((item) => (<option value={item.id}>{item.name}</option>))}
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rendkívüli feladat:	&nbsp;	&nbsp;</td>
+                                        <td>
+                                            <select className="select" onChange={(e) => setSpecMaintenance_selected(e.target.value)}>
+                                                { }
+                                                <option>Válassz egyet</option>{specMaintenance.map((item) => (<option value={item.id}>{item.name}</option>))}
                                             </select>
                                         </td>
                                     </tr>
