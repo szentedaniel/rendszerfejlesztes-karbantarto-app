@@ -21,6 +21,7 @@ import { UserState } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { initialState } from '../Components/LoginPanel';
 import axios from 'axios';
+import Moment from 'moment';
 import "../css/Category.css"
 
 export function TaskPanel() {
@@ -65,12 +66,12 @@ export function TaskPanel() {
                 setSpecMaintenance(res.data)
             })
     }, [])
-    const [user, setUser] = useState<any[]>([]);
+    const [users, setUsers] = useState<any[]>([]);
     useEffect(() => {
         axios.get('/users')
             .then(res => {
                 console.log(res.data)
-                setUser(res.data)                
+                setUsers(res.data)                
             })
     }, [])
 
@@ -100,7 +101,8 @@ export function TaskPanel() {
     const giveTaskHandler = () =>(
         setAddTask(true),
         setAddMaintenance(true),
-        setGiveTask(false)
+        setGiveTask(false),
+        console.log(Number(activeUser.id) == 3)
     )
 
     const addSpecTaskHandler = () => (
@@ -176,7 +178,7 @@ export function TaskPanel() {
                                 <tr key={item.id}>
                                     <th>{item.id}</th>
                                     <th>{item.scheduledMaintenance != null ? category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) : devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))}</th>
-                                    <th>{item.due}</th>
+                                    <th>{Moment(item.due).format('YYYY-MM-DD HH:mm:ss')}</th>
                                     <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : " "}</th>
                                     <th>{item.specialMaintenance != null ? item.specialMaintenance.name : " "}</th>
                                     <th>{item.status.name}</th>
@@ -193,7 +195,7 @@ export function TaskPanel() {
                     <Button className="buttons" variant="default" onClick={() => addMaintenanceHandler()}>
                         Rendkívüli feladat hozzárendelése
                     </Button>
-                    <Button className="buttons" variant="default" onClick={() => giveTaskHandler()}>
+                    <Button className="buttons" hidden={activeUser.id == 3} variant="default" onClick={() => giveTaskHandler()}>
                         Feladat kiosztása
                     </Button>        
                 </Group>
@@ -258,7 +260,7 @@ export function TaskPanel() {
                                 <td>Karbantartó:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintainer_selected(e.target.value)}>
                                     { }
-                                    <option>Válassz egyet</option>{user.filter(user => user.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{users.filter(users => users.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
                             <tr>
