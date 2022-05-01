@@ -1,5 +1,5 @@
 import {
-    BellRinging, Fingerprint, Key, Settings, TwoFA, DatabaseImport, Receipt2, SwitchHorizontal, Logout, Door, HeartRateMonitor, Error404,
+    AddressBook, DeviceDesktop, Receipt2, Door, HeartRateMonitor, Error404, Users, Template, Briefcase
 } from 'tabler-icons-react';
 import NotFoundTitle from '../Components/NotFoundTitle'
 import Dashboard from '../Pages/Dashboard'
@@ -11,6 +11,7 @@ import Qualifications from '../Pages/Qualifications';
 import Admin from '../Pages/Admin';
 import Maintainers from '../Pages/Maintainers';
 import Tasks from '../Pages/Tasks';
+import PersonalTasks from '../Pages/PersonalTasks';
 
 const routes: RoutesType[] = [
     {
@@ -44,31 +45,37 @@ const routes: RoutesType[] = [
     {
         path: '/category',
         label: 'Kategóriák',
-        icon: Receipt2,
+        icon: Template,
         element: <Category />,
     },
     {
         path: '/qualifications',
         label: 'Végzettségek',
-        icon: Receipt2,
+        icon: Briefcase,
         element: <Qualifications />,
     },
     {
         path: '/maintainers',
         label: 'Karbantarók',
-        icon: Receipt2,
+        icon: Users,
         element: <Maintainers />,
     },
     {
         path: '/tasks',
         label: 'Feladatok',
-        icon: Receipt2,
+        icon: AddressBook,
         element: <Tasks />,
+    },
+    {
+        path: '/personaltasks',
+        label: 'Feladataim',
+        icon: AddressBook,
+        element: <PersonalTasks />,
     },
     {
         path: '/admin',
         label: 'Adminpanel',
-        icon: Receipt2,
+        icon: DeviceDesktop,
         element: <Admin />,
     },
     

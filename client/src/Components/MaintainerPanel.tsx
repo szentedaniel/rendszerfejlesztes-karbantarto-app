@@ -17,6 +17,9 @@ import {
 import { useAppSelector, useAppDispatch } from '../Store/hooks'
 import axios from 'axios';
 import "../css/Category.css"
+import { useLocalStorage } from '@mantine/hooks';
+import { UserState } from '../types';
+import Moment from 'moment';
 
 export function MaintainerPanel() {
 
@@ -68,6 +71,14 @@ export function MaintainerPanel() {
                 setDevices(res.data)                
             })
     }, [])
+    const [statuses, setStatuses] = useState<any[]>([]); 
+    useEffect(() => {
+        axios.get('/status')
+            .then(res => {
+                // console.log(res.data)
+                setStatuses(res.data)                
+            })
+    }, [])
     const [password, setPassword] = useState('')  
     const [name, setName] = useState('')
     const [userName, setUserName] = useState('')
@@ -103,7 +114,6 @@ export function MaintainerPanel() {
         setDeletequalification(true),
         setAssignedTasks(false)
     )   
-    
 
     const addUserHandler = () => {
         axios.post('/user',
@@ -258,34 +268,34 @@ export function MaintainerPanel() {
                                 </tr>
                             </div>
                         </div>
-                        <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Eszköz</th>
-                                    <th>Határidő</th>
-                                    <th>Rendszeres karbantartási instrukciók</th>
-                                    <th>Rendkívüli karbantartási instrukciók</th>
-                                    <th>Állapot</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                task.filter(task => task.userId == Number(user_selected)).map((item) => (
-                                    <tr key={item.id}>
-                                        <th>{item.id}</th>
-                                        <th>{item.scheduledMaintenance != null ? category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) : devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))}</th>
-                                        <th>{item.due}</th>
-                                        <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : " "}</th>
-                                        <th>{item.specialMaintenance != null ? item.specialMaintenance.name : " "}</th>
-                                        <th>{item.status.name}</th>
-                                    </tr>
-                                ))   
-                                }             
-                            </tbody>
-                        </Table>
                     </div>
                 </Group>
+                <Table sx={{ minWidth: 800 }} verticalSpacing="sm" hidden={assignedTasks}>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Eszköz</th>
+                            <th>Határidő</th>
+                            <th>Rendszeres karbantartási instrukciók</th>
+                            <th>Rendkívüli karbantartási instrukciók</th>
+                            <th>Állapot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                        task.filter(task => task.userId == Number(user_selected)).map((item) => (
+                            <tr key={item.id}>
+                                <th>{item.id}</th>
+                                <th>{item.scheduledMaintenance != null ? category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) : devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))}</th>
+                                <th>{Moment(item.due).format('YYYY-MM-DD HH:mm:ss')}</th>
+                                <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : " "}</th>
+                                <th>{item.specialMaintenance != null ? item.specialMaintenance.name : " "}</th>
+                                <th>{item.status.name}</th>
+                            </tr>
+                        ))   
+                        }             
+                    </tbody>
+                </Table>
             </ScrollArea>
         </>
     );
