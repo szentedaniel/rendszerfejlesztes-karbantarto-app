@@ -150,7 +150,7 @@ export function TaskPanel() {
 
             }).then(res => {
                 console.log(res)
-                // window.location.reload()
+                window.location.reload()
             }).catch(error => {
                 console.log(error);
 
@@ -195,9 +195,9 @@ export function TaskPanel() {
                     <Button className="buttons" variant="default" onClick={() => addMaintenanceHandler()}>
                         Rendkívüli feladat hozzárendelése
                     </Button>
-                    <Button className="buttons" hidden={activeUser.id == 3} variant="default" onClick={() => giveTaskHandler()}>
+                    {(activeUser.roleId == 3) &&<Button className="buttons" variant="default" onClick={() => giveTaskHandler()}>
                         Feladat kiosztása
-                    </Button>        
+                    </Button>}        
                 </Group>
                 <Group>
                     <div className="add" hidden={addTask}>
