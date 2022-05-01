@@ -91,10 +91,15 @@ export function CategoryPanel() {
     }
     const updateCategoryHandler = () => {
         axios.patch('/categories/'+Number(category__selected),
+            Number(category_selected) == 1 ?
             {                
-                parentId: Number(category_selected),
+                parentId: null
 
-            }).then(res => {
+            }:
+            {
+                parentId: Number(category_selected)
+            }
+            ).then(res => {
                 console.log(res)
                 window.location.reload()
             }).catch(error => {
