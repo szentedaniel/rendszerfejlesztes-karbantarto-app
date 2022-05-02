@@ -81,14 +81,8 @@ export function LoginPanel() {
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <div hidden={hidden}>Rossz adatokat adott meg</div>
-        <TextInput label="Email" placeholder="you@mantine.dev" required onChange={(e) => setUsername(e.target.value)} />
-        <PasswordInput label="Password" placeholder="Your password" required mt="md" onChange={(e) => setPassword(e.target.value)} />
-        <Group position="apart" mt="md">
-          <Checkbox label="Remember me" />
-          <Anchor<'a'> onClick={(event) => event.preventDefault()} href="#" size="sm">
-            Forgot password?
-          </Anchor>
-        </Group>
+        <TextInput label="Felhasználónév" placeholder="felhasznalonev" required onChange={(e) => setUsername(e.target.value)} />
+        <PasswordInput label="Jelszó" placeholder="jelszo" required mt="md" onChange={(e) => setPassword(e.target.value)} />
         <Button fullWidth mt="xl" onClick={loginHandler}>
           Sign in
         </Button>

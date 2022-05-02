@@ -101,8 +101,7 @@ export function TaskPanel() {
     const giveTaskHandler = () =>(
         setAddTask(true),
         setAddMaintenance(true),
-        setGiveTask(false),
-        console.log(Number(activeUser.id) == 3)
+        setGiveTask(false)
     )
 
     const addSpecTaskHandler = () => (
@@ -195,7 +194,7 @@ export function TaskPanel() {
                     <Button className="buttons" variant="default" onClick={() => addMaintenanceHandler()}>
                         Rendkívüli feladat hozzárendelése
                     </Button>
-                    {(activeUser.roleId == 3) &&<Button className="buttons" variant="default" onClick={() => giveTaskHandler()}>
+                    {((activeUser.roleId == 3) || (activeUser.roleId == 1)) &&<Button className="buttons" variant="default" onClick={() => giveTaskHandler()}>
                         Feladat kiosztása
                     </Button>}        
                 </Group>

@@ -36,10 +36,6 @@ export function QualificationsPanel() {
             })
     }, [])
     const [qualifications, setQualifications] = useState<any[]>([]);    
-    const [maintenance_selected, setMaintenance_selected] = useState('')
-    const [specMaintenance_selected, setSpecMaintenance_selected] = useState('')
-    const [Qualif_selected, setQualif_selected] = useState('')
-    const [name, setName] = useState('')
     useEffect(() => {
         axios.get('/qualifications')
             .then(res => {
@@ -47,6 +43,13 @@ export function QualificationsPanel() {
                 setQualifications(res.data)                
             })
     }, [])
+
+    const [maintenance_selected, setMaintenance_selected] = useState('')
+    const [specMaintenance_selected, setSpecMaintenance_selected] = useState('')
+    const [Qualif_selected, setQualif_selected] = useState('')
+    const [name, setName] = useState('')
+    const [scheduled, setScheduled] = useState('')
+
     const [addcat, setAddcat] = useState(true);
     const [pcat, setPcat] = useState(true);
     const addcatHandler = () => (
@@ -166,26 +169,26 @@ export function QualificationsPanel() {
                                     <tr>
                                         <td>Végzettség:	&nbsp;	&nbsp;</td>
                                         <td><select className="select" onChange={(e) => setQualif_selected(e.target.value)}>
-                                            { }
                                             <option>Válassz egyet</option>{qualifications.map((item) =><option value={item.id}>{item.id + ": " + item.name}</option>)}
                                         </select></td>
                                     </tr>
                                     <tr>
-                                        <td>Időzített feladat:	&nbsp;	&nbsp;</td>
-                                        <td>
-                                            <select className="select" onChange={(e) => setMaintenance_selected(e.target.value)}>
-                                                { }
-                                                <option>Válassz egyet</option>{maintenance.map((item) => (<option value={item.id}>{item.name}</option>))}
-                                            </select>
-                                        </td>
+                                        <td>Feladat típusa:	&nbsp;	&nbsp;</td>
+                                        <td><select className="select" onChange={(e) => setScheduled(e.target.value)}>
+                                                <option>Válassz egyet</option>
+                                                <option value={1}>Időzített feladat</option>
+                                                <option value={0}>Rendkívüli feladat</option>
+                                            </select>	&nbsp;	&nbsp;</td>
                                     </tr>
                                     <tr>
-                                        <td>Rendkívüli feladat:	&nbsp;	&nbsp;</td>
-                                        <td>
-                                            <select className="select" onChange={(e) => setSpecMaintenance_selected(e.target.value)}>
-                                                { }
-                                                <option>Válassz egyet</option>{specMaintenance.map((item) => (<option value={item.id}>{item.name}</option>))}
+                                        <td>Feladat	&nbsp;	&nbsp;</td>
+                                        <td>{Number(scheduled) == 1? 
+                                            <select className="select" onChange={(e) => setMaintenance_selected(e.target.value)}>
+                                                <option>Válassz egyet</option>{maintenance.map((item) => (<option value={item.id}>{item.name}</option>))}
                                             </select>
+                                            :<select className="select" onChange={(e) => setSpecMaintenance_selected(e.target.value)}>
+                                                <option>Válassz egyet</option>{specMaintenance.map((item) => (<option value={item.id}>{item.name}</option>))}
+                                            </select>}
                                         </td>
                                     </tr>
                                 </table>

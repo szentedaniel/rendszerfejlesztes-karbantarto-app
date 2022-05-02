@@ -78,7 +78,7 @@ const routes: RoutesType[] = [
         label: 'Feladataim',
         icon: AddressBook,
         element: <PersonalTasks />,
-        roleId: [1,4]
+        roleId: [4]
     },
     {
         path: '/admin',
