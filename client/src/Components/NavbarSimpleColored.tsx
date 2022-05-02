@@ -82,7 +82,8 @@ export function NavbarSimpleColored() {
     }
 
     const links = routerConfig.map((item, index) => (
-        (!(item.hide) &&
+        console.log(item.roleId.filter(roleId => roleId == user.roleId) ),
+        (!(item.hide) && (item.roleId.filter(roleId => roleId == user.roleId).length > 0) &&
             <Link
             to={item.path!}
             

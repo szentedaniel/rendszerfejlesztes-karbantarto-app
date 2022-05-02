@@ -73,8 +73,6 @@ export function AdminPanel() {
                             <th>Név</th>
                             <th>Felhasználónév</th>
                             <th>Szerep</th>
-                            <th>Állapot</th>
-                            <th>Akciók</th>
                         </tr>
                     </thead>
                     <tbody>

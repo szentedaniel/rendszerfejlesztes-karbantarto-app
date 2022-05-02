@@ -51,4 +51,5 @@ interface RoutesType {
     label: string
     icon: Icon
     hide?: boolean
+    roleId: Number[]
 }

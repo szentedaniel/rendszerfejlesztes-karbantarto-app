@@ -19,64 +19,73 @@ const routes: RoutesType[] = [
         label: 'Login',
         icon: HeartRateMonitor,
         element: <Login />,
-        hide: true
-
+        hide: true,
+        roleId: []
     },
     {
         path: "/login",
         label: 'Login',
         icon: Door,
         element: <Login />,
-        hide: true
+        hide: true,
+        roleId: []
     },
     {
         path: "/dashboard",
         label: 'Dashboard',
         icon: HeartRateMonitor,
         element: <Dashboard />,
-        hide: true
+        hide: true,
+        roleId: []
     },
     {
         path: "/tools",
         label: 'Eszközök',
         icon: HeartRateMonitor,
         element: <Tools />,
+        roleId: [1,2]
     },
     {
         path: '/category',
         label: 'Kategóriák',
         icon: Template,
         element: <Category />,
+        roleId: [1,2]
     },
     {
         path: '/qualifications',
         label: 'Végzettségek',
         icon: Briefcase,
         element: <Qualifications />,
+        roleId: [1]
     },
     {
         path: '/maintainers',
         label: 'Karbantarók',
         icon: Users,
         element: <Maintainers />,
+        roleId: [1]
     },
     {
         path: '/tasks',
         label: 'Feladatok',
         icon: AddressBook,
         element: <Tasks />,
+        roleId: [1,3]
     },
     {
         path: '/personaltasks',
         label: 'Feladataim',
         icon: AddressBook,
         element: <PersonalTasks />,
+        roleId: [1,4]
     },
     {
         path: '/admin',
         label: 'Adminpanel',
         icon: DeviceDesktop,
         element: <Admin />,
+        roleId: [1]
     },
     
     {
@@ -84,7 +93,8 @@ const routes: RoutesType[] = [
         label: 'NotFound',
         icon: Error404,
         element: <NotFoundTitle />,
-        hide: true
+        hide: true,
+        roleId: []
     },
 ];
 

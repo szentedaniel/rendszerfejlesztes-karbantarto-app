@@ -205,14 +205,12 @@ export function TaskPanel() {
                             <tr>
                                 <td>Eszköz:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setDevice_selected(e.target.value)}>
-                                    { }
                                     <option>Válassz egyet</option>{devices.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
                             <tr>
                                 <td>Feladat:	&nbsp;	&nbsp;</td>
                                 <td><select className="select"  onChange={(e) => setMaintenance_selected(e.target.value)}>
-                                    { }
                                     <option>Válassz egyet</option>{specMaintenance.filter(specMaintenance => specMaintenance.deviceId == device_selected).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
@@ -230,7 +228,6 @@ export function TaskPanel() {
                             <tr>
                                 <td>Eszköz:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setDevice_selected(e.target.value)}>
-                                    { }
                                     <option>Válassz egyet</option>{devices.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
@@ -245,7 +242,6 @@ export function TaskPanel() {
                             <tr>
                                 <td>Prioritás:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setPriority_selected(e.target.value)}>
-                                    { }
                                     <option>Válassz egyet</option>{priority.map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
@@ -259,14 +255,12 @@ export function TaskPanel() {
                             <tr>
                                 <td>Karbantartó:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintainer_selected(e.target.value)}>
-                                    { }
                                     <option>Válassz egyet</option>{users.filter(users => users.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
                             <tr>
                                 <td>Feladat:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintenance_selected(e.target.value)}>
-                                    { }
                                     <option>Válassz egyet</option>{task.filter(task => task.statusId == 6).map((item) =>
                                      (<option value={item.id}>{item.id + ": " + (item.scheduledMaintenance != null ?
                                       category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) :
