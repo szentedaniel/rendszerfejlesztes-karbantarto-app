@@ -74,6 +74,14 @@ export function TaskPanel() {
                 setUsers(res.data)                
             })
     }, [])
+    const [userQualifications, setUserQualifications] = useState<any[]>([]);    
+    useEffect(() => {
+        axios.get('/userQualifications')
+            .then(res => {
+                console.log(res.data)
+                setUserQualifications(res.data)                
+            })
+    }, [])
 
     const [activeUser, setActiveUser] = useLocalStorage<UserState>({ key: 'user', defaultValue: initialState });
     const [device_selected, setDevice_selected] = useState('')
@@ -102,6 +110,12 @@ export function TaskPanel() {
         setAddTask(true),
         setAddMaintenance(true),
         setGiveTask(false)
+    )
+
+    const checkUserQualification = (qualifId) => (
+        userQualifications.filter(userQualifications =>
+             userQualifications.userId == Number(maintainer_selected)
+        ).map((ch) => ch.qualificationId).includes(Number(qualifId))
     )
 
     const addSpecTaskHandler = () => (
@@ -254,16 +268,27 @@ export function TaskPanel() {
                             <tr>
                                 <td>Karbantartó:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintainer_selected(e.target.value)}>
-                                    <option>Válassz egyet</option>{users.filter(users => users.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>
+                                    {users.filter(users => users.roleId == 4).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
                             <tr>
                                 <td>Feladat:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintenance_selected(e.target.value)}>
-                                    <option>Válassz egyet</option>{task.filter(task => task.statusId == 6).map((item) =>
+                                    <option>Válassz egyet</option>
+                                    {task.filter(task => ((task.statusId == 6) && 
+                                        (task.scheduledMaintenance != null ?
+                                            task.scheduledMaintenance.MaintenanceQualification.map((ch) => ch.qualificationId).some(checkUserQualification):
+                                            task.specialMaintenance.MaintenanceQualification.map((ch) => ch.qualificationId).some(checkUserQualification)
+                                        ))).map((item) =>
+                                            
                                      (<option value={item.id}>{item.id + ": " + (item.scheduledMaintenance != null ?
-                                      category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) :
-                                      devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))) + " - " + (item.scheduledMaintenance != null ? item.scheduledMaintenance.name : item.specialMaintenance.name)}</option>))}
+                                        category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) :
+                                        devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) =>
+
+                                             (dev.name))) + " - " + (item.scheduledMaintenance != null ?
+                                                 item.scheduledMaintenance.name :
+                                                 item.specialMaintenance.name)}</option>))}
                                 </select></td>
                             </tr>
                             <Group className="gp" position="center">
