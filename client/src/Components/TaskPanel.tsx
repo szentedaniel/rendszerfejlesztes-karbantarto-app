@@ -276,20 +276,21 @@ export function TaskPanel() {
                                 <td>Feladat:	&nbsp;	&nbsp;</td>
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintenance_selected(e.target.value)}>
                                     <option>Válassz egyet</option>
-                                    {task.filter(task => ((task.statusId == 6) && 
-                                        (task.scheduledMaintenance != null ?
+                                    {task.filter(task => (
+                                        (task.statusId == 6) && (task.scheduledMaintenance != null ?
                                             task.scheduledMaintenance.MaintenanceQualification.map((ch) => ch.qualificationId).some(checkUserQualification):
                                             task.specialMaintenance.MaintenanceQualification.map((ch) => ch.qualificationId).some(checkUserQualification)
-                                        ))).map((item) =>
+                                        )
+                                    )).map((item) =>(
                                             
-                                     (<option value={item.id}>{item.id + ": " + (item.scheduledMaintenance != null ?
+                                     <option value={item.id}>{item.id + ": " + (item.scheduledMaintenance != null ?
                                         category.filter(category => category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)) :
                                         devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) =>
 
                                              (dev.name))) + " - " + (item.scheduledMaintenance != null ?
                                                  item.scheduledMaintenance.name :
-                                                 item.specialMaintenance.name)}</option>))}
-                                </select></td>
+                                                 item.specialMaintenance.name)}</option>)
+                                    )}</select></td>
                             </tr>
                             <Group className="gp" position="center">
                                 <Button onClick={giveMaintenanceHandler}>Kiosztás</Button>
