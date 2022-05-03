@@ -71,67 +71,29 @@ export function MaintainerPanel() {
                 setDevices(res.data)                
             })
     }, [])
-    const [statuses, setStatuses] = useState<any[]>([]); 
-    useEffect(() => {
-        axios.get('/status')
-            .then(res => {
-                // console.log(res.data)
-                setStatuses(res.data)                
-            })
-    }, [])
-    const [password, setPassword] = useState('')  
-    const [name, setName] = useState('')
-    const [userName, setUserName] = useState('')
+
     const [user_selected, setUser_selected] = useState('')
     const [qualification_selected, setQualification_selected] = useState('')
 
-    const [addMaintainer, setAddMaintainer] = useState(true);
     const [qualification, setQualification] = useState(true);
     const [deleteQualification, setDeletequalification] = useState(true);
     const [assignedTasks, setAssignedTasks] = useState(true);
 
-    const addMaintainerHandler = () => (
-        setAddMaintainer(false),
-        setQualification(true),
-        setDeletequalification(true),
-        setAssignedTasks(true)
-    );
     const qualificationHandler = () => (
-        setAddMaintainer(true),
         setQualification(false),
         setDeletequalification(true),
         setAssignedTasks(true)
     );
     const delQualificationHandler = () => (
-        setAddMaintainer(true),
         setQualification(true),
         setDeletequalification(false),
         setAssignedTasks(true)
     );
     const tasksHandler = () => (
-        setAddMaintainer(true),
         setQualification(true),
         setDeletequalification(true),
         setAssignedTasks(false)
     )   
-
-    const addUserHandler = () => {
-        axios.post('/user',
-            {                
-                name:name,
-                username:userName,
-                password:password,
-                roleId: 4,
-                active: true
-
-            }).then(res => {
-                console.log(res)
-                window.location.reload()
-            }).catch(error => {
-                console.log(error);
-
-            })    
-    }
     const setQualificationHandler = () => {
         axios.post('/userQualification',
             {
@@ -184,9 +146,6 @@ export function MaintainerPanel() {
                     </tbody>
                 </Table>
                 <Group className="gp" grow spacing={0}>
-                    <Button className="buttons" variant="default" onClick={() => addMaintainerHandler()}>
-                        Karbantartó hozzáadása
-                    </Button>
                     <Button className="buttons" variant="default" onClick={() => qualificationHandler()}>
                         Végzettség beállítása
                     </Button>
@@ -198,18 +157,6 @@ export function MaintainerPanel() {
                     </Button>                    
                 </Group>
                 <Group>
-                    <div className="add" hidden={addMaintainer}>
-                        <div >
-                        <div className="gp">
-                            <TextInput className="text" placeholder="Név" required onChange={(e) => setName(e.target.value)}/>
-                            <TextInput className="text" placeholder="Felhasználónév"  required onChange={(e) => setUserName(e.target.value)}/>
-                            <PasswordInput label=" " placeholder="Jelszó" required onChange={(e) => setPassword(e.target.value)}/>
-                            <Group className="gp" position="center">
-                                <Button onClick={addUserHandler}>Hozzáadás</Button>
-                            </Group>
-                            </div>
-                        </div>
-                    </div>
                     <div className="add" hidden={qualification}>
                         <div >
                             <div className="gp">
