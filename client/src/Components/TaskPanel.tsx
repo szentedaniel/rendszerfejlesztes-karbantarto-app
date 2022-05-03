@@ -183,10 +183,12 @@ export function TaskPanel() {
                             <th>Rendszeres karbantartási instrukciók</th>
                             <th>Rendkívüli karbantartási instrukciók</th>
                             <th>Állapot</th>
+                            <th>Prioritás</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
+
                             task.map((item) => (
                                 <tr key={item.id}>
                                     <th>{item.id}</th>
@@ -195,6 +197,7 @@ export function TaskPanel() {
                                     <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : " "}</th>
                                     <th>{item.specialMaintenance != null ? item.specialMaintenance.name : " "}</th>
                                     <th>{item.status.name}</th>
+                                    <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.priority.name : item.specialMaintenance.priority.name}</th>
                                 </tr>
                             ))
                         }
@@ -224,7 +227,8 @@ export function TaskPanel() {
                             <tr>
                                 <td>Feladat:	&nbsp;	&nbsp;</td>
                                 <td><select className="select"  onChange={(e) => setMaintenance_selected(e.target.value)}>
-                                    <option>Válassz egyet</option>{specMaintenance.filter(specMaintenance => specMaintenance.deviceId == device_selected).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
+                                    <option>Válassz egyet</option>{specMaintenance.filter(specMaintenance =>specMaintenance.deviceId == device_selected
+                                        ).map((item) => (<option value={item.id}>{item.id + ": " + item.name}</option>))}
                                 </select></td>
                             </tr>
                             <tr>
@@ -277,7 +281,7 @@ export function TaskPanel() {
                                 <td><select className="select" defaultValue={"Válassz egyet"} onChange={(e) => setMaintenance_selected(e.target.value)}>
                                     <option>Válassz egyet</option>
                                     {task.filter(task => (
-                                        (task.statusId == 6) && (task.scheduledMaintenance != null ?
+                                        ((task.statusId == 6) || (task.statusId == 3)) && (task.scheduledMaintenance != null ?
                                             task.scheduledMaintenance.MaintenanceQualification.map((ch) => ch.qualificationId).some(checkUserQualification):
                                             task.specialMaintenance.MaintenanceQualification.map((ch) => ch.qualificationId).some(checkUserQualification)
                                         )

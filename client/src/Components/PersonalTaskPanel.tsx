@@ -114,9 +114,9 @@ export function PersonalTaskPanel() {
                             <th>Id</th>
                             <th>Eszköz</th>
                             <th>Határidő</th>
-                            <th>Rendszeres karbantartási instrukciók</th>
-                            <th>Rendkívüli karbantartási instrukciók</th>
+                            <th>Feladat rövid leírása</th>
                             <th>Állapot</th>
+                            <th>Prioritás</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -128,9 +128,9 @@ export function PersonalTaskPanel() {
                                      category.filter(category =>category.id == item.scheduledMaintenance.categoryId).map((cat) => (cat.name)):
                                      devices.filter(devices => devices.id == item.specialMaintenance.deviceId).map((dev) => (dev.name))}</th>
                                 <th>{Moment(item.due).format('YYYY-MM-DD HH:mm:ss')}</th>
-                                <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : " "}</th>
-                                <th>{item.specialMaintenance != null ? item.specialMaintenance.name : " "}</th>
+                                <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.name : item.specialMaintenance.name}</th>
                                 <th>{item.status.name}</th>
+                                <th>{item.scheduledMaintenance != null ? item.scheduledMaintenance.priority.name : item.specialMaintenance.priority.name}</th>
                             </tr>
                         ))   
                         }             
